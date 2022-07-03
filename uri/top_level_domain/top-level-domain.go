@@ -10,7 +10,8 @@ type TopLevelDomain struct {
 }
 
 func New(value string) (*TopLevelDomain, error) {
-	if len(value) < 1 {
+	length := len([]rune(value))
+	if length < 1 {
 		return &TopLevelDomain{}, errors.New("The top level domain value must be atleast one (1) character.")
 	}
 
