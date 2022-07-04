@@ -24,8 +24,12 @@ func New(value string) (*DomainName, error) {
 	}, nil
 }
 
-func (tld *DomainName) Value() string {
-	return tld.value
+func (dn *DomainName) Value() string {
+	return dn.value
+}
+
+func (dn *DomainName) Equals(compare *DomainName) bool {
+	return dn.Value() == compare.Value()
 }
 
 func isValidDomainNameValue(value string) bool {

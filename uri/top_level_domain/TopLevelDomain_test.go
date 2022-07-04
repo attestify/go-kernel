@@ -4,6 +4,8 @@ import (
 	"testing"
 )
 
+/** Happy Path **/
+
 func Test_InstantiateTopLevelDomain(t *testing.T) {
 
 	tld, err := New("io")
@@ -34,6 +36,26 @@ func Test_MustReturnErrorForEmptyString(t *testing.T) {
 	}
 
 }
+
+func Test_TwoSameTopLevelDomainMustEqual(t *testing.T) {
+
+	// Act
+	tld1, err := New("io")
+	tld2, err := New("io")
+
+	// Assert
+	if err != nil {
+		t.Fatalf("An error was returned when no error was expected.\n Error: %s ", err.Error())
+	}
+
+	areEqual := tld1.Equals(tld2)
+	if !areEqual {
+		t.Errorf("The Top Level Domains do not equal.\nBase: %s\nComparator: %s", tld1.Value(), tld2.Value())
+	}
+
+}
+
+/** Happy Path **/
 
 func Test_MustReturnErrorForNumberInString(t *testing.T) {
 
@@ -67,6 +89,24 @@ func Test_MustReturnErrorForSymbolInString(t *testing.T) {
 	}
 	if tld == nil {
 		t.Error("Expected an instantiated, empty, TopLeveLDomain object, but got a 'nil' value.")
+	}
+
+}
+
+func Test_TwoDifferentDomainNameMustNotEqual(t *testing.T) {
+
+	// Act
+	tld1, err := New("io")
+	tld2, err := New("com")
+
+	// Assert
+	if err != nil {
+		t.Fatalf("An error was returned when no error was expected.\n Error: %s ", err.Error())
+	}
+
+	areEqual := tld1.Equals(tld2)
+	if areEqual {
+		t.Errorf("The Top Level Domains should not equal.\nBase: %s\nComparator: %s", tld1.Value(), tld2.Value())
 	}
 
 }

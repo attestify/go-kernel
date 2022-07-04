@@ -28,6 +28,10 @@ func (tld *TopLevelDomain) Value() string {
 	return tld.value
 }
 
+func (tld *TopLevelDomain) Equals(compare *TopLevelDomain) bool {
+	return tld.Value() == compare.Value()
+}
+
 func isOnlyLetters(value string) bool {
 	result, err := regexp.MatchString(`^[A-Za-z]+$`, value)
 	if err != nil {
