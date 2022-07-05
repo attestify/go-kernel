@@ -54,6 +54,24 @@ func Test_InstantiateForStringWithDash(t *testing.T) {
 
 }
 
+func Test_TwoSameDomainNameMustEqual(t *testing.T) {
+
+	// Act
+	dn1, err := New("attestify")
+	dn2, err := New("attestify")
+
+	// Assert
+	if err != nil {
+		t.Fatalf("An error was returned when no error was expected.\n Error: %s ", err.Error())
+	}
+
+	areEqual := dn1.Equals(dn2)
+	if !areEqual {
+		t.Errorf("The Top Level Domains do not equal.\nBase: %s\nComparator: %s", dn1.Value(), dn2.Value())
+	}
+
+}
+
 /** Sad Path Tests **/
 
 func Test_MustReturnErrorForEmptyString(t *testing.T) {
@@ -121,6 +139,24 @@ func Test_MustReturnErrorStringStartingWithDash(t *testing.T) {
 	}
 	if tld == nil {
 		t.Error("Expected an instantiated, empty, TopLeveLDomain object, but got a 'nil' value.")
+	}
+
+}
+
+func Test_TwoDifferentTopLevelDomainMustNotEqual(t *testing.T) {
+
+	// Act
+	dn1, err := New("attestify")
+	dn2, err := New("billbensing")
+
+	// Assert
+	if err != nil {
+		t.Fatalf("An error was returned when no error was expected.\n Error: %s ", err.Error())
+	}
+
+	areEqual := dn1.Equals(dn2)
+	if areEqual {
+		t.Errorf("The Top Level Domains should not equal.\nBase: %s\nComparator: %s", dn1.Value(), dn2.Value())
 	}
 
 }
