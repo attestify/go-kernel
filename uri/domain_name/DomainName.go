@@ -33,9 +33,7 @@ func (dn *DomainName) Equals(compare *DomainName) bool {
 }
 
 func isValidDomainNameValue(value string) bool {
-	result, err := regexp.MatchString(`^[a-z0-9]+(-[a-z0-9]+)*`, value)
-	if err != nil {
-		return false
-	}
+	result := false
+	result, _ = regexp.MatchString(`^[a-z0-9]+(-[a-z0-9]+)*`, value)
 	return result
 }
