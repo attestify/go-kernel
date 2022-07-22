@@ -6,6 +6,9 @@ import (
 
 /** Happy Path Tests **/
 
+// Instantiate a RegisteredName object using a top level domain of "io", and a doming name
+// "attestify", without receiving an error. Validate state of the object by expecting the
+// .Value() to return "attestify.io"
 func Test_InstantiateRegisteredName(t *testing.T) {
 
 	registeredName, err := New("io", "attestify")
@@ -17,6 +20,42 @@ func Test_InstantiateRegisteredName(t *testing.T) {
 
 	actualValue := registeredName.Value()
 	expectedValue := "attestify.io"
+	if expectedValue != actualValue {
+		t.Errorf("Did not return the expected value.\nActual: %s\nExpected: %s",
+			registeredName.Value(),
+			expectedValue)
+	}
+}
+
+func Test_InstantiateRegisteredNameFromString(t *testing.T) {
+
+	registeredName, err := NewFromString("attestify.io")
+
+	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
+	if err != nil {
+		t.Fatalf("An error was returned when no error was expected.\n Error: %s ", err.Error())
+	}
+
+	actualValue := registeredName.Value()
+	expectedValue := "attestify.io"
+	if expectedValue != actualValue {
+		t.Errorf("Did not return the expected value.\nActual: %s\nExpected: %s",
+			registeredName.Value(),
+			expectedValue)
+	}
+}
+
+func Test_InstantiateRegisteredNameFromStringWithSubDomain(t *testing.T) {
+
+	registeredName, err := NewFromString("subdomain.attestify.io")
+
+	// Fatal use to end test if an error objet was not returned because the expressions after this evaluate the error object
+	if err != nil {
+		t.Fatalf("An error was returned when no error was expected.\n Error: %s ", err.Error())
+	}
+
+	actualValue := registeredName.Value()
+	expectedValue := "subdomain.attestify.io"
 	if expectedValue != actualValue {
 		t.Errorf("Did not return the expected value.\nActual: %s\nExpected: %s",
 			registeredName.Value(),
