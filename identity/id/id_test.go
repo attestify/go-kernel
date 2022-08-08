@@ -4,15 +4,20 @@ import (
 	"testing"
 )
 
-// Instantiate Id struct successfully without error
-func Test_Instantiate_Id(t *testing.T) {
-	id := New(1541815603606036480)
-	if id == nil {
-		t.Error("Should not have received a nil object.")
-	}
+func setup(t *testing.T) {
+	t.Parallel()
 }
 
+// Test_Instantiate_Id instantiates Id struct successfully without error
+func Test_Instantiate_Id(t *testing.T) {
+	setup(t)
+	New(1541815603606036480)
+}
+
+// Test_Instantiate_Id_Get_Value returns the string value of "1541815603606036480"
+// when Id is instantiated with the int64 argument of 1541815603606036480.
 func Test_Instantiate_Id_Get_Value(t *testing.T) {
+	setup(t)
 	id := New(1541815603606036480)
 
 	expectedValue := "1541815603606036480"
@@ -25,7 +30,10 @@ func Test_Instantiate_Id_Get_Value(t *testing.T) {
 
 }
 
-func Test_Instantiate_Id_Get_As_Value(t *testing.T) {
+// Test_Instantiate_Id_Get_Value returns the integer value of 1541815603606036480
+// when Id is instantiated with the int64 argument of 1541815603606036480.
+func Test_Instantiate_Id_Get_As_Integer(t *testing.T) {
+	setup(t)
 	id := New(1541815603606036480)
 
 	var expectedInt int64
