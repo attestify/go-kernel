@@ -57,6 +57,6 @@ func (rn *RegisteredName) Value() string {
 
 // Equals compares the current RegisteredName to another instance
 // of a RegisteredName object to asses equality
-func (rn *RegisteredName) Equals(compare *RegisteredName) bool {
+func (rn *RegisteredName) Equals(compare RegisteredName) bool {
 	return rn.Value() == compare.Value()
 }
