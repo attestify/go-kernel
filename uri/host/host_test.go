@@ -12,7 +12,7 @@ import (
 func Test_InstantiateHost(t *testing.T) {
 
 	regname, _ := registered_name.NewFromString("attestify.io")
-	host, err := NewFromRegisteredName(*regname)
+	host, err := NewFromRegisteredName(regname)
 
 	// Fatal use to end test if an error object was not returned because the expressions after this evaluate the error object
 	if err != nil {
