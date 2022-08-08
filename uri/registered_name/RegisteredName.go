@@ -16,18 +16,18 @@ type RegisteredName struct {
 
 // New Instantiates a RegisteredName class from separated top level domain
 // and domain name string objects.
-func New(tld string, domainName string) (*RegisteredName, error) {
+func New(tld string, domainName string) (RegisteredName, error) {
 	tldInstance, err := top_level_domain.New(tld)
 	if err != nil {
-		return &RegisteredName{}, generateError(err)
+		return RegisteredName{}, generateError(err)
 	}
 
 	domainNameInstance, err := domain_name.New(domainName)
 	if err != nil {
-		return &RegisteredName{}, generateError(err)
+		return RegisteredName{}, generateError(err)
 	}
 
-	return &RegisteredName{
+	return RegisteredName{
 		tld:        tldInstance,
 		domainName: domainNameInstance,
 	}, nil
@@ -35,7 +35,7 @@ func New(tld string, domainName string) (*RegisteredName, error) {
 
 // NewFromString Instantiates a RegisteredName class from a
 // full registered name string.  Example: "attestify.io"
-func NewFromString(registeredName string) (*RegisteredName, error) {
+func NewFromString(registeredName string) (RegisteredName, error) {
 
 	tld := registeredName[strings.LastIndex(registeredName, ".")+1:]
 	domainName := strings.TrimRight(registeredName,"."+tld)
