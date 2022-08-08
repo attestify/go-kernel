@@ -9,17 +9,17 @@ type TopLevelDomain struct {
 	value string
 }
 
-func New(value string) (*TopLevelDomain, error) {
+func New(value string) (TopLevelDomain, error) {
 	length := len([]rune(value))
 	if length < 1 {
-		return &TopLevelDomain{}, errors.New("The top level domain value must be atleast one (1) character.")
+		return TopLevelDomain{}, errors.New("The top level domain value must be atleast one (1) character.")
 	}
 
 	if !isOnlyLetters(value) {
-		return &TopLevelDomain{}, errors.New("The top level domain value can only be letters.")
+		return TopLevelDomain{}, errors.New("The top level domain value can only be letters.")
 	}
 
-	return &TopLevelDomain{
+	return TopLevelDomain{
 		value: value,
 	}, nil
 }
