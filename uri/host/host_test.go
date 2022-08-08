@@ -5,14 +5,18 @@ import (
 	"testing"
 )
 
+func setup(t *testing.T) {
+	t.Parallel()
+}
+
 /** Happy Path Tests **/
 
 // Instantiate a Host object using the NewFromRegisteredName constructor without an error
 // and expect the .Value() to be "attestify.io" and .HostType() to be "reg-name".
 func Test_InstantiateHost(t *testing.T) {
-
+	setup(t)
 	regname, _ := registered_name.NewFromString("attestify.io")
-	host, err := NewFromRegisteredName(*regname)
+	host, err := NewFromRegisteredName(regname)
 
 	// Fatal use to end test if an error object was not returned because the expressions after this evaluate the error object
 	if err != nil {
