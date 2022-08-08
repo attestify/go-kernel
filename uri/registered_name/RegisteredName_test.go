@@ -103,31 +103,22 @@ func Test_TwoDifferentTopLevelDomainMustNotEqual(t *testing.T) {
 func Test_HandleTopLevelDomainError(t *testing.T) {
 
 	// Arrange & Act - provide a bad top level domain
-	registeredName, err := New("bad!", "attestify")
+	_, err := New("bad!", "attestify")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
 	if err == nil {
 		t.Fatalf("An error was expected, but no error was returned")
 	}
-
-	if registeredName == nil {
-		t.Error("Expected an instantiated, empty, RegisteredName object, but got a 'nil' value.")
-	}
-
-
 }
 
 func Test_HandleDomainNameError(t *testing.T) {
 
 	// Arrange & Act - provide a bad domain name
-	registeredName, err := New("io", "-attestify")
+	_, err := New("io", "-attestify")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
 	if err == nil {
 		t.Fatalf("An error was expected, but no error was returned")
 	}
 
-	if registeredName == nil {
-		t.Error("Expected an instantiated, empty, RegisteredName object, but got a 'nil' value.")
-	}
 }
