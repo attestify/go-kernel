@@ -4,10 +4,14 @@ import (
 	"testing"
 )
 
+func setup(t *testing.T) {
+	t.Parallel()
+}
+
 /** Happy Path **/
 
 func Test_InstantiateTopLevelDomain(t *testing.T) {
-
+	setup(t)
 	tld, err := New("io")
 
 	if err != nil {
@@ -20,8 +24,7 @@ func Test_InstantiateTopLevelDomain(t *testing.T) {
 }
 
 func Test_MustReturnErrorForEmptyString(t *testing.T) {
-
-
+	setup(t)
 	_, err := New("")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
@@ -36,7 +39,7 @@ func Test_MustReturnErrorForEmptyString(t *testing.T) {
 }
 
 func Test_TwoSameTopLevelDomainMustEqual(t *testing.T) {
-
+	setup(t)
 	// Act
 	tld1, err := New("io")
 	tld2, err := New("io")
@@ -53,10 +56,10 @@ func Test_TwoSameTopLevelDomainMustEqual(t *testing.T) {
 
 }
 
-/** Happy Path **/
+/** Sad Path **/
 
 func Test_MustReturnErrorForNumberInString(t *testing.T) {
-
+	setup(t)
 	_, err := New("1io")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
@@ -71,7 +74,7 @@ func Test_MustReturnErrorForNumberInString(t *testing.T) {
 }
 
 func Test_MustReturnErrorForSymbolInString(t *testing.T) {
-
+	setup(t)
 	_, err := New("com-")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
@@ -86,7 +89,7 @@ func Test_MustReturnErrorForSymbolInString(t *testing.T) {
 }
 
 func Test_TwoDifferentDomainNameMustNotEqual(t *testing.T) {
-
+	setup(t)
 	// Act
 	tld1, err := New("io")
 	tld2, err := New("com")
