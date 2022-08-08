@@ -4,10 +4,14 @@ import (
 	"testing"
 )
 
+func setup(t *testing.T) {
+	t.Parallel()
+}
+
 /** Happy Path Tests **/
 
 func Test_InstantiateDomainName(t *testing.T) {
-
+	setup(t)
 	tld, err := New("attestify")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
@@ -22,7 +26,7 @@ func Test_InstantiateDomainName(t *testing.T) {
 }
 
 func Test_InstantiateForStringOfExactly255Characters(t *testing.T) {
-
+	setup(t)
 	// Arrange - Generate a string of eactly 255 characters
 	testString := ""
 	for i := 1; i <= 255; i++ {
@@ -40,7 +44,7 @@ func Test_InstantiateForStringOfExactly255Characters(t *testing.T) {
 }
 
 func Test_InstantiateForStringWithDash(t *testing.T) {
-
+	setup(t)
 	// Act
 	tld, err := New("attestify-site")
 
@@ -55,7 +59,7 @@ func Test_InstantiateForStringWithDash(t *testing.T) {
 }
 
 func Test_TwoSameDomainNameMustEqual(t *testing.T) {
-
+	setup(t)
 	// Act
 	dn1, err := New("attestify")
 	dn2, err := New("attestify")
@@ -75,7 +79,7 @@ func Test_TwoSameDomainNameMustEqual(t *testing.T) {
 /** Sad Path Tests **/
 
 func Test_MustReturnErrorForEmptyString(t *testing.T) {
-
+	setup(t)
 	// Arrange & Act
 	_, err := New("")
 
@@ -93,7 +97,7 @@ func Test_MustReturnErrorForEmptyString(t *testing.T) {
 }
 
 func Test_MustReturnErrorForStringMoreThan255Characters(t *testing.T) {
-
+	setup(t)
 	// Arrange - Generate a string of 256 characters
 	testString := ""
 	for i := 1; i <= 256; i++ {
@@ -117,7 +121,7 @@ func Test_MustReturnErrorForStringMoreThan255Characters(t *testing.T) {
 }
 
 func Test_MustReturnErrorStringStartingWithDash(t *testing.T) {
-
+	setup(t)
 	// Arrange & Act
 	_, err := New("-attestify")
 
@@ -135,7 +139,7 @@ func Test_MustReturnErrorStringStartingWithDash(t *testing.T) {
 }
 
 func Test_TwoDifferentTopLevelDomainMustNotEqual(t *testing.T) {
-
+	setup(t)
 	// Act
 	dn1, err := New("attestify")
 	dn2, err := New("billbensing")
