@@ -77,7 +77,7 @@ func Test_TwoSameDomainNameMustEqual(t *testing.T) {
 func Test_MustReturnErrorForEmptyString(t *testing.T) {
 
 	// Arrange & Act
-	tld, err := New("")
+	_, err := New("")
 
 	// Assert
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
@@ -88,9 +88,6 @@ func Test_MustReturnErrorForEmptyString(t *testing.T) {
 	expectedMessage := "The domain name value must be atleast one (1) character, and no greather than two-hundred fifty-five (255) characters."
 	if err.Error() != expectedMessage {
 		t.Errorf("The exptected error was not returned. \n Actual: %s \n Expected: %s", err.Error(), expectedMessage)
-	}
-	if tld == nil {
-		t.Error("Expected an instantiated, empty, DomainName object, but got a 'nil' value.")
 	}
 
 }
@@ -104,7 +101,7 @@ func Test_MustReturnErrorForStringMoreThan255Characters(t *testing.T) {
 	}
 
 	// Act
-	tld, err := New(testString)
+	_, err := New(testString)
 
 	// Assert
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
@@ -116,16 +113,13 @@ func Test_MustReturnErrorForStringMoreThan255Characters(t *testing.T) {
 	if err.Error() != expectedMessage {
 		t.Errorf("The exptected error was not returned. \n Actual: %s \n Expected: %s", err.Error(), expectedMessage)
 	}
-	if tld == nil {
-		t.Error("Expected an instantiated, empty, TopLeveLDomain object, but got a 'nil' value.")
-	}
 
 }
 
 func Test_MustReturnErrorStringStartingWithDash(t *testing.T) {
 
 	// Arrange & Act
-	tld, err := New("-attestify")
+	_, err := New("-attestify")
 
 	// Assert
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
@@ -136,9 +130,6 @@ func Test_MustReturnErrorStringStartingWithDash(t *testing.T) {
 	expectedMessage := "The domain name can only be ASCII characters and hyphens.  The domain name cannot start with a hyphen."
 	if err.Error() != expectedMessage {
 		t.Errorf("The exptected error was not returned. \n Actual: %s \n Expected: %s", err.Error(), expectedMessage)
-	}
-	if tld == nil {
-		t.Error("Expected an instantiated, empty, TopLeveLDomain object, but got a 'nil' value.")
 	}
 
 }
