@@ -57,7 +57,7 @@ func Test_TwoSameTopLevelDomainMustEqual(t *testing.T) {
 
 func Test_MustReturnErrorForNumberInString(t *testing.T) {
 
-	tld, err := New("1io")
+	_, err := New("1io")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
 	if err == nil {
@@ -72,7 +72,7 @@ func Test_MustReturnErrorForNumberInString(t *testing.T) {
 
 func Test_MustReturnErrorForSymbolInString(t *testing.T) {
 
-	tld, err := New("com-")
+	_, err := New("com-")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
 	if err == nil {
