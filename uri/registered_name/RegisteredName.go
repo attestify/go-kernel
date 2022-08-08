@@ -28,7 +28,7 @@ func New(tld string, domainName string) (*RegisteredName, error) {
 	}
 
 	return &RegisteredName{
-		tld:        *tldInstance,
+		tld:        tldInstance,
 		domainName: domainNameInstance,
 	}, nil
 }
