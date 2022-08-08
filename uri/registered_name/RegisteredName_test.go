@@ -4,13 +4,17 @@ import (
 	"testing"
 )
 
+func setup(t *testing.T) {
+	t.Parallel()
+}
+
 /** Happy Path Tests **/
 
 // Instantiate a RegisteredName object using a top level domain of "io", and a doming name
 // "attestify", without receiving an error. Validate state of the object by expecting the
 // .Value() to return "attestify.io"
 func Test_InstantiateRegisteredName(t *testing.T) {
-
+	setup(t)
 	registeredName, err := New("io", "attestify")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
@@ -28,7 +32,7 @@ func Test_InstantiateRegisteredName(t *testing.T) {
 }
 
 func Test_InstantiateRegisteredNameFromString(t *testing.T) {
-
+	setup(t)
 	registeredName, err := NewFromString("attestify.io")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
@@ -46,7 +50,7 @@ func Test_InstantiateRegisteredNameFromString(t *testing.T) {
 }
 
 func Test_InstantiateRegisteredNameFromStringWithSubDomain(t *testing.T) {
-
+	setup(t)
 	registeredName, err := NewFromString("subdomain.attestify.io")
 
 	// Fatal use to end test if an error objet was not returned because the expressions after this evaluate the error object
@@ -64,7 +68,7 @@ func Test_InstantiateRegisteredNameFromStringWithSubDomain(t *testing.T) {
 }
 
 func Test_TwoSameRegisteredNameMustEqual(t *testing.T) {
-
+	setup(t)
 	// Act
 	rn1, err := New("io", "attestify")
 	rn2, err := New("io", "attestify")
@@ -83,7 +87,7 @@ func Test_TwoSameRegisteredNameMustEqual(t *testing.T) {
 /** Sad Path Tests **/
 
 func Test_TwoDifferentTopLevelDomainMustNotEqual(t *testing.T) {
-
+	setup(t)
 	// Act
 	rn1, err := New("io", "attestify")
 	rn2, err := New("com", "attestify")
@@ -101,7 +105,7 @@ func Test_TwoDifferentTopLevelDomainMustNotEqual(t *testing.T) {
 }
 
 func Test_HandleTopLevelDomainError(t *testing.T) {
-
+	setup(t)
 	// Arrange & Act - provide a bad top level domain
 	_, err := New("bad!", "attestify")
 
@@ -112,7 +116,7 @@ func Test_HandleTopLevelDomainError(t *testing.T) {
 }
 
 func Test_HandleDomainNameError(t *testing.T) {
-
+	setup(t)
 	// Arrange & Act - provide a bad domain name
 	_, err := New("io", "-attestify")
 
