@@ -6,13 +6,17 @@ import "github.com/attestify/go-kernel/uri/registered_name"
 // Source: https://datatracker.ietf.org/doc/html/rfc3986#section-3.2.2
 type Host struct {
 	hostType string
-	value string
+	value    string
 }
 
-func NewFromRegisteredName(regName registered_name.RegisteredName) (Host, error) {
-	return Host {
+func NewFromRegisteredName(registeredName string) (Host, error) {
+	regName, err := registered_name.NewFromString(registeredName)
+	if err != nil {
+		return Host{}, err
+	}
+	return Host{
 		hostType: "reg-name",
-		value: regName.Value(),
+		value:    regName.Value(),
 	}, nil
 }
 

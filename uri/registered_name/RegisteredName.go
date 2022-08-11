@@ -19,12 +19,12 @@ type RegisteredName struct {
 func New(tld string, domainName string) (RegisteredName, error) {
 	tldInstance, err := top_level_domain.New(tld)
 	if err != nil {
-		return RegisteredName{}, generateError(err)
+		return RegisteredName{}, err
 	}
 
 	domainNameInstance, err := domain_name.New(domainName)
 	if err != nil {
-		return RegisteredName{}, generateError(err)
+		return RegisteredName{}, err
 	}
 
 	return RegisteredName{
@@ -38,7 +38,7 @@ func New(tld string, domainName string) (RegisteredName, error) {
 func NewFromString(registeredName string) (RegisteredName, error) {
 
 	tld := registeredName[strings.LastIndex(registeredName, ".")+1:]
-	domainName := strings.TrimRight(registeredName,"."+tld)
+	domainName := strings.TrimRight(registeredName, "."+tld)
 
 	return New(tld, domainName)
 }
