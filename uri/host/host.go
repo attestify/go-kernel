@@ -9,7 +9,11 @@ type Host struct {
 	value    string
 }
 
-func NewFromRegisteredName(regName registered_name.RegisteredName) (Host, error) {
+func NewFromRegisteredName(registeredName string) (Host, error) {
+	regName, err := registered_name.NewFromString(registeredName)
+	if err != nil {
+		return Host{}, err
+	}
 	return Host{
 		hostType: "reg-name",
 		value:    regName.Value(),
