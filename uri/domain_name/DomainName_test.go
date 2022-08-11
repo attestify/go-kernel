@@ -151,6 +151,10 @@ func Test_MustReturnErrorStringStartingWithDash(t *testing.T) {
 		t.Errorf("The exptected error was not returned. \n Actual: %s \n Expected: %s", err.Error(), expectedMessage)
 	}
 
+	if !errors.As(err, &validation_error.ValidationError{}) {
+		t.Errorf("did not get the epected error of type ValidationError")
+	}
+
 }
 
 func Test_TwoDifferentTopLevelDomainMustNotEqual(t *testing.T) {
