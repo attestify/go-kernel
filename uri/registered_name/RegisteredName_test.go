@@ -1,8 +1,9 @@
-package registered_name
+package registered_name_test
 
 import (
 	"errors"
 	"github.com/attestify/go-kernel/error/validation_error"
+	"github.com/attestify/go-kernel/uri/registered_name"
 	"testing"
 )
 
@@ -17,7 +18,7 @@ func setup(t *testing.T) {
 // .Value() to return "attestify.io"
 func Test_InstantiateRegisteredName(t *testing.T) {
 	setup(t)
-	registeredName, err := New("io", "attestify")
+	registeredName, err := registered_name.New("io", "attestify")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
 	if err != nil {
@@ -35,7 +36,7 @@ func Test_InstantiateRegisteredName(t *testing.T) {
 
 func Test_InstantiateRegisteredNameFromString(t *testing.T) {
 	setup(t)
-	registeredName, err := NewFromString("attestify.io")
+	registeredName, err := registered_name.NewFromString("attestify.io")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
 	if err != nil {
@@ -53,7 +54,7 @@ func Test_InstantiateRegisteredNameFromString(t *testing.T) {
 
 func Test_InstantiateRegisteredNameFromStringWithSubDomain(t *testing.T) {
 	setup(t)
-	registeredName, err := NewFromString("subdomain.attestify.io")
+	registeredName, err := registered_name.NewFromString("subdomain.attestify.io")
 
 	// Fatal use to end test if an error objet was not returned because the expressions after this evaluate the error object
 	if err != nil {
@@ -72,8 +73,8 @@ func Test_InstantiateRegisteredNameFromStringWithSubDomain(t *testing.T) {
 func Test_TwoSameRegisteredNameMustEqual(t *testing.T) {
 	setup(t)
 	// Act
-	rn1, err := New("io", "attestify")
-	rn2, err := New("io", "attestify")
+	rn1, err := registered_name.New("io", "attestify")
+	rn2, err := registered_name.New("io", "attestify")
 
 	// Assert
 	if err != nil {
@@ -91,8 +92,8 @@ func Test_TwoSameRegisteredNameMustEqual(t *testing.T) {
 func Test_TwoDifferentTopLevelDomainMustNotEqual(t *testing.T) {
 	setup(t)
 	// Act
-	rn1, err := New("io", "attestify")
-	rn2, err := New("com", "attestify")
+	rn1, err := registered_name.New("io", "attestify")
+	rn2, err := registered_name.New("com", "attestify")
 
 	// Assert
 	if err != nil {
@@ -109,7 +110,7 @@ func Test_TwoDifferentTopLevelDomainMustNotEqual(t *testing.T) {
 func Test_Handle_Top_Level_Domain_Error(t *testing.T) {
 	setup(t)
 	// Arrange & Act - provide a bad top level domain
-	_, err := New("bad!", "attestify")
+	_, err := registered_name.New("bad!", "attestify")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
 	if err == nil {
@@ -124,7 +125,7 @@ func Test_Handle_Top_Level_Domain_Error(t *testing.T) {
 func Test_Handle_Domain_Name_Error(t *testing.T) {
 	setup(t)
 	// Arrange & Act - provide a bad domain name
-	_, err := New("io", "-attestify")
+	_, err := registered_name.New("io", "-attestify")
 
 	// Fatal use to end test if an error object was not returned because the expressions after this evaluate the
 	//error object
