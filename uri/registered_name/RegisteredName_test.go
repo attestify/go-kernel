@@ -1,6 +1,8 @@
 package registered_name
 
 import (
+	"errors"
+	"github.com/attestify/go-kernel/error/validation_error"
 	"testing"
 )
 
@@ -104,7 +106,7 @@ func Test_TwoDifferentTopLevelDomainMustNotEqual(t *testing.T) {
 
 }
 
-func Test_HandleTopLevelDomainError(t *testing.T) {
+func Test_Handle_Top_Level_Domain_Error(t *testing.T) {
 	setup(t)
 	// Arrange & Act - provide a bad top level domain
 	_, err := New("bad!", "attestify")
@@ -113,16 +115,25 @@ func Test_HandleTopLevelDomainError(t *testing.T) {
 	if err == nil {
 		t.Fatalf("An error was expected, but no error was returned")
 	}
+
+	if !errors.As(err, &validation_error.ValidationError{}) {
+		t.Errorf("did not get the epected error of type ValidationError")
+	}
 }
 
-func Test_HandleDomainNameError(t *testing.T) {
+func Test_Handle_Domain_Name_Error(t *testing.T) {
 	setup(t)
 	// Arrange & Act - provide a bad domain name
 	_, err := New("io", "-attestify")
 
-	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
+	// Fatal use to end test if an error object was not returned because the expressions after this evaluate the
+	//error object
 	if err == nil {
 		t.Fatalf("An error was expected, but no error was returned")
+	}
+
+	if !errors.As(err, &validation_error.ValidationError{}) {
+		t.Errorf("did not get the epected error of type ValidationError")
 	}
 
 }

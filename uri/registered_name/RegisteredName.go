@@ -19,12 +19,12 @@ type RegisteredName struct {
 func New(tld string, domainName string) (RegisteredName, error) {
 	tldInstance, err := top_level_domain.New(tld)
 	if err != nil {
-		return RegisteredName{}, generateError(err)
+		return RegisteredName{}, err
 	}
 
 	domainNameInstance, err := domain_name.New(domainName)
 	if err != nil {
-		return RegisteredName{}, generateError(err)
+		return RegisteredName{}, err
 	}
 
 	return RegisteredName{
