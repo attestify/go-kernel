@@ -26,11 +26,11 @@ func New(value string) (DomainName, error) {
 	}, nil
 }
 
-func (dn *DomainName) Value() string {
+func (dn DomainName) Value() string {
 	return dn.value
 }
 
-func (dn *DomainName) Equals(compare DomainName) bool {
+func (dn DomainName) Equals(compare DomainName) bool {
 	return dn.Value() == compare.Value()
 }
 
