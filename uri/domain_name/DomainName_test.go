@@ -1,6 +1,8 @@
 package domain_name
 
 import (
+	"errors"
+	"github.com/attestify/go-kernel/error/validation_error"
 	"testing"
 )
 
@@ -84,15 +86,22 @@ func Test_MustReturnErrorForEmptyString(t *testing.T) {
 	_, err := New("")
 
 	// Assert
-	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
+	// Fatal use to end test if an error object was not returned because the expressions after this evaluate the
+	// error object
 	if err == nil {
 		t.Fatal("An error was expected, but an error was not returned.")
 	}
 
-	expectedMessage := "The domain name value must be atleast one (1) character, and no greather than two-hundred fifty-five (255) characters."
+	expectedMessage := "The domain name value must be at least one (1) character, " +
+		"and no greater than two-hundred fifty-five (255) characters."
 	if err.Error() != expectedMessage {
 		t.Errorf("The exptected error was not returned. \n Actual: %s \n Expected: %s", err.Error(), expectedMessage)
 	}
+
+	if !errors.As(err, &validation_error.ValidationError{}) {
+		t.Errorf("did not get the epected error of type ValidationError")
+	}
+
 
 }
 
@@ -113,9 +122,14 @@ func Test_MustReturnErrorForStringMoreThan255Characters(t *testing.T) {
 		t.Fatal("An error was expected, but an error was not returned.")
 	}
 
-	expectedMessage := "The domain name value must be atleast one (1) character, and no greather than two-hundred fifty-five (255) characters."
+	expectedMessage := "The domain name value must be at least one (1) character, " +
+		"and no greater than two-hundred fifty-five (255) characters."
 	if err.Error() != expectedMessage {
 		t.Errorf("The exptected error was not returned. \n Actual: %s \n Expected: %s", err.Error(), expectedMessage)
+	}
+
+	if !errors.As(err, &validation_error.ValidationError{}) {
+		t.Errorf("did not get the epected error of type ValidationError")
 	}
 
 }
