@@ -24,11 +24,11 @@ func New(value string) (TopLevelDomain, error) {
 	}, nil
 }
 
-func (tld *TopLevelDomain) Value() string {
+func (tld TopLevelDomain) Value() string {
 	return tld.value
 }
 
-func (tld *TopLevelDomain) Equals(compare TopLevelDomain) bool {
+func (tld TopLevelDomain) Equals(compare TopLevelDomain) bool {
 	return tld.Value() == compare.Value()
 }
 
