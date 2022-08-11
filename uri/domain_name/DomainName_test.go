@@ -1,8 +1,9 @@
-package domain_name
+package domain_name_test
 
 import (
 	"errors"
 	"github.com/attestify/go-kernel/error/validation_error"
+	"github.com/attestify/go-kernel/uri/domain_name"
 	"testing"
 )
 
@@ -14,7 +15,7 @@ func setup(t *testing.T) {
 
 func Test_InstantiateDomainName(t *testing.T) {
 	setup(t)
-	tld, err := New("attestify")
+	tld, err := domain_name.New("attestify")
 
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
 	if err != nil {
@@ -36,7 +37,7 @@ func Test_InstantiateForStringOfExactly255Characters(t *testing.T) {
 	}
 
 	// Act
-	_, err := New(testString)
+	_, err := domain_name.New(testString)
 
 	// Assert
 	if err != nil {
@@ -48,7 +49,7 @@ func Test_InstantiateForStringOfExactly255Characters(t *testing.T) {
 func Test_InstantiateForStringWithDash(t *testing.T) {
 	setup(t)
 	// Act
-	tld, err := New("attestify-site")
+	tld, err := domain_name.New("attestify-site")
 
 	// Assert
 	if err != nil {
@@ -63,8 +64,8 @@ func Test_InstantiateForStringWithDash(t *testing.T) {
 func Test_TwoSameDomainNameMustEqual(t *testing.T) {
 	setup(t)
 	// Act
-	dn1, err := New("attestify")
-	dn2, err := New("attestify")
+	dn1, err := domain_name.New("attestify")
+	dn2, err := domain_name.New("attestify")
 
 	// Assert
 	if err != nil {
@@ -83,7 +84,7 @@ func Test_TwoSameDomainNameMustEqual(t *testing.T) {
 func Test_MustReturnErrorForEmptyString(t *testing.T) {
 	setup(t)
 	// Arrange & Act
-	_, err := New("")
+	_, err := domain_name.New("")
 
 	// Assert
 	// Fatal use to end test if an error object was not returned because the expressions after this evaluate the
@@ -114,7 +115,7 @@ func Test_MustReturnErrorForStringMoreThan255Characters(t *testing.T) {
 	}
 
 	// Act
-	_, err := New(testString)
+	_, err := domain_name.New(testString)
 
 	// Assert
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
@@ -137,7 +138,7 @@ func Test_MustReturnErrorForStringMoreThan255Characters(t *testing.T) {
 func Test_MustReturnErrorStringStartingWithDash(t *testing.T) {
 	setup(t)
 	// Arrange & Act
-	_, err := New("-attestify")
+	_, err := domain_name.New("-attestify")
 
 	// Assert
 	// Fatal use to end test if an error obejct was not returned because the expessions after this evaluate the error object
@@ -155,8 +156,8 @@ func Test_MustReturnErrorStringStartingWithDash(t *testing.T) {
 func Test_TwoDifferentTopLevelDomainMustNotEqual(t *testing.T) {
 	setup(t)
 	// Act
-	dn1, err := New("attestify")
-	dn2, err := New("billbensing")
+	dn1, err := domain_name.New("attestify")
+	dn2, err := domain_name.New("billbensing")
 
 	// Assert
 	if err != nil {
