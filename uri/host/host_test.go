@@ -24,7 +24,7 @@ func Test_InstantiateHost(t *testing.T) {
 	}
 
 	actualValue := host.Value()
-	actualType  := host.HostType()
+	actualType := host.HostType()
 
 	expectedValue := "attestify.io"
 	expectedType := "reg-name"

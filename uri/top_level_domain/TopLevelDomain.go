@@ -34,6 +34,6 @@ func (tld *TopLevelDomain) Equals(compare TopLevelDomain) bool {
 
 func isOnlyLetters(value string) bool {
 	result := false
-	result, _= regexp.MatchString(`^[A-Za-z]+$`, value)
+	result, _ = regexp.MatchString(`^[A-Za-z]+$`, value)
 	return result
 }

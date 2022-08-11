@@ -1,7 +1,7 @@
 package strings
 
 import (
-"testing"
+	"testing"
 )
 
 // Remove any leading spaces for a string
