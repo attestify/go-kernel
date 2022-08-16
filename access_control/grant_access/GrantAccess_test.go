@@ -116,7 +116,7 @@ func NewAssignRoleGatewayMock() AssignRoleGatewayMock {
 	}
 }
 
-func (gateway AssignRoleGatewayMock) GrantAccess(userId id.Id, entityId id.Id, entity string) error {
+func (gateway AssignRoleGatewayMock) Grant(userId id.Id, entityId id.Id, entity string) error {
 	if gateway.internalError {
 		return internal_error.New("some internal error")
 	}

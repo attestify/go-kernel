@@ -23,7 +23,7 @@ func New(gateway access_control.GrantAccessGateway) (GrantAccess, error) {
 
 func (usecase GrantAccess) Grant(userId int64, entityId int64, entity string) error {
 
-	err := usecase.gateway.GrantAccess(id.New(userId), id.New(entityId), entity)
+	err := usecase.gateway.Grant(id.New(userId), id.New(entityId), entity)
 	if err != nil {
 		return err
 	}
