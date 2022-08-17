@@ -4,12 +4,12 @@ import (
 	"github.com/attestify/go-kernel/strings"
 )
 
-// todo - Create Control value object
 // Permission
 // Expected behaviour
 // - Only characters allowed are alphabet characters
 // - Will remove any numeric values
 // - Replace any special characters with a dash
+// - Must only start with an alpha character, and can only end with an alpha character
 type Permission struct {
 	value string
 }

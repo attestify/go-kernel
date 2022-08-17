@@ -5,8 +5,6 @@ import (
 	"testing"
 )
 
-// todo - Implement Control Tests
-
 func setup(t *testing.T){
 	t.Parallel()
 }

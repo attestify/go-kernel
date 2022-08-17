@@ -83,7 +83,9 @@ func Test_Instantiate_AssignRole_With_Nil_AssignRoleGateway(t *testing.T) {
 	}
 }
 
-// todo - describe
+// Given we expect the GrantAccessGateway to return InternalError
+// When .Grant(...) is invoked with the proper arguments
+// Then the GrantAccess use case must return an InternalError
 func Test_Invoke_Assign_Returns_InternalError(t *testing.T) {
 	setup(t)
 	// Assemble
