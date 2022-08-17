@@ -75,3 +75,40 @@ func Test_CleanStringAndLowerCase(t *testing.T) {
 			expectedValue)
 	}
 }
+
+// Remove all numbers from a string
+func Test_RemoveAllNumbers(t *testing.T) {
+	t.Parallel()
+	input := "work9"
+	actual := RemoveAllNumbers(input)
+
+	expected := "work"
+	if expected != actual {
+		t.Errorf("Actual value was differnet from expected value.\n Expected: %s\n Actual: %s\n", expected, actual)
+	}
+}
+
+// Replace all special characters with a dash
+func Test_ReplaceSpecialCharactersWithDash(t *testing.T) {
+	t.Parallel()
+	input := "$There%Should*Now-Be@all(dashes)"
+	actual := ReplaceSpecialCharactersWithDash(input)
+
+	expected := "-There-Should-Now-Be-all-dashes-"
+	if expected != actual {
+		t.Errorf("Actual value was differnet from expected value.\n Expected: %s\n Actual: %s\n", expected, actual)
+	}
+}
+
+// Replace the first and last character of a string if it's a special character
+func Test_CleanLeadAndTrailSpecialCharacter(t *testing.T) {
+	t.Parallel()
+	input := "-should-remove-first-and-last-special-character-"
+	actual := CleanLeadAndTrailSpecialCharacter(input)
+
+	expected := "should-remove-first-and-last-special-character"
+	if expected != actual {
+		t.Errorf("Actual value was differnet from expected value.\n Expected: %s\n Actual: %s\n", expected, actual)
+	}
+}
+
