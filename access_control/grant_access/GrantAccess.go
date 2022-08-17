@@ -6,6 +6,8 @@ import (
 	"github.com/attestify/go-kernel/identity/id"
 )
 
+// todo - Update to use AccessControl as argument for .New(...)
+
 type GrantAccess struct {
 	gateway access_control.GrantAccessGateway
 }
