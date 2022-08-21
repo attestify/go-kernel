@@ -26,7 +26,10 @@ func Test_Instantiate_Permission_Successful(t *testing.T)  {
 
 }
 
-// todo - Test_Lower_Case_All_Letters - provide description
+// Given a value of "Write" is provided
+// When a permission class is instantiated
+// Then the .Value() method should return "write"
+//  and all letters should be lower cased
 func Test_Lower_Case_All_Letters(t *testing.T) {
 	setup(t)
 	perm := permission.New("Write")
