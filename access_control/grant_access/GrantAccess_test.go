@@ -5,7 +5,6 @@ import (
 	"github.com/attestify/go-kernel/access_control"
 	"github.com/attestify/go-kernel/access_control/grant_access"
 	"github.com/attestify/go-kernel/error/internal_error"
-	"github.com/attestify/go-kernel/identity/id"
 	"testing"
 )
 
@@ -42,11 +41,12 @@ func Test_Invoke_Assign_Successfully(t *testing.T) {
 		t.Errorf("An error was returned when no error was expected: \n %s", err.Error())
 	}
 	var userId int64 = 0
-	var entityId int64 = 1
-	entity := "test-entity"
+	var resourceId int64 = 1
+	resource := "test-entity"
+	permissions := []string{"read"}
 
 	// Act
-	err = usecase.Grant(userId, entityId, entity)
+	err = usecase.Grant(userId, resourceId, resource, permissions)
 
 	// Assert
 	if err != nil {
@@ -96,11 +96,12 @@ func Test_Invoke_Assign_Returns_InternalError(t *testing.T) {
 		t.Errorf("An error was returned when no error was expected: \n %s", err.Error())
 	}
 	var userId int64 = 0
-	var entityId int64 = 1
-	entity := "test-entity"
+	var resourceId int64 = 1
+	resource := "test-entity"
+	permissions := []string{"read"}
 
 	// Act
-	err = usecase.Grant(userId, entityId, entity)
+	err = usecase.Grant(userId, resourceId, resource, permissions)
 
 	// Assert
 	if !errors.As(err, &internal_error.InternalError{}) {
@@ -118,7 +119,7 @@ func NewAssignRoleGatewayMock() AssignRoleGatewayMock {
 	}
 }
 
-func (gateway AssignRoleGatewayMock) Grant(userId id.Id, entityId id.Id, entity string) error {
+func (gateway AssignRoleGatewayMock) Grant(accessControl access_control.AccessControl) error {
 	if gateway.internalError {
 		return internal_error.New("some internal error")
 	}

@@ -3,10 +3,7 @@ package grant_access
 import (
 	"github.com/attestify/go-kernel/access_control"
 	"github.com/attestify/go-kernel/error/internal_error"
-	"github.com/attestify/go-kernel/identity/id"
 )
-
-// todo - Update to use AccessControl as argument for .New(...)
 
 type GrantAccess struct {
 	gateway access_control.GrantAccessGateway
@@ -23,9 +20,10 @@ func New(gateway access_control.GrantAccessGateway) (GrantAccess, error) {
 	}, nil
 }
 
-func (usecase GrantAccess) Grant(userId int64, entityId int64, entity string) error {
+func (usecase GrantAccess) Grant(userId int64, resourceId int64, resource string, permissions []string) error {
 
-	err := usecase.gateway.Grant(id.New(userId), id.New(entityId), entity)
+	accessControl, _ := access_control.New(userId, resourceId, resource, permissions)
+	err := usecase.gateway.Grant(accessControl)
 	if err != nil {
 		return err
 	}
