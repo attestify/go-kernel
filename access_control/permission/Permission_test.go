@@ -55,6 +55,10 @@ func Test_Remove_All_Whitespace(t *testing.T) {
 }
 
 // todo - Test_Remove_All_Numbers_Update_Special_Characters_With_Dash - provide description
+// Given a value of "write%0allow$90984find" is provided,
+// When a permission class is instantiated
+// Then the .Value() method should return "write-allow-find"
+//   without all special characters being replaced with dashes
 func Test_Remove_All_Numbers_Update_Special_Characters_With_Dash(t *testing.T) {
 	setup(t)
 	perm := permission.New("write%0allow$90984find")
