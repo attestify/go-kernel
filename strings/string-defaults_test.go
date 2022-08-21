@@ -111,4 +111,3 @@ func Test_CleanLeadAndTrailSpecialCharacter(t *testing.T) {
 		t.Errorf("Actual value was differnet from expected value.\n Expected: %s\n Actual: %s\n", expected, actual)
 	}
 }
-

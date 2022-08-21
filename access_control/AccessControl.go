@@ -6,9 +6,9 @@ import (
 )
 
 type AccessControl struct {
-	userId     id.Id
-	resourceId id.Id
-	entityType string
+	userId      id.Id
+	resourceId  id.Id
+	entityType  string
 	permissions []permission.Permission
 }
 
@@ -19,9 +19,9 @@ func New(userId int64, resourceId int64, entityType string, permissions []string
 		validPermissions = append(validPermissions, _perm)
 	}
 	return AccessControl{
-		userId:     id.New(userId),
-		resourceId: id.New(resourceId),
-		entityType: entityType,
+		userId:      id.New(userId),
+		resourceId:  id.New(resourceId),
+		entityType:  entityType,
 		permissions: validPermissions,
 	}, nil
 }

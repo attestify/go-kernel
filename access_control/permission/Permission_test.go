@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func setup(t *testing.T){
+func setup(t *testing.T) {
 	t.Parallel()
 }
 
@@ -14,7 +14,7 @@ func setup(t *testing.T){
 // Given a value of "write" is provided
 // When a permission class is instantiated
 // Then the .Value() method should return "write"
-func Test_Instantiate_Permission_Successful(t *testing.T)  {
+func Test_Instantiate_Permission_Successful(t *testing.T) {
 	setup(t)
 	perm := permission.New("write")
 
