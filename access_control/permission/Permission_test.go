@@ -69,7 +69,10 @@ func Test_Remove_All_Numbers_Update_Special_Characters_With_Dash(t *testing.T) {
 	}
 }
 
-// todo - Test_Remove_All_Leading_And_Trailing_Special_Characters - provide description
+// Given a value of "*write%0allow$90984find-" is provided,
+// When a permission class is instantiated
+// Then the .Value() method should return "write-allow-find"
+//   without all special characters as either a the first and last character
 func Test_Remove_All_Leading_And_Trailing_Special_Characters(t *testing.T) {
 	setup(t)
 	perm := permission.New("*write%0allow$90984find-")
