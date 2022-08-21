@@ -26,10 +26,9 @@ func Test_Instantiate_Permission_Successful(t *testing.T)  {
 
 }
 
-// Given a value of "Write" is provided
+// Given a value of "Write" is provided,
 // When a permission class is instantiated
-// Then the .Value() method should return "write"
-//  and all letters should be lower cased
+// Then the .Value() method should return "write" without any capital letters
 func Test_Lower_Case_All_Letters(t *testing.T) {
 	setup(t)
 	perm := permission.New("Write")
@@ -44,7 +43,7 @@ func Test_Lower_Case_All_Letters(t *testing.T) {
 // todo - Test_Remove_All_Whitespace - provide description
 func Test_Remove_All_Whitespace(t *testing.T) {
 	setup(t)
-	perm := permission.New(" Write ")
+	perm := permission.New(" write ")
 
 	actual := perm.Value()
 	expected := "write"
