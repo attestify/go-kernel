@@ -40,7 +40,9 @@ func Test_Lower_Case_All_Letters(t *testing.T) {
 	}
 }
 
-// todo - Test_Remove_All_Whitespace - provide description
+// Given a value of " write " is provided,
+// When a permission class is instantiated
+// Then the .Value() method should return "write" without any whitespace
 func Test_Remove_All_Whitespace(t *testing.T) {
 	setup(t)
 	perm := permission.New(" write ")
