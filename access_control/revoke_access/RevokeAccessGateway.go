@@ -1,4 +1,4 @@
-package access_control
+package revoke_access
 
 import "github.com/attestify/go-kernel/identity/id"
 

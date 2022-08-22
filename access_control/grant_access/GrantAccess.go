@@ -6,10 +6,10 @@ import (
 )
 
 type GrantAccess struct {
-	gateway access_control.GrantAccessGateway
+	gateway GrantAccessGateway
 }
 
-func New(gateway access_control.GrantAccessGateway) (GrantAccess, error) {
+func New(gateway GrantAccessGateway) (GrantAccess, error) {
 
 	if gateway == nil {
 		return GrantAccess{}, internal_error.New("the provided GrantAccessGateway is nil, please provide a valid instance of an GrantAccessGateway")

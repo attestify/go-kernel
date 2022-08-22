@@ -62,7 +62,7 @@ func Test_Invoke_Assign_Successfully(t *testing.T) {
 func Test_Instantiate_AssignRole_With_Nil_AssignRoleGateway(t *testing.T) {
 	setup(t)
 	// Assemble
-	var assignRoleGateway access_control.GrantAccessGateway = nil
+	var assignRoleGateway grant_access.GrantAccessGateway = nil
 
 	// Act
 	_, err := grant_access.New(assignRoleGateway)
