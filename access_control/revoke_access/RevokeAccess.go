@@ -6,9 +6,9 @@ import (
 )
 
 type RevokeAccess struct {
-	gateway           RevokeAccessGateway
-	accessControl 	access_control.AccessControl
-	usecaseError error
+	gateway       RevokeAccessGateway
+	accessControl access_control.AccessControl
+	usecaseError  error
 }
 
 func New(revokeAccessGateway RevokeAccessGateway) RevokeAccess {
@@ -17,23 +17,27 @@ func New(revokeAccessGateway RevokeAccessGateway) RevokeAccess {
 		err = internal_error.New("the provided RevokeAccessGateway is nil, please provide a valid instance of an RevokeAccessGateway")
 	}
 	return RevokeAccess{
-		gateway: revokeAccessGateway,
+		gateway:      revokeAccessGateway,
 		usecaseError: err,
 	}
 }
 
-func (usecase *RevokeAccess) Revoke(userId int64, resourceId int64, resource string, permissions []string)  {
+func (usecase *RevokeAccess) Revoke(userId int64, resourceId int64, resource string, permissions []string) {
 	usecase.setAccessControl(userId, resourceId, resource, permissions)
 	usecase.revokeAccessControl()
 }
 
 func (usecase *RevokeAccess) setAccessControl(userId int64, resourceId int64, resource string, permissions []string) {
-	if usecase.HasError() { return }
+	if usecase.HasError() {
+		return
+	}
 	usecase.accessControl = access_control.New(userId, resourceId, resource, permissions)
 }
 
 func (usecase *RevokeAccess) revokeAccessControl() {
-	if usecase.HasError() { return }
+	if usecase.HasError() {
+		return
+	}
 	usecase.gateway.Revoke(usecase.accessControl)
 	if usecase.gateway.HasError() {
 		usecase.usecaseError = usecase.gateway.Error()

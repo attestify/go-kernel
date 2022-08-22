@@ -130,7 +130,6 @@ func Test_Invoke_Assign_Returns_InternalError(t *testing.T) {
 	}
 }
 
-
 /** Test tooling **/
 
 type MockRevokeAccessGateway struct {

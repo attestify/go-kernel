@@ -38,7 +38,7 @@ func Test_Invoke_Assign_Successfully(t *testing.T) {
 	// Assemble
 	gateway := NewAssignRoleGatewayMock()
 	usecase := grant_access.New(gateway)
-	if usecase.HasError()  {
+	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
 	var userId int64 = 0
