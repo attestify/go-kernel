@@ -40,10 +40,12 @@ func (usecase *RevokeAccess) revokeAccessControl() {
 	}
 }
 
+// Error returns the current error.  This can be nil.
 func (usecase RevokeAccess) Error() error {
 	return usecase.revokeAccessError
 }
 
+// HasError informs you if there is currently an error state
 func (usecase RevokeAccess) HasError() bool {
 	return usecase.revokeAccessError != nil
 }
