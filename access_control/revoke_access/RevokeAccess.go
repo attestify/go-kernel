@@ -8,7 +8,7 @@ import (
 type RevokeAccess struct {
 	gateway           RevokeAccessGateway
 	accessControl 	access_control.AccessControl
-	revokeAccessError error
+	usecaseError error
 }
 
 func New(revokeAccessGateway RevokeAccessGateway) RevokeAccess {
@@ -18,7 +18,7 @@ func New(revokeAccessGateway RevokeAccessGateway) RevokeAccess {
 	}
 	return RevokeAccess{
 		gateway: revokeAccessGateway,
-		revokeAccessError: err,
+		usecaseError: err,
 	}
 }
 
@@ -36,16 +36,16 @@ func (usecase *RevokeAccess) revokeAccessControl() {
 	if usecase.HasError() { return }
 	usecase.gateway.Revoke(usecase.accessControl)
 	if usecase.gateway.HasError() {
-		usecase.revokeAccessError = usecase.gateway.Error()
+		usecase.usecaseError = usecase.gateway.Error()
 	}
 }
 
 // Error returns the current error.  This can be nil.
 func (usecase RevokeAccess) Error() error {
-	return usecase.revokeAccessError
+	return usecase.usecaseError
 }
 
 // HasError informs you if there is currently an error state
 func (usecase RevokeAccess) HasError() bool {
-	return usecase.revokeAccessError != nil
+	return usecase.usecaseError != nil
 }
