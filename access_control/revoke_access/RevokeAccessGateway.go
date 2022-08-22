@@ -9,5 +9,7 @@ import "github.com/attestify/go-kernel/access_control"
 // Returns one (1) type of error:
 //   - InternalError - Returned if there is an error invoking the implementation of this interface
 type RevokeAccessGateway interface {
-	Revoke(accessControl access_control.AccessControl) error
+	Revoke(accessControl access_control.AccessControl)
+	Error() error
+	HasError() bool
 }

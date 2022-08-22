@@ -14,6 +14,7 @@ type AccessControl struct {
 
 func New(userId int64, resourceId int64, entityType string, permissions []string) (AccessControl, error) {
 	var validPermissions []permission.Permission
+	// todo - implement error handing for marshalling permissions from string slice
 	for _, perm := range permissions {
 		_perm := permission.New(perm)
 		validPermissions = append(validPermissions, _perm)
