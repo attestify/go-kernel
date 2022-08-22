@@ -1,6 +1,6 @@
 package revoke_access
 
-import "github.com/attestify/go-kernel/identity/id"
+import "github.com/attestify/go-kernel/access_control"
 
 // RevokeAccessGateway provides the behavior for remove an access permission
 // Expected Alternative Behaviors
@@ -9,5 +9,5 @@ import "github.com/attestify/go-kernel/identity/id"
 // Returns one (1) type of error:
 //   - InternalError - Returned if there is an error invoking the implementation of this interface
 type RevokeAccessGateway interface {
-	Revoke(userId id.Id, entityId id.Id, entity string) error
+	Revoke(accessControl access_control.AccessControl) error
 }
