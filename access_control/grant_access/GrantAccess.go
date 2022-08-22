@@ -7,6 +7,7 @@ import (
 
 type GrantAccess struct {
 	gateway GrantAccessGateway
+	accessControl 	access_control.AccessControl
 	grantAccessError error
 }
 
@@ -22,8 +23,18 @@ func New(gateway GrantAccessGateway) GrantAccess {
 }
 
 func (usecase *GrantAccess) Grant(userId int64, resourceId int64, resource string, permissions []string) {
-	accessControl := access_control.New(userId, resourceId, resource, permissions)
-	usecase.grantAccessError = usecase.gateway.Grant(accessControl)
+	usecase.setAccessControl(userId, resourceId, resource, permissions)
+	usecase.grantAccessControl()
+}
+
+func (usecase *GrantAccess) setAccessControl(userId int64, resourceId int64, resource string, permissions []string) {
+	if usecase.HasError() { return }
+	usecase.accessControl = access_control.New(userId, resourceId, resource, permissions)
+}
+
+func (usecase *GrantAccess) grantAccessControl() {
+	if usecase.HasError() { return }
+	usecase.grantAccessError = usecase.gateway.Grant(usecase.accessControl)
 }
 
 func (usecase GrantAccess) Error() error {
@@ -33,3 +44,5 @@ func (usecase GrantAccess) Error() error {
 func (usecase GrantAccess) HasError() bool {
 	return usecase.grantAccessError != nil
 }
+
+
