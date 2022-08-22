@@ -12,6 +12,8 @@ func setup(t *testing.T) {
 	t.Parallel()
 }
 
+// todo - complete RevokeAccess - Sad Path Testing
+
 /** Happy Path **/
 
 // Given a non-nil RevokeAccessGateway is provided
@@ -62,8 +64,6 @@ func Test_RevokeAccess_Successfully(t *testing.T) {
 }
 
 /** Sad Path **/
-
-
 
 
 /** Test tooling **/

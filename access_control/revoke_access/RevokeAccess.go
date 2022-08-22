@@ -4,8 +4,6 @@ import (
 	"github.com/attestify/go-kernel/access_control"
 )
 
-// todo - complete RevokeAccess
-
 type RevokeAccess struct {
 	gateway           RevokeAccessGateway
 	revokeAccessError error
