@@ -27,14 +27,6 @@ func (usecase *RevokeAccess) Revoke(userId int64, resourceId int64, resource str
 	usecase.revokeAccessControl()
 }
 
-func (usecase RevokeAccess) Error() error {
-	return usecase.revokeAccessError
-}
-
-func (usecase RevokeAccess) HasError() bool {
-	return usecase.revokeAccessError != nil
-}
-
 func (usecase *RevokeAccess) setAccessControl(userId int64, resourceId int64, resource string, permissions []string) {
 	if usecase.HasError() { return }
 	usecase.accessControl = access_control.New(userId, resourceId, resource, permissions)
@@ -46,4 +38,12 @@ func (usecase *RevokeAccess) revokeAccessControl() {
 	if usecase.gateway.HasError() {
 		usecase.revokeAccessError = usecase.gateway.Error()
 	}
+}
+
+func (usecase RevokeAccess) Error() error {
+	return usecase.revokeAccessError
+}
+
+func (usecase RevokeAccess) HasError() bool {
+	return usecase.revokeAccessError != nil
 }
