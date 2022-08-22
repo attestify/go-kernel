@@ -20,9 +20,9 @@ func setup(t *testing.T) {
 func Test_Instantiate_AssignRole_Successfully(t *testing.T) {
 	setup(t)
 	assignRoleGateway := NewAssignRoleGatewayMock()
-	_, err := grant_access.New(assignRoleGateway)
-	if err != nil {
-		t.Errorf("An error was returned when no error was expected: \n %s", err.Error())
+	usecase := grant_access.New(assignRoleGateway)
+	if usecase.HasError() {
+		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
 }
 
@@ -37,9 +37,9 @@ func Test_Invoke_Assign_Successfully(t *testing.T) {
 	setup(t)
 	// Assemble
 	gateway := NewAssignRoleGatewayMock()
-	usecase, err := grant_access.New(gateway)
-	if err != nil {
-		t.Errorf("An error was returned when no error was expected: \n %s", err.Error())
+	usecase := grant_access.New(gateway)
+	if usecase.HasError()  {
+		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
 	var userId int64 = 0
 	var resourceId int64 = 1
@@ -47,10 +47,10 @@ func Test_Invoke_Assign_Successfully(t *testing.T) {
 	permissions := []string{"read"}
 
 	// Act
-	err = usecase.Grant(userId, resourceId, resource, permissions)
+	usecase.Grant(userId, resourceId, resource, permissions)
 
 	// Assert
-	if err != nil {
+	if usecase.HasError() {
 		t.Error("an error was returned when no error was expected")
 	}
 }
@@ -66,18 +66,18 @@ func Test_Instantiate_AssignRole_With_Nil_AssignRoleGateway(t *testing.T) {
 	var assignRoleGateway grant_access.GrantAccessGateway = nil
 
 	// Act
-	_, err := grant_access.New(assignRoleGateway)
+	usecase := grant_access.New(assignRoleGateway)
 
 	// Assert
-	if err == nil {
+	if usecase.HasError() == false {
 		t.Fatalf("An error was expected, although no error was returned.")
 	}
 
-	if !errors.As(err, &internal_error.InternalError{}) {
+	if !errors.As(usecase.Error(), &internal_error.InternalError{}) {
 		t.Errorf("did not get the epected error of type InternalError")
 	}
 
-	actualMessage := err.Error()
+	actualMessage := usecase.Error().Error()
 	expectedMessage := "the provided GrantAccessGateway is nil, please provide a valid instance of an GrantAccessGateway"
 	if expectedMessage != actualMessage {
 		t.Errorf("The returned error message was not expected: \n Expected: %s \n Actual %s", expectedMessage, actualMessage)
@@ -92,9 +92,9 @@ func Test_Invoke_Assign_Returns_InternalError(t *testing.T) {
 	// Assemble
 	gateway := NewAssignRoleGatewayMock()
 	gateway.ReturnInternalError()
-	usecase, err := grant_access.New(gateway)
-	if err != nil {
-		t.Errorf("An error was returned when no error was expected: \n %s", err.Error())
+	usecase := grant_access.New(gateway)
+	if usecase.HasError() {
+		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
 	var userId int64 = 0
 	var resourceId int64 = 1
@@ -102,10 +102,10 @@ func Test_Invoke_Assign_Returns_InternalError(t *testing.T) {
 	permissions := []string{"read"}
 
 	// Act
-	err = usecase.Grant(userId, resourceId, resource, permissions)
+	usecase.Grant(userId, resourceId, resource, permissions)
 
 	// Assert
-	if !errors.As(err, &internal_error.InternalError{}) {
+	if !errors.As(usecase.Error(), &internal_error.InternalError{}) {
 		t.Errorf("did not get the epected error of type InternalError")
 	}
 }

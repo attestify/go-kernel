@@ -7,25 +7,29 @@ import (
 
 type GrantAccess struct {
 	gateway GrantAccessGateway
+	grantAccessError error
 }
 
-func New(gateway GrantAccessGateway) (GrantAccess, error) {
-
+func New(gateway GrantAccessGateway) GrantAccess {
+	var grantAccessError error
 	if gateway == nil {
-		return GrantAccess{}, internal_error.New("the provided GrantAccessGateway is nil, please provide a valid instance of an GrantAccessGateway")
+		grantAccessError = internal_error.New("the provided GrantAccessGateway is nil, please provide a valid instance of an GrantAccessGateway")
 	}
-
 	return GrantAccess{
 		gateway: gateway,
-	}, nil
+		grantAccessError: grantAccessError,
+	}
 }
 
-func (usecase GrantAccess) Grant(userId int64, resourceId int64, resource string, permissions []string) error {
-
+func (usecase *GrantAccess) Grant(userId int64, resourceId int64, resource string, permissions []string) {
 	accessControl := access_control.New(userId, resourceId, resource, permissions)
-	err := usecase.gateway.Grant(accessControl)
-	if err != nil {
-		return err
-	}
-	return nil
+	usecase.grantAccessError = usecase.gateway.Grant(accessControl)
+}
+
+func (usecase GrantAccess) Error() error {
+	return usecase.grantAccessError
+}
+
+func (usecase GrantAccess) HasError() bool {
+	return usecase.grantAccessError != nil
 }
