@@ -6,9 +6,9 @@ import (
 )
 
 type GrantAccess struct {
-	gateway GrantAccessGateway
-	accessControl 	access_control.AccessControl
-	grantAccessError error
+	gateway       GrantAccessGateway
+	accessControl access_control.AccessControl
+	usecaseError  error
 }
 
 func New(gateway GrantAccessGateway) GrantAccess {
@@ -17,8 +17,8 @@ func New(gateway GrantAccessGateway) GrantAccess {
 		grantAccessError = internal_error.New("the provided GrantAccessGateway is nil, please provide a valid instance of an GrantAccessGateway")
 	}
 	return GrantAccess{
-		gateway: gateway,
-		grantAccessError: grantAccessError,
+		gateway:      gateway,
+		usecaseError: grantAccessError,
 	}
 }
 
@@ -34,17 +34,17 @@ func (usecase *GrantAccess) setAccessControl(userId int64, resourceId int64, res
 
 func (usecase *GrantAccess) grantAccessControl() {
 	if usecase.HasError() { return }
-	usecase.grantAccessError = usecase.gateway.Grant(usecase.accessControl)
+	usecase.usecaseError = usecase.gateway.Grant(usecase.accessControl)
 }
 
 // Error returns the current error.  This can be nil.
 func (usecase GrantAccess) Error() error {
-	return usecase.grantAccessError
+	return usecase.usecaseError
 }
 
 // HasError informs you if there is currently an error state
 func (usecase GrantAccess) HasError() bool {
-	return usecase.grantAccessError != nil
+	return usecase.usecaseError != nil
 }
 
 
