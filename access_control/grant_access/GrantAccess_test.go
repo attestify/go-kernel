@@ -27,9 +27,10 @@ func Test_Instantiate_AssignRole_Successfully(t *testing.T) {
 }
 
 // Given a valid instance of GrantAccess exists
-//   and the user id of "[x]" is provided,
-//   and the entity if of "[y]" is provided,
-//   and the entity of "test-entity" is provided
+//  and the user id of "0" is provided,
+//  and the entity if of "1" is provided,
+//  and the entity of "test-entity" is provided
+//  and a permission of "write" is provided
 // When .Grant(...) is invoked
 // Then there should be no error
 func Test_Invoke_Assign_Successfully(t *testing.T) {
