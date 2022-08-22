@@ -129,6 +129,8 @@ func Test_Invoke_Assign_Returns_InternalError(t *testing.T) {
 		t.Errorf("did not get the epected error of type InternalError")
 	}
 }
+
+
 /** Test tooling **/
 
 type MockRevokeAccessGateway struct {

@@ -12,19 +12,13 @@ type AccessControl struct {
 	permissions []permission.Permission
 }
 
-func New(userId int64, resourceId int64, entityType string, permissions []string) (AccessControl, error) {
-	var validPermissions []permission.Permission
-	// todo - implement error handing for marshalling permissions from string slice
-	for _, perm := range permissions {
-		_perm := permission.New(perm)
-		validPermissions = append(validPermissions, _perm)
-	}
+func New(userId int64, resourceId int64, entityType string, permissions []string) AccessControl {
 	return AccessControl{
 		userId:      id.New(userId),
 		resourceId:  id.New(resourceId),
 		entityType:  entityType,
-		permissions: validPermissions,
-	}, nil
+		permissions: generatePermissions(permissions),
+	}
 }
 
 func (ac AccessControl) UserId() int64 {
@@ -45,4 +39,13 @@ func (ac AccessControl) Permissions() []string {
 		result = append(result, perm.Value())
 	}
 	return result
+}
+
+func generatePermissions(permissions []string) []permission.Permission {
+	var validPermissions []permission.Permission
+	for _, perm := range permissions {
+		_perm := permission.New(perm)
+		validPermissions = append(validPermissions, _perm)
+	}
+	return validPermissions
 }

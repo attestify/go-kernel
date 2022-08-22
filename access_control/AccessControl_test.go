@@ -27,13 +27,9 @@ func Test_Instantiate_AccessControl_Successfully(t *testing.T) {
 	permissions := []string{"write"}
 
 	// Act
-	ac, err := access_control.New(userId, resourceId, resource, permissions)
+	ac := access_control.New(userId, resourceId, resource, permissions)
 
 	// Assert
-	if err != nil {
-		t.Error("An error was returned when no error was expected")
-	}
-
 	var actual int64 = ac.UserId()
 	var expected int64 = 1541815603606036480
 	if actual != expected {
