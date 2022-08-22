@@ -96,4 +96,3 @@ func Test_Validate_PermissionList_DeleteChild(t *testing.T) {
 		t.Errorf("The actual permission list value is not the expected value.\n Expected: %s\n Actual: %s\n", expectedValue, actualValue)
 	}
 }
-
