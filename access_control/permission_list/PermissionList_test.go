@@ -235,6 +235,8 @@ func Test_Add_Two_Of_Same_Permission_Without_Duplication(t *testing.T) {
 
 }
 
+// todo - Test to ensure duplicates of adding many permissions with mulitupls permissions are not added
+
 /** Testing Tools **/
 func stringSlicesEqual(a, b []string) bool {
 	if len(a) != len(b) {
