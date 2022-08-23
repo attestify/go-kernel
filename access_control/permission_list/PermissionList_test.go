@@ -1,7 +1,9 @@
 package permission_list_test
 
 import (
+	"errors"
 	"github.com/attestify/go-kernel/access_control/permission_list"
+	"github.com/attestify/go-kernel/error/validation_error"
 	"testing"
 )
 
@@ -179,7 +181,33 @@ func Test_Remove_All_Leading_And_Trailing_Special_Characters(t *testing.T) {
 
 /** Sad Path **/
 
-// todo - add a negative test for an empty string
+// Given a permission_list class is instantiated
+// When and empty string for a permission is added to the list
+// Then and ValidationError should be generated
+//  with the text "The permissions must be at least one alphabetical character."
+func Test_Generate_Error_For_Empty_String_AddPermission(t *testing.T) {
+	setup(t)
+	// Assemble
+	permissionList := permission_list.New()
+
+	// Act
+	permissionList.AddPermission(" ")
+
+	// Assert
+	if permissionList.HasError() != true {
+		t.Error("Expected and error, although no error was provided")
+	}
+
+	if !errors.As(permissionList.Error(), &validation_error.ValidationError{}) {
+		t.Errorf("did not get the epected error of type ValidationError")
+	}
+
+	actualMessage := permissionList.Error().Error()
+	expectedMessage := "The permissions must be at least one alphabetical character."
+	if expectedMessage != actualMessage{
+		t.Errorf("The expected error message was not returned.\n Expected: %s\n Actual: %s\n", expectedMessage, actualMessage)
+	}
+}
 
 // todo - add a negative test to prevent duplicate permissions
 

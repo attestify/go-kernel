@@ -1,6 +1,9 @@
 package permission_list
 
-import "github.com/attestify/go-kernel/strings"
+import (
+	"github.com/attestify/go-kernel/error/validation_error"
+	"github.com/attestify/go-kernel/strings"
+)
 
 // PermissionList
 // Expected behaviour
@@ -19,14 +22,15 @@ func New() PermissionList {
 
 func (list *PermissionList) AddPermission(permission string) {
 	if list.HasError() { return }
-	cleanedPermission := cleanPermission(permission)
+	cleanedPermission := list.cleanPermission(permission)
+	println(cleanedPermission)
 	list.permissions = append(list.permissions, cleanedPermission)
 }
 
 func (list *PermissionList) AddManyPermissions(permissions []string) {
 	if list.HasError() { return }
 	for _, permissionInList := range permissions {
-		cleanedPermission := cleanPermission(permissionInList)
+		cleanedPermission := list.cleanPermission(permissionInList)
 		list.permissions = append(list.permissions, cleanedPermission)
 	}
 }
@@ -52,10 +56,13 @@ func (list PermissionList) HasError() bool {
 	return list.listError != nil
 }
 
-func cleanPermission(permission string) string {
+func (list *PermissionList) cleanPermission(permission string) string {
 	permission = strings.CleanAndLower(permission)
 	permission = strings.RemoveAllNumbers(permission)
 	permission = strings.ReplaceSpecialCharactersWithDash(permission)
 	permission = strings.CleanLeadAndTrailSpecialCharacter(permission)
+	if strings.LengthIsZero(permission) {
+		list.listError = validation_error.New("The permissions must be at least one alphabetical character.")
+	}
 	return permission
 }
