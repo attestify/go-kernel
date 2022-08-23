@@ -5,6 +5,10 @@ import (
 	"github.com/attestify/go-kernel/identity/id"
 )
 
+// todo - add methods to for AddPermissions
+// todo - add methods to for AddManyPermissions
+// todo - add methods to for ContainsPermission
+
 type AccessControl struct {
 	userId      id.Id
 	resourceId  id.Id

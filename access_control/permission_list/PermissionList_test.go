@@ -209,7 +209,31 @@ func Test_Generate_Error_For_Empty_String_AddPermission(t *testing.T) {
 	}
 }
 
-// todo - add a negative test to prevent duplicate permissions
+// Given a permission_list class is instantiated
+// When "write" is added to the list twice
+// Then .Contains("write") should return true
+//   and .GetAllPermissions should return a slice with only a single (1) write value
+func Test_Add_Two_Of_Same_Permission_Without_Duplication(t *testing.T) {
+	setup(t)
+	// Assemble
+	permissionList := permission_list.New()
+
+	// Act
+	permissionList.AddPermission("write")
+	permissionList.AddPermission("write")
+
+	// Assert
+	if permissionList.HasError() {
+		t.Error("The permission list has an error when an error was not expected")
+	}
+
+	actualValue := permissionList.GetAllPermissions()
+	expectedValue := []string{"write"}
+	if stringSlicesEqual(expectedValue, actualValue) != true {
+		t.Errorf("The expectced value does match the actual value.\n Expected: %s\n Actual: %s\n", expectedValue, actualValue)
+	}
+
+}
 
 /** Testing Tools **/
 func stringSlicesEqual(a, b []string) bool {

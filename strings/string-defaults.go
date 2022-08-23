@@ -5,8 +5,6 @@ import (
 	"strings"
 )
 
-// todo - update directions to reflect the guard of an empty string
-
 // CleanString removes all leading & trailing spaces, and line breaks in a string,
 // while retaining any other spaces or line breaks which are not leading elements of the string.
 func CleanString(value string) string {

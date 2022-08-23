@@ -23,7 +23,7 @@ func New() PermissionList {
 func (list *PermissionList) AddPermission(permission string) {
 	if list.HasError() { return }
 	cleanedPermission := list.cleanPermission(permission)
-	println(cleanedPermission)
+	if list.Contains(cleanedPermission) { return }
 	list.permissions = append(list.permissions, cleanedPermission)
 }
 
