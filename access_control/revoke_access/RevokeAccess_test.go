@@ -12,9 +12,6 @@ func setup(t *testing.T) {
 	t.Parallel()
 }
 
-// todo - complete RevokeAccess - Sad Path Testing - Errors when creaeting access control
-// todo - update AccessControl for new error pattern
-
 /** Happy Path **/
 
 // Given a non-nil RevokeAccessGateway is provided

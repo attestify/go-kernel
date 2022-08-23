@@ -14,6 +14,7 @@ type Permission struct {
 	value string
 }
 
+// todo - FUTURE - Implement Error pattern for a string with no values
 func New(value string) Permission {
 	value = strings.CleanAndLower(value)
 	value = strings.RemoveAllNumbers(value)
