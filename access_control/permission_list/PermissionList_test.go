@@ -80,7 +80,7 @@ func Test_GetAllPermissions_Successful(t *testing.T) {
 
 	expectedList := []string{"write", "read"}
 	actualList := permissionList.GetAllPermissions()
-	if stringSlicesEqual(expectedList, actualList ) != true {
+	if stringSlicesEqual(expectedList, actualList) != true {
 		t.Errorf("The actual permissions did not matched the expected permissions.\n Expected: %s\n, Actual: %s\n", expectedList, actualList)
 	}
 
@@ -204,7 +204,7 @@ func Test_Generate_Error_For_Empty_String_AddPermission(t *testing.T) {
 
 	actualMessage := permissionList.Error().Error()
 	expectedMessage := "The permissions must be at least one alphabetical character."
-	if expectedMessage != actualMessage{
+	if expectedMessage != actualMessage {
 		t.Errorf("The expected error message was not returned.\n Expected: %s\n Actual: %s\n", expectedMessage, actualMessage)
 	}
 }

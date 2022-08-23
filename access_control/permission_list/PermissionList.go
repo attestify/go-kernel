@@ -13,7 +13,7 @@ import (
 // - Must only start with an alpha character, and can only end with an alpha character
 type PermissionList struct {
 	permissions []string
-	listError error
+	listError   error
 }
 
 func New() PermissionList {
@@ -21,14 +21,20 @@ func New() PermissionList {
 }
 
 func (list *PermissionList) AddPermission(permission string) {
-	if list.HasError() { return }
+	if list.HasError() {
+		return
+	}
 	cleanedPermission := list.cleanPermission(permission)
-	if list.Contains(cleanedPermission) { return }
+	if list.Contains(cleanedPermission) {
+		return
+	}
 	list.permissions = append(list.permissions, cleanedPermission)
 }
 
 func (list *PermissionList) AddManyPermissions(permissions []string) {
-	if list.HasError() { return }
+	if list.HasError() {
+		return
+	}
 	for _, permissionInList := range permissions {
 		cleanedPermission := list.cleanPermission(permissionInList)
 		list.permissions = append(list.permissions, cleanedPermission)
