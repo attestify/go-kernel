@@ -16,7 +16,7 @@ func Test_Validate_PermissionList_Create(t *testing.T) {
 	expectedValue := "create"
 
 	if expectedValue != actualValue {
-		t.Errorf("The actual permission list value is not the expected value.\n Expected: %s\n, Actual: %s\n", expectedValue, actualValue)
+		t.Errorf("The actual permission_list list value is not the expected value.\n Expected: %s\n, Actual: %s\n", expectedValue, actualValue)
 	}
 }
 
@@ -27,7 +27,7 @@ func Test_Validate_PermissionList_Read(t *testing.T) {
 	expectedValue := "read"
 
 	if expectedValue != actualValue {
-		t.Errorf("The actual permission list value is not the expected value.\n Expected: %s\n, Actual: %s\n", expectedValue, actualValue)
+		t.Errorf("The actual permission_list list value is not the expected value.\n Expected: %s\n, Actual: %s\n", expectedValue, actualValue)
 	}
 }
 
@@ -38,7 +38,7 @@ func Test_Validate_PermissionList_Update(t *testing.T) {
 	expectedValue := "update"
 
 	if expectedValue != actualValue {
-		t.Errorf("The actual permission list value is not the expected value.\n Expected: %s\n, Actual: %s\n", expectedValue, actualValue)
+		t.Errorf("The actual permission_list list value is not the expected value.\n Expected: %s\n, Actual: %s\n", expectedValue, actualValue)
 	}
 }
 
@@ -49,7 +49,7 @@ func Test_Validate_PermissionList_Delete(t *testing.T) {
 	expectedValue := "delete"
 
 	if expectedValue != actualValue {
-		t.Errorf("The actual permission list value is not the expected value.\n Expected: %s\n, Actual: %s\n", expectedValue, actualValue)
+		t.Errorf("The actual permission_list list value is not the expected value.\n Expected: %s\n, Actual: %s\n", expectedValue, actualValue)
 	}
 }
 
@@ -60,7 +60,7 @@ func Test_Validate_PermissionList_CreateChild(t *testing.T) {
 	expectedValue := "create-child"
 
 	if expectedValue != actualValue {
-		t.Errorf("The actual permission list value is not the expected value.\n Expected: %s\n Actual: %s\n", expectedValue, actualValue)
+		t.Errorf("The actual permission_list list value is not the expected value.\n Expected: %s\n Actual: %s\n", expectedValue, actualValue)
 	}
 }
 
@@ -71,7 +71,7 @@ func Test_Validate_PermissionList_ReadChild(t *testing.T) {
 	expectedValue := "read-child"
 
 	if expectedValue != actualValue {
-		t.Errorf("The actual permission list value is not the expected value.\n Expected: %s\n Actual: %s\n", expectedValue, actualValue)
+		t.Errorf("The actual permission_list list value is not the expected value.\n Expected: %s\n Actual: %s\n", expectedValue, actualValue)
 	}
 }
 
@@ -82,7 +82,7 @@ func Test_Validate_PermissionList_UpdateChild(t *testing.T) {
 	expectedValue := "update-child"
 
 	if expectedValue != actualValue {
-		t.Errorf("The actual permission list value is not the expected value.\n Expected: %s\n Actual: %s\n", expectedValue, actualValue)
+		t.Errorf("The actual permission_list list value is not the expected value.\n Expected: %s\n Actual: %s\n", expectedValue, actualValue)
 	}
 }
 
@@ -93,6 +93,6 @@ func Test_Validate_PermissionList_DeleteChild(t *testing.T) {
 	expectedValue := "delete-child"
 
 	if expectedValue != actualValue {
-		t.Errorf("The actual permission list value is not the expected value.\n Expected: %s\n Actual: %s\n", expectedValue, actualValue)
+		t.Errorf("The actual permission_list list value is not the expected value.\n Expected: %s\n Actual: %s\n", expectedValue, actualValue)
 	}
 }

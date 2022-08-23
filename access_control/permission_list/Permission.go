@@ -1,4 +1,4 @@
-package permission
+package permission_list
 
 import (
 	"github.com/attestify/go-kernel/strings"

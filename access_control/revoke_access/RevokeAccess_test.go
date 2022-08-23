@@ -42,7 +42,7 @@ func Test_Instantiate_RevokeAccess_Successfully(t *testing.T) {
 //  and a user id of 0
 //  and a resourceId of 1
 //  and a resource of "test-resource"
-//  and a permission of "write"
+//  and a permission_list of "write"
 // When a RevokeAccess.Revoke(...) is invoked
 // Then there should be no error
 func Test_RevokeAccess_Successfully(t *testing.T) {

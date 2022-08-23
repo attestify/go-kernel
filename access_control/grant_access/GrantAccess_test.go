@@ -30,7 +30,7 @@ func Test_Instantiate_AssignRole_Successfully(t *testing.T) {
 //  and the user id of "0" is provided,
 //  and the entity if of "1" is provided,
 //  and the entity of "test-entity" is provided
-//  and a permission of "write" is provided
+//  and a permission_list of "write" is provided
 // When .Grant(...) is invoked
 // Then there should be no error
 func Test_Invoke_Assign_Successfully(t *testing.T) {

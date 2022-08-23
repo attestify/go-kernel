@@ -12,12 +12,12 @@ func setup(t *testing.T) {
 // Given a user Id of "1541815603606036480" is provided
 //  and a resource Id of "1541815603606036481" is provided
 //  and a resource of "io:attestify::entity::some-entity" is provided
-//  and the permission of "write" is provided
+//  and the permission_list of "write" is provided
 // When the AccessControl class is instantiated
 // Then .UserId() should return 1541815603606036480
 //  and .ResourceId() should return 1541815603606036481
 //  and .Resource should return "io:attestify::entity::some-entity"
-//  and .Permissions should return a list of permissions with only one permission of "write"
+//  and .Permissions should return a list of permissions with only one permission_list of "write"
 func Test_Instantiate_AccessControl_Successfully(t *testing.T) {
 	//Assemble
 	setup(t)

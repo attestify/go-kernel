@@ -1,7 +1,7 @@
-package permission_test
+package permission_list_test
 
 import (
-	"github.com/attestify/go-kernel/access_control/permission"
+	"github.com/attestify/go-kernel/access_control/permission_list"
 	"testing"
 )
 
@@ -12,75 +12,75 @@ func setup(t *testing.T) {
 /** Happy Path **/
 
 // Given a value of "write" is provided
-// When a permission class is instantiated
+// When a permission_list class is instantiated
 // Then the .Value() method should return "write"
 func Test_Instantiate_Permission_Successful(t *testing.T) {
 	setup(t)
-	perm := permission.New("write")
+	perm := permission_list.New("write")
 
 	actual := perm.Value()
 	expected := "write"
 	if expected != actual {
-		t.Errorf("Actual permission is not what was expected.\n Expected: %s\n Actual: %s\n", expected, actual)
+		t.Errorf("Actual permission_list is not what was expected.\n Expected: %s\n Actual: %s\n", expected, actual)
 	}
 
 }
 
 // Given a value of "Write" is provided,
-// When a permission class is instantiated
+// When a permission_list class is instantiated
 // Then the .Value() method should return "write" without any capital letters
 func Test_Lower_Case_All_Letters(t *testing.T) {
 	setup(t)
-	perm := permission.New("Write")
+	perm := permission_list.New("Write")
 
 	actual := perm.Value()
 	expected := "write"
 	if expected != actual {
-		t.Errorf("Actual permission is not what was expected.\n Expected: %s\n Actual: %s\n", expected, actual)
+		t.Errorf("Actual permission_list is not what was expected.\n Expected: %s\n Actual: %s\n", expected, actual)
 	}
 }
 
 // Given a value of " write " is provided,
-// When a permission class is instantiated
+// When a permission_list class is instantiated
 // Then the .Value() method should return "write" without any whitespace
 func Test_Remove_All_Whitespace(t *testing.T) {
 	setup(t)
-	perm := permission.New(" write ")
+	perm := permission_list.New(" write ")
 
 	actual := perm.Value()
 	expected := "write"
 	if expected != actual {
-		t.Errorf("Actual permission is not what was expected.\n Expected: %s\n Actual: %s\n", expected, actual)
+		t.Errorf("Actual permission_list is not what was expected.\n Expected: %s\n Actual: %s\n", expected, actual)
 	}
 }
 
 // Given a value of "write%0allow$90984find" is provided,
-// When a permission class is instantiated
+// When a permission_list class is instantiated
 // Then the .Value() method should return "write-allow-find"
 //   without all special characters being replaced with dashes
 func Test_Remove_All_Numbers_Update_Special_Characters_With_Dash(t *testing.T) {
 	setup(t)
-	perm := permission.New("write%0allow$90984find")
+	perm := permission_list.New("write%0allow$90984find")
 
 	actual := perm.Value()
 	expected := "write-allow-find"
 	if expected != actual {
-		t.Errorf("Actual permission is not what was expected.\n Expected: %s\n Actual: %s\n", expected, actual)
+		t.Errorf("Actual permission_list is not what was expected.\n Expected: %s\n Actual: %s\n", expected, actual)
 	}
 }
 
 // Given a value of "*write%0allow$90984find-" is provided,
-// When a permission class is instantiated
+// When a permission_list class is instantiated
 // Then the .Value() method should return "write-allow-find"
 //   without all special characters as either a the first and last character
 func Test_Remove_All_Leading_And_Trailing_Special_Characters(t *testing.T) {
 	setup(t)
-	perm := permission.New("*write%0allow$90984find-")
+	perm := permission_list.New("*write%0allow$90984find-")
 
 	actual := perm.Value()
 	expected := "write-allow-find"
 	if expected != actual {
-		t.Errorf("Actual permission is not what was expected.\n Expected: %s\n Actual: %s\n", expected, actual)
+		t.Errorf("Actual permission_list is not what was expected.\n Expected: %s\n Actual: %s\n", expected, actual)
 	}
 }
 

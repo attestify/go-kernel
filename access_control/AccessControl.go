@@ -1,7 +1,7 @@
 package access_control
 
 import (
-	"github.com/attestify/go-kernel/access_control/permission"
+	"github.com/attestify/go-kernel/access_control/permission_list"
 	"github.com/attestify/go-kernel/identity/id"
 )
 
@@ -9,7 +9,7 @@ type AccessControl struct {
 	userId      id.Id
 	resourceId  id.Id
 	entityType  string
-	permissions []permission.Permission
+	permissions []permission_list.Permission
 }
 
 func New(userId int64, resourceId int64, entityType string, permissions []string) AccessControl {
@@ -41,10 +41,10 @@ func (ac AccessControl) Permissions() []string {
 	return result
 }
 
-func generatePermissions(permissions []string) []permission.Permission {
-	var validPermissions []permission.Permission
+func generatePermissions(permissions []string) []permission_list.Permission {
+	var validPermissions []permission_list.Permission
 	for _, perm := range permissions {
-		_perm := permission.New(perm)
+		_perm := permission_list.New(perm)
 		validPermissions = append(validPermissions, _perm)
 	}
 	return validPermissions
