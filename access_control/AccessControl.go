@@ -9,7 +9,7 @@ type AccessControl struct {
 	userId      id.Id
 	resourceId  id.Id
 	entityType  string
-	permissions []permission_list.PermissionList
+	permissions permission_list.PermissionList
 }
 
 func New(userId int64, resourceId int64, entityType string, permissions []string) AccessControl {
@@ -17,7 +17,7 @@ func New(userId int64, resourceId int64, entityType string, permissions []string
 		userId:      id.New(userId),
 		resourceId:  id.New(resourceId),
 		entityType:  entityType,
-		permissions: generatePermissions(permissions),
+		permissions: generatePermissionList(permissions),
 	}
 }
 
@@ -34,18 +34,11 @@ func (ac AccessControl) EntityType() string {
 }
 
 func (ac AccessControl) Permissions() []string {
-	var result []string
-	for _, perm := range ac.permissions {
-		result = append(result, perm.Value())
-	}
-	return result
+	return ac.permissions.GetAllPermissions()
 }
 
-func generatePermissions(permissions []string) []permission_list.PermissionList {
-	var validPermissions []permission_list.PermissionList
-	for _, perm := range permissions {
-		_perm := permission_list.New(perm)
-		validPermissions = append(validPermissions, _perm)
-	}
-	return validPermissions
+func generatePermissionList(permissions []string) permission_list.PermissionList {
+	newList := permission_list.New()
+	newList.AddManyPermissions(permissions)
+	return newList
 }

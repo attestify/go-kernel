@@ -1,8 +1,6 @@
 package permission_list
 
-import (
-	"github.com/attestify/go-kernel/strings"
-)
+import "github.com/attestify/go-kernel/strings"
 
 // PermissionList
 // Expected behaviour
@@ -11,20 +9,53 @@ import (
 // - Replace any special characters with a dash
 // - Must only start with an alpha character, and can only end with an alpha character
 type PermissionList struct {
-	value string
+	permissions []string
+	listError error
 }
 
-// todo - FUTURE - Implement Error pattern for a string with no values
-func New(value string) PermissionList {
-	value = strings.CleanAndLower(value)
-	value = strings.RemoveAllNumbers(value)
-	value = strings.ReplaceSpecialCharactersWithDash(value)
-	value = strings.CleanLeadAndTrailSpecialCharacter(value)
-	return PermissionList{
-		value: value,
+func New() PermissionList {
+	return PermissionList{}
+}
+
+func (list *PermissionList) AddPermission(permission string) {
+	if list.HasError() { return }
+	cleanedPermission := cleanPermission(permission)
+	list.permissions = append(list.permissions, cleanedPermission)
+}
+
+func (list *PermissionList) AddManyPermissions(permissions []string) {
+	if list.HasError() { return }
+	for _, permissionInList := range permissions {
+		cleanedPermission := cleanPermission(permissionInList)
+		list.permissions = append(list.permissions, cleanedPermission)
 	}
 }
 
-func (permission PermissionList) Value() string {
-	return permission.value
+func (list PermissionList) Contains(permission string) bool {
+	for _, _permission := range list.permissions {
+		if permission == _permission {
+			return true
+		}
+	}
+	return false
+}
+
+func (list PermissionList) GetAllPermissions() []string {
+	return list.permissions
+}
+
+func (list PermissionList) Error() error {
+	return list.listError
+}
+
+func (list PermissionList) HasError() bool {
+	return list.listError != nil
+}
+
+func cleanPermission(permission string) string {
+	permission = strings.CleanAndLower(permission)
+	permission = strings.RemoveAllNumbers(permission)
+	permission = strings.ReplaceSpecialCharactersWithDash(permission)
+	permission = strings.CleanLeadAndTrailSpecialCharacter(permission)
+	return permission
 }
