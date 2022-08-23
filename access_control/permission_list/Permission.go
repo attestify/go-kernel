@@ -4,27 +4,27 @@ import (
 	"github.com/attestify/go-kernel/strings"
 )
 
-// Permission
+// PermissionList
 // Expected behaviour
 // - Only characters allowed are alphabet characters
 // - Will remove any numeric values
 // - Replace any special characters with a dash
 // - Must only start with an alpha character, and can only end with an alpha character
-type Permission struct {
+type PermissionList struct {
 	value string
 }
 
 // todo - FUTURE - Implement Error pattern for a string with no values
-func New(value string) Permission {
+func New(value string) PermissionList {
 	value = strings.CleanAndLower(value)
 	value = strings.RemoveAllNumbers(value)
 	value = strings.ReplaceSpecialCharactersWithDash(value)
 	value = strings.CleanLeadAndTrailSpecialCharacter(value)
-	return Permission{
+	return PermissionList{
 		value: value,
 	}
 }
 
-func (permission Permission) Value() string {
+func (permission PermissionList) Value() string {
 	return permission.value
 }
