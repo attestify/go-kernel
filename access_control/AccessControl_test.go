@@ -1,13 +1,17 @@
 package access_control_test
 
 import (
+	"errors"
 	"github.com/attestify/go-kernel/access_control"
+	"github.com/attestify/go-kernel/error/validation_error"
 	"testing"
 )
 
 func setup(t *testing.T) {
 	t.Parallel()
 }
+
+/** Happy Path **/
 
 // Given a user Id of "1541815603606036480" is provided
 //  and a resource Id of "1541815603606036481" is provided
@@ -52,6 +56,36 @@ func Test_Instantiate_AccessControl_Successfully(t *testing.T) {
 
 	if !stringSlicesEqual(expectedPermissions, actualPermissions) {
 		t.Errorf("The actual permissions did not matched the expected permissions.\n Expected: %s\n, Actual: %s\n", expectedPermissions, actualPermissions)
+	}
+}
+
+/** Sad Path **/
+
+// Given a user Id of "1541815603606036480" is provided
+//  and a resource Id of "1541815603606036481" is provided
+//  and a resource of "io:attestify::entity::some-entity" is provided
+//  and the permission_list of and empty string is provided
+// When the AccessControl class is instantiated
+// Then .HasError() should return true
+//  and .Error() should return a ValidationError
+func Test_Error_Propagation_For_PermissionList(t *testing.T) {
+	//Assemble
+	setup(t)
+	var userId int64 = 1541815603606036480
+	var resourceId int64 = 1541815603606036481
+	resource := "io:attestify::entity::some-entity"
+	permissions := []string{""}
+
+	// Act
+	ac := access_control.New(userId, resourceId, resource, permissions)
+
+	// Assert
+	if ac.HasError() != true {
+		t.Errorf("Expected an error, although no error exists")
+	}
+
+	if !errors.As(ac.Error(), &validation_error.ValidationError{}) {
+		t.Errorf("Did not get the epected error of type ValidationError")
 	}
 }
 

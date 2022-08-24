@@ -5,10 +5,6 @@ import (
 	"github.com/attestify/go-kernel/identity/id"
 )
 
-// todo - add methods to for AddPermissions
-// todo - add methods to for ContainsPermission
-// todo - propagate error to AccessControl from Permission
-
 type AccessControl struct {
 	userId      id.Id
 	resourceId  id.Id
@@ -36,4 +32,12 @@ func (ac AccessControl) ResourceId() int64 {
 
 func (ac AccessControl) EntityType() string {
 	return ac.entityType
+}
+
+func (ac AccessControl) HasError() bool {
+	return ac.PermissionList.HasError()
+}
+
+func (ac AccessControl) Error() error {
+	return ac.PermissionList.Error()
 }
