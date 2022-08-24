@@ -25,7 +25,7 @@ func (list *PermissionList) AddPermission(permission string) {
 		return
 	}
 	cleanedPermission := list.cleanPermission(permission)
-	if list.Contains(cleanedPermission) {
+	if list.ContainsPermission(cleanedPermission) {
 		return
 	}
 	list.permissions = append(list.permissions, cleanedPermission)
@@ -41,7 +41,7 @@ func (list *PermissionList) AddManyPermissions(permissions []string) {
 	}
 }
 
-func (list PermissionList) Contains(permission string) bool {
+func (list PermissionList) ContainsPermission(permission string) bool {
 	for _, _permission := range list.permissions {
 		if permission == _permission {
 			return true

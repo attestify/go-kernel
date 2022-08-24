@@ -15,7 +15,7 @@ func setup(t *testing.T) {
 
 // Given a permission_list class is instantiated
 // When "write" is added to the list
-// Then .Contains("write") should return true
+// Then .ContainsPermission("write") should return true
 func Test_Instantiate_And_Add_Permission_Successful(t *testing.T) {
 	setup(t)
 	// Assemble
@@ -30,7 +30,7 @@ func Test_Instantiate_And_Add_Permission_Successful(t *testing.T) {
 	}
 
 	expectedValue := "write"
-	if permissionList.Contains(expectedValue) != true {
+	if permissionList.ContainsPermission(expectedValue) != true {
 		t.Errorf("Expected [%s] but it was not found in the list.", expectedValue)
 	}
 
@@ -38,7 +38,7 @@ func Test_Instantiate_And_Add_Permission_Successful(t *testing.T) {
 
 // Given a permission_list class is instantiated
 // When "write" is added to the list
-// Then .Contains("write") should return true
+// Then .ContainsPermission("write") should return true
 func Test_Add_Slice_Of_Permissions_Successful(t *testing.T) {
 	setup(t)
 	// Assemble
@@ -89,7 +89,7 @@ func Test_GetAllPermissions_Successful(t *testing.T) {
 // Given a permission_list class is instantiated
 // When "Write" is added to the list
 // Then all capital letters should be lower cased
-//  and the .Contains("write") should return true
+//  and the .ContainsPermission("write") should return true
 func Test_Lower_Case_All_Letters(t *testing.T) {
 	setup(t)
 	// Assemble
@@ -104,7 +104,7 @@ func Test_Lower_Case_All_Letters(t *testing.T) {
 	}
 
 	expectedValue := "write"
-	if permissionList.Contains(expectedValue) != true {
+	if permissionList.ContainsPermission(expectedValue) != true {
 		t.Errorf("Expected [%s] but it was not found in the list.", expectedValue)
 	}
 }
@@ -112,7 +112,7 @@ func Test_Lower_Case_All_Letters(t *testing.T) {
 // Given a permission_list class is instantiated
 // When " write " is added to the list
 // Then all whitespace should be removed
-//  and the .Contains("write") should return true
+//  and the .ContainsPermission("write") should return true
 func Test_Remove_All_Whitespace(t *testing.T) {
 	setup(t)
 	// Assemble
@@ -127,7 +127,7 @@ func Test_Remove_All_Whitespace(t *testing.T) {
 	}
 
 	expectedValue := "write"
-	if permissionList.Contains(expectedValue) != true {
+	if permissionList.ContainsPermission(expectedValue) != true {
 		t.Errorf("Expected [%s] but it was not found in the list.", expectedValue)
 	}
 }
@@ -136,7 +136,7 @@ func Test_Remove_All_Whitespace(t *testing.T) {
 // When "write%0allow$90984find" is added to the list
 // Then all numbers should be removed
 //  and all special characters should be replaced with a dash
-//  and the .Contains("write-allow-find") should return true
+//  and the .ContainsPermission("write-allow-find") should return true
 func Test_Remove_All_Numbers_Update_Special_Characters_With_Dash(t *testing.T) {
 	setup(t)
 	// Assemble
@@ -151,7 +151,7 @@ func Test_Remove_All_Numbers_Update_Special_Characters_With_Dash(t *testing.T) {
 	}
 
 	expectedValue := "write-allow-find"
-	if permissionList.Contains(expectedValue) != true {
+	if permissionList.ContainsPermission(expectedValue) != true {
 		t.Errorf("Expected [%s] but it was not found in the list.", expectedValue)
 	}
 }
@@ -159,7 +159,7 @@ func Test_Remove_All_Numbers_Update_Special_Characters_With_Dash(t *testing.T) {
 // Given a permission_list class is instantiated
 // When "*write%0allow$90984find-" is added to the list
 // Then all leading and trailing special characters should be removed
-//  and the .Contains("write-allow-find") should return true
+//  and the .ContainsPermission("write-allow-find") should return true
 func Test_Remove_All_Leading_And_Trailing_Special_Characters(t *testing.T) {
 	setup(t)
 	// Assemble
@@ -174,7 +174,7 @@ func Test_Remove_All_Leading_And_Trailing_Special_Characters(t *testing.T) {
 	}
 
 	expectedValue := "write-allow-find"
-	if permissionList.Contains(expectedValue) != true {
+	if permissionList.ContainsPermission(expectedValue) != true {
 		t.Errorf("Expected [%s] but it was not found in the list.", expectedValue)
 	}
 }
