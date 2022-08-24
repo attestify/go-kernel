@@ -37,7 +37,7 @@ func (list *PermissionList) AddManyPermissions(permissions []string) {
 	}
 	for _, permissionInList := range permissions {
 		cleanedPermission := list.cleanPermission(permissionInList)
-		list.permissions = append(list.permissions, cleanedPermission)
+		list.AddPermission(cleanedPermission)
 	}
 }
 

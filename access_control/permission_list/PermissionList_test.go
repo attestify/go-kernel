@@ -211,8 +211,8 @@ func Test_Generate_Error_For_Empty_String_AddPermission(t *testing.T) {
 
 // Given a permission_list class is instantiated
 // When "write" is added to the list twice
-// Then .Contains("write") should return true
-//   and .GetAllPermissions should return a slice with only a single (1) write value
+// Then .GetAllPermissions() should return no duplicate copies of the permissions
+//   and the only permissions that should be returned is "write"
 func Test_Add_Two_Of_Same_Permission_Without_Duplication(t *testing.T) {
 	setup(t)
 	// Assemble
@@ -235,7 +235,35 @@ func Test_Add_Two_Of_Same_Permission_Without_Duplication(t *testing.T) {
 
 }
 
-// todo - Test to ensure duplicates of adding many permissions with mulitupls permissions are not added
+// Given a permission_list class is instantiated
+// When "write", "read", "delete", and "update" are added one-by-one
+//  and "create", "delete", "copy", "write" are added as many permissions
+// Then .GetAllPermissions() should return no duplicate copies of the permissions
+//   and the only permissions that should be returned are "write", "read", "delete", "update", "create", "copy".
+func Test_Add_Many_Of_Same_Permission_Without_Duplication(t *testing.T) {
+	setup(t)
+	// Assemble
+	permissionList := permission_list.New()
+
+	// Act
+	permissionList.AddPermission("write")
+	permissionList.AddPermission("read")
+	permissionList.AddPermission("delete")
+	permissionList.AddPermission("update")
+	permissionList.AddManyPermissions([]string{"create", "delete", "copy", "write"})
+
+	// Assert
+	if permissionList.HasError() {
+		t.Error("The permission list has an error when an error was not expected")
+	}
+
+	actualValue := permissionList.GetAllPermissions()
+	expectedValue := []string{"write", "read", "delete", "update", "create", "copy"}
+	if stringSlicesEqual(expectedValue, actualValue) != true {
+		t.Errorf("The expectced value does match the actual value.\n Expected: %s\n Actual: %s\n", expectedValue, actualValue)
+	}
+
+}
 
 /** Testing Tools **/
 func stringSlicesEqual(a, b []string) bool {
