@@ -65,6 +65,7 @@ func CleanLeadAndTrailSpecialCharacter(value string) string {
 	return value
 }
 
+// LengthIsZero returns "true" of the string has zero characters
 func LengthIsZero(value string) bool {
 	length := len([]rune(value))
 	if length == 0 {
