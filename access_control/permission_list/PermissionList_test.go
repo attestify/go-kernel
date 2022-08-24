@@ -210,6 +210,66 @@ func Test_Generate_Error_For_Empty_String_AddPermission(t *testing.T) {
 }
 
 // Given a permission_list class is instantiated
+// When "write" is added, and an empty string is added, and "read" is added
+// Then a .HasError() should be true
+//  and .Error() returns a ValidationError
+//  and there should only be "write" when you get all permissions
+func Test_Generate_Error_Stop_Adding_Once_Error_Occurred_AddPermission(t *testing.T) {
+	setup(t)
+	// Assemble
+	permissionList := permission_list.New()
+
+	// Act
+	permissionList.AddPermission("write")
+	permissionList.AddPermission("")
+	permissionList.AddPermission("read")
+
+	// Assert
+	if permissionList.HasError() != true {
+		t.Error("Expected and error, although no error was provided")
+	}
+
+	if !errors.As(permissionList.Error(), &validation_error.ValidationError{}) {
+		t.Errorf("did not get the epected error of type ValidationError")
+	}
+
+	actual := permissionList.GetAllPermissions()
+	expected := []string{"write"}
+	if stringSlicesEqual(expected, actual)!= true {
+		t.Errorf("The expected values were returned.\n Expected: %s\n Actual: %s\n", expected, actual)
+	}
+}
+
+// Given a permission_list class is instantiated
+// When "write" is added, and an empty string is added, and "read" is added using Add Many feature
+// Then a .HasError() should be true
+//  and .Error() returns a ValidationError
+//  and there should only be "write" when you get all permissions
+func Test_Generate_Error_Stop_Adding_Once_Error_Occurred_AddManyPermission(t *testing.T) {
+	setup(t)
+	// Assemble
+	permissionList := permission_list.New()
+
+	// Act
+	permissionList.AddManyPermissions([]string{"write", "", "read", "copy", "paste"})
+
+	// Assert
+	if permissionList.HasError() != true {
+		t.Error("Expected and error, although no error was provided")
+	}
+
+	if !errors.As(permissionList.Error(), &validation_error.ValidationError{}) {
+		t.Errorf("did not get the epected error of type ValidationError")
+	}
+
+	actual := permissionList.GetAllPermissions()
+	expected := []string{"write"}
+	if stringSlicesEqual(expected, actual)!= true {
+		t.Errorf("The expected values were returned.\n Expected: %s\n Actual: %s\n", expected, actual)
+	}
+}
+
+// Given a permission_list class is instantiated
 // When "write" is added to the list twice
 // Then .GetAllPermissions() should return no duplicate copies of the permissions
 //   and the only permissions that should be returned is "write"

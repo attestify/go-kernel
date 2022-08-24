@@ -25,6 +25,7 @@ func (list *PermissionList) AddPermission(permission string) {
 		return
 	}
 	cleanedPermission := list.cleanPermission(permission)
+	if list.HasError() { return }
 	if list.ContainsPermission(cleanedPermission) {
 		return
 	}
@@ -32,12 +33,8 @@ func (list *PermissionList) AddPermission(permission string) {
 }
 
 func (list *PermissionList) AddManyPermissions(permissions []string) {
-	if list.HasError() {
-		return
-	}
 	for _, permissionInList := range permissions {
-		cleanedPermission := list.cleanPermission(permissionInList)
-		list.AddPermission(cleanedPermission)
+		list.AddPermission(permissionInList)
 	}
 }
 
