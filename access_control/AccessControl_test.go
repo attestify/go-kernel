@@ -25,7 +25,6 @@ func Test_Instantiate_AccessControl_Successfully(t *testing.T) {
 	var resourceId int64 = 1541815603606036481
 	resource := "io:attestify::entity::some-entity"
 	permissions := []string{"write"}
-
 	// Act
 	ac := access_control.New(userId, resourceId, resource, permissions)
 
@@ -48,7 +47,7 @@ func Test_Instantiate_AccessControl_Successfully(t *testing.T) {
 		t.Errorf("The actual entity did not match the expected entity.\n Expected: %s\n Actual: %s\n", expectedEntity, actualEntity)
 	}
 
-	actualPermissions := ac.Permissions()
+	actualPermissions := ac.GetAllPermissions()
 	expectedPermissions := []string{"write"}
 
 	if !stringSlicesEqual(expectedPermissions, actualPermissions) {
