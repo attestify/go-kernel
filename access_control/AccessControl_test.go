@@ -89,6 +89,7 @@ func Test_Error_Propagation_For_PermissionList(t *testing.T) {
 	}
 }
 
+/** Testing Tools **/
 func stringSlicesEqual(a, b []string) bool {
 	if len(a) != len(b) {
 		return false
