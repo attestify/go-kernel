@@ -1,11 +1,16 @@
 package strings
 
-import (
-	"testing"
-)
+import "testing"
+
+func setup(t *testing.T) {
+	t.Parallel()
+}
+
+/** Happy Path **/
 
 // Remove any leading spaces for a string
 func Test_CleanStringEmptyLeading(t *testing.T) {
+	setup(t)
 	inputString := "  hello there!"
 	outputString := CleanString(inputString)
 
@@ -16,6 +21,7 @@ func Test_CleanStringEmptyLeading(t *testing.T) {
 
 // Remove all trailing spaces for a string
 func Test_CleanStringEmptyTrailing(t *testing.T) {
+	setup(t)
 	inputString := "hello there!  "
 	outputString := CleanString(inputString)
 
@@ -26,6 +32,7 @@ func Test_CleanStringEmptyTrailing(t *testing.T) {
 
 // Ensure both leading and trailing spaces are removed.
 func Test_CleanStringEmptyLeadingAndTrailing(t *testing.T) {
+	setup(t)
 	inputString := "  hello there!  "
 	outputString := CleanString(inputString)
 
@@ -37,6 +44,7 @@ func Test_CleanStringEmptyLeadingAndTrailing(t *testing.T) {
 // Ensure both leading and trailing spaces are removed,
 // while preserving the line break in the middle of the string.
 func Test_CleanStringEmptyLeadingAndTrailingWithSpaceInMiddle(t *testing.T) {
+	setup(t)
 	inputString := "  hello \n there!  "
 	outputString := CleanString(inputString)
 
@@ -47,6 +55,7 @@ func Test_CleanStringEmptyLeadingAndTrailingWithSpaceInMiddle(t *testing.T) {
 
 // Remove the line break from the beginning of the string.
 func Test_CleanStringLeadingLineBreak(t *testing.T) {
+	setup(t)
 	inputString := "\nhello there!"
 	outputString := CleanString(inputString)
 
@@ -57,6 +66,7 @@ func Test_CleanStringLeadingLineBreak(t *testing.T) {
 
 // Remove the trailing line break from the end of the string
 func Test_CleanStringTrailingLineBreak(t *testing.T) {
+	setup(t)
 	inputString := "hello there!\n"
 	outputString := CleanString(inputString)
 
@@ -67,6 +77,7 @@ func Test_CleanStringTrailingLineBreak(t *testing.T) {
 
 // Ensure all upper case letters are lower case
 func Test_CleanStringAndLowerCase(t *testing.T) {
+	setup(t)
 	actualValue := CleanAndLower("Attestify.io")
 	expectedValue := "attestify.io"
 	if expectedValue != actualValue {
@@ -78,7 +89,7 @@ func Test_CleanStringAndLowerCase(t *testing.T) {
 
 // Remove all numbers from a string
 func Test_RemoveAllNumbers(t *testing.T) {
-	t.Parallel()
+	setup(t)
 	input := "work9"
 	actual := RemoveAllNumbers(input)
 
@@ -90,7 +101,7 @@ func Test_RemoveAllNumbers(t *testing.T) {
 
 // Replace all special characters with a dash
 func Test_ReplaceSpecialCharactersWithDash(t *testing.T) {
-	t.Parallel()
+	setup(t)
 	input := "$There%Should*Now-Be@all(dashes)"
 	actual := ReplaceSpecialCharactersWithDash(input)
 
@@ -102,7 +113,7 @@ func Test_ReplaceSpecialCharactersWithDash(t *testing.T) {
 
 // Replace the first and last character of a string if it's a special character
 func Test_CleanLeadAndTrailSpecialCharacter(t *testing.T) {
-	t.Parallel()
+	setup(t)
 	input := "-should-remove-first-and-last-special-character-"
 	actual := CleanLeadAndTrailSpecialCharacter(input)
 
@@ -111,3 +122,5 @@ func Test_CleanLeadAndTrailSpecialCharacter(t *testing.T) {
 		t.Errorf("Actual value was differnet from expected value.\n Expected: %s\n Actual: %s\n", expected, actual)
 	}
 }
+
+/** Sad Path **/
