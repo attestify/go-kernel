@@ -99,6 +99,43 @@ func Test_Instantiate_RevokeAccess_With_Nil_RevokeAccessGateway(t *testing.T) {
 
 }
 
+// Given an nil instance of a RevokeAccessGateway is provided
+// When .Revoke() is invoked
+// Then an InternalError should be returned with the text
+// "the provided RevokeAccessGateway is nil, please provide a valid instance of an RevokeAccessGateway"
+func Test_Returns_InternalError_With_Nil_RevokeAccessGateway_When_Revoke_Invoked(t *testing.T) {
+	setup(t)
+
+	// Assemble
+	var gateway revoke_access.RevokeAccessGateway = nil
+	var userId int64 = 0
+	var resourceId int64 = 1
+	resource := "test-resource"
+	permissions := []string{"read"}
+
+	// Act
+	usecase := revoke_access.New(gateway)
+	usecase.Revoke(userId, resourceId, resource, permissions)
+
+	// Assert
+	if usecase.HasError() != true {
+		t.Fatalf("Expected an error, although no error exists.")
+	}
+
+	if !errors.As(usecase.Error(), &internal_error.InternalError{}) {
+		t.Errorf("did not get the epected error of type InternalError")
+	}
+
+	actualMessage := usecase.Error().Error()
+	expectedMessage := "the provided RevokeAccessGateway is nil, please provide a valid instance of an RevokeAccessGateway"
+
+	if expectedMessage != actualMessage {
+		t.Errorf("The actual error message was not the expected error message.\n Expected: %s\n Actual: %s\n", expectedMessage, actualMessage)
+	}
+
+}
+
+
 // Given we expect the RevokeAccessGateway to return InternalError
 // When .Revoke(...) is invoked with the proper arguments
 // Then the RevokeAccess use case must return an InternalError
