@@ -103,7 +103,6 @@ func Test_MustReturnErrorForEmptyString(t *testing.T) {
 		t.Errorf("did not get the epected error of type ValidationError")
 	}
 
-
 }
 
 func Test_MustReturnErrorForStringMoreThan255Characters(t *testing.T) {

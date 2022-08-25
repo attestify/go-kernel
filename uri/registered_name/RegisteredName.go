@@ -1,7 +1,6 @@
 package registered_name
 
 import (
-	"errors"
 	"github.com/attestify/go-kernel/uri/domain_name"
 	"github.com/attestify/go-kernel/uri/top_level_domain"
 	"strings"
@@ -41,12 +40,6 @@ func NewFromString(registeredName string) (RegisteredName, error) {
 	domainName := strings.TrimRight(registeredName, "."+tld)
 
 	return New(tld, domainName)
-}
-
-// generateError constructs an error message for the RegisteredName struct
-func generateError(err error) error {
-	errorMessage := "Error creating a Registered Name: " + err.Error()
-	return errors.New(errorMessage)
 }
 
 // Value returns the combined value of the RegisteredName
