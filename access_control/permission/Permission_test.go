@@ -1,7 +1,7 @@
-package standard_permission_test
+package permission_test
 
 import (
-	"github.com/attestify/go-kernel/access_control/standard_permission"
+	"github.com/attestify/go-kernel/access_control/permission"
 	"testing"
 )
 
@@ -9,10 +9,10 @@ func setup(t *testing.T) {
 	t.Parallel()
 }
 
-// Validated that standard_permission.Create returns the value of "create"
+// Validated that permission.Create returns the value of "create"
 func Test_Validate_PermissionList_Create(t *testing.T) {
 	setup(t)
-	actualValue := standard_permission.Create
+	actualValue := permission.Create
 	expectedValue := "create"
 
 	if expectedValue != actualValue {
@@ -20,10 +20,10 @@ func Test_Validate_PermissionList_Create(t *testing.T) {
 	}
 }
 
-// Validated that standard_permission.Read returns the value of "read"
+// Validated that permission.Read returns the value of "read"
 func Test_Validate_PermissionList_Read(t *testing.T) {
 	setup(t)
-	actualValue := standard_permission.Read
+	actualValue := permission.Read
 	expectedValue := "read"
 
 	if expectedValue != actualValue {
@@ -31,10 +31,10 @@ func Test_Validate_PermissionList_Read(t *testing.T) {
 	}
 }
 
-// Validated that standard_permission.Update returns the value of "update"
+// Validated that permission.Update returns the value of "update"
 func Test_Validate_PermissionList_Update(t *testing.T) {
 	setup(t)
-	actualValue := standard_permission.Update
+	actualValue := permission.Update
 	expectedValue := "update"
 
 	if expectedValue != actualValue {
@@ -42,10 +42,10 @@ func Test_Validate_PermissionList_Update(t *testing.T) {
 	}
 }
 
-// Validated that standard_permission.Delete returns the value of "delete"
+// Validated that permission.Delete returns the value of "delete"
 func Test_Validate_PermissionList_Delete(t *testing.T) {
 	setup(t)
-	actualValue := standard_permission.Delete
+	actualValue := permission.Delete
 	expectedValue := "delete"
 
 	if expectedValue != actualValue {
@@ -53,10 +53,10 @@ func Test_Validate_PermissionList_Delete(t *testing.T) {
 	}
 }
 
-// Validated that standard_permission.CreateChild returns the value of "create-child"
+// Validated that permission.CreateChild returns the value of "create-child"
 func Test_Validate_PermissionList_CreateChild(t *testing.T) {
 	setup(t)
-	actualValue := standard_permission.CreateChild
+	actualValue := permission.CreateChild
 	expectedValue := "create-child"
 
 	if expectedValue != actualValue {
@@ -64,10 +64,10 @@ func Test_Validate_PermissionList_CreateChild(t *testing.T) {
 	}
 }
 
-// Validated that standard_permission.ReadChild returns the value of "read-child"
+// Validated that permission.ReadChild returns the value of "read-child"
 func Test_Validate_PermissionList_ReadChild(t *testing.T) {
 	setup(t)
-	actualValue := standard_permission.ReadChild
+	actualValue := permission.ReadChild
 	expectedValue := "read-child"
 
 	if expectedValue != actualValue {
@@ -75,10 +75,10 @@ func Test_Validate_PermissionList_ReadChild(t *testing.T) {
 	}
 }
 
-// Validated that standard_permission.UpdateChild returns the value of "update-child"
+// Validated that permission.UpdateChild returns the value of "update-child"
 func Test_Validate_PermissionList_UpdateChild(t *testing.T) {
 	setup(t)
-	actualValue := standard_permission.UpdateChild
+	actualValue := permission.UpdateChild
 	expectedValue := "update-child"
 
 	if expectedValue != actualValue {
@@ -86,10 +86,10 @@ func Test_Validate_PermissionList_UpdateChild(t *testing.T) {
 	}
 }
 
-// Validated that standard_permission.DeleteChild returns the value of "delete-child"
+// Validated that permission.DeleteChild returns the value of "delete-child"
 func Test_Validate_PermissionList_DeleteChild(t *testing.T) {
 	setup(t)
-	actualValue := standard_permission.DeleteChild
+	actualValue := permission.DeleteChild
 	expectedValue := "delete-child"
 
 	if expectedValue != actualValue {

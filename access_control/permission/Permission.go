@@ -1,6 +1,6 @@
-package standard_permission
+package permission
 
-type StandardPermission string
+type Permission string
 
 const (
 	Create      = "create"
