@@ -25,7 +25,9 @@ func (list *PermissionList) AddPermission(permission string) {
 		return
 	}
 	cleanedPermission := list.cleanPermission(permission)
-	if list.HasError() { return }
+	if list.HasError() {
+		return
+	}
 	if list.ContainsPermission(cleanedPermission) {
 		return
 	}

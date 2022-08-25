@@ -6,17 +6,17 @@ import (
 )
 
 type AccessControl struct {
-	userId      id.Id
-	resourceId  id.Id
-	entityType  string
+	userId     id.Id
+	resourceId id.Id
+	entityType string
 	permission_list.PermissionList
 }
 
 func New(userId int64, resourceId int64, entityType string, permissions []string) AccessControl {
 	ac := AccessControl{
-		userId:      id.New(userId),
-		resourceId:  id.New(resourceId),
-		entityType:  entityType,
+		userId:     id.New(userId),
+		resourceId: id.New(resourceId),
+		entityType: entityType,
 	}
 	ac.AddManyPermissions(permissions)
 	return ac

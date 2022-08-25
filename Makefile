@@ -3,3 +3,6 @@ test:
 
 cover:
 	go tool cover -html=cover.out
+
+fmt:
+	go fmt ./...

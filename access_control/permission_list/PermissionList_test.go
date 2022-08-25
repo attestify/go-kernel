@@ -235,7 +235,7 @@ func Test_Generate_Error_Stop_Adding_Once_Error_Occurred_AddPermission(t *testin
 
 	actual := permissionList.GetAllPermissions()
 	expected := []string{"write"}
-	if stringSlicesEqual(expected, actual)!= true {
+	if stringSlicesEqual(expected, actual) != true {
 		t.Errorf("The expected values were returned.\n Expected: %s\n Actual: %s\n", expected, actual)
 	}
 }
@@ -264,7 +264,7 @@ func Test_Generate_Error_Stop_Adding_Once_Error_Occurred_AddManyPermission(t *te
 
 	actual := permissionList.GetAllPermissions()
 	expected := []string{"write"}
-	if stringSlicesEqual(expected, actual)!= true {
+	if stringSlicesEqual(expected, actual) != true {
 		t.Errorf("The expected values were returned.\n Expected: %s\n Actual: %s\n", expected, actual)
 	}
 }

@@ -155,7 +155,7 @@ func NewAssignRoleGatewayMock() AssignRoleGatewayMock {
 func (gateway AssignRoleGatewayMock) Grant(accessControl access_control.AccessControl) {}
 
 func (gateway *AssignRoleGatewayMock) ReturnInternalError() {
-	gateway.gatewayError =  internal_error.New("some internal error")
+	gateway.gatewayError = internal_error.New("some internal error")
 }
 
 func (gateway AssignRoleGatewayMock) HasError() bool {

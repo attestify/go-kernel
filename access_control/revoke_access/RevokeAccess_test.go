@@ -135,7 +135,6 @@ func Test_Returns_InternalError_With_Nil_RevokeAccessGateway_When_Revoke_Invoked
 
 }
 
-
 // Given we expect the RevokeAccessGateway to return InternalError
 // When .Revoke(...) is invoked with the proper arguments
 // Then the RevokeAccess use case must return an InternalError

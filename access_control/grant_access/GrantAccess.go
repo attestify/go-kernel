@@ -40,7 +40,7 @@ func (usecase *GrantAccess) grantAccessControl() {
 	}
 	usecase.gateway.Grant(usecase.accessControl)
 	if usecase.gateway.HasError() {
-		usecase.usecaseError =  usecase.gateway.Error()
+		usecase.usecaseError = usecase.gateway.Error()
 	}
 }
 

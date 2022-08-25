@@ -125,7 +125,6 @@ func Test_CleanLeadAndTrailSpecialCharacter(t *testing.T) {
 
 /** Sad Path **/
 
-
 // Given an empty string is provided
 // When CleanString is invoke
 // Then an empty string should be returned
@@ -149,7 +148,6 @@ func Test_Return_Empty_String_CleanAndLower(t *testing.T) {
 		t.Error("expected the output string to be empty, but it was not")
 	}
 }
-
 
 // Given an empty string is provided
 // When RemoveAllNumbers is invoke
