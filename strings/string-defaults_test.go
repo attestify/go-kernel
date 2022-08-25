@@ -124,3 +124,65 @@ func Test_CleanLeadAndTrailSpecialCharacter(t *testing.T) {
 }
 
 /** Sad Path **/
+
+
+// Given an empty string is provided
+// When CleanString is invoke
+// Then an empty string should be returned
+func Test_Return_Empty_String_CleanString(t *testing.T) {
+	setup(t)
+	outputString := CleanString("")
+
+	if outputString != "" {
+		t.Error("expected the output string to be empty, but it was not")
+	}
+}
+
+// Given an empty string is provided
+// When CleanAndLower is invoke
+// Then an empty string should be returned
+func Test_Return_Empty_String_CleanAndLower(t *testing.T) {
+	setup(t)
+	outputString := CleanAndLower("")
+
+	if outputString != "" {
+		t.Error("expected the output string to be empty, but it was not")
+	}
+}
+
+
+// Given an empty string is provided
+// When RemoveAllNumbers is invoke
+// Then an empty string should be returned
+func Test_Return_Empty_String_RemoveAllNumbers(t *testing.T) {
+	setup(t)
+	outputString := RemoveAllNumbers("")
+
+	if outputString != "" {
+		t.Error("expected the output string to be empty, but it was not")
+	}
+}
+
+// Given an empty string is provided
+// When ReplaceSpecialCharactersWithDash is invoke
+// Then an empty string should be returned
+func Test_Return_Empty_String_ReplaceSpecialCharactersWithDash(t *testing.T) {
+	setup(t)
+	outputString := ReplaceSpecialCharactersWithDash("")
+
+	if outputString != "" {
+		t.Error("expected the output string to be empty, but it was not")
+	}
+}
+
+// Given an empty string is provided
+// When CleanLeadAndTrailSpecialCharacter is invoke
+// Then an empty string should be returned
+func Test_Return_Empty_String_CleanLeadAndTrailSpecialCharacter(t *testing.T) {
+	setup(t)
+	outputString := CleanLeadAndTrailSpecialCharacter("")
+
+	if outputString != "" {
+		t.Error("expected the output string to be empty, but it was not")
+	}
+}
