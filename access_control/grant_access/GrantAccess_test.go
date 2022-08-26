@@ -43,11 +43,10 @@ func Test_Invoke_Assign_Successfully(t *testing.T) {
 	}
 	var userId int64 = 0
 	var resourceId int64 = 1
-	resource := "test-entity"
 	permissions := []string{"read"}
 
 	// Act
-	usecase.Grant(userId, resourceId, resource, permissions)
+	usecase.Grant(userId, resourceId, permissions)
 
 	// Assert
 	if usecase.HasError() {
@@ -96,11 +95,10 @@ func Test_Returns_InternalError_With_Nil_AssignRoleGateway_When_Grant_Invoked(t 
 	usecase := grant_access.New(assignRoleGateway)
 	var userId int64 = 0
 	var resourceId int64 = 1
-	resource := "test-entity"
 	permissions := []string{"read"}
 
 	// Act
-	usecase.Grant(userId, resourceId, resource, permissions)
+	usecase.Grant(userId, resourceId, permissions)
 
 	// Assert
 	if usecase.HasError() == false {
@@ -132,11 +130,10 @@ func Test_Invoke_Assign_Returns_InternalError(t *testing.T) {
 	}
 	var userId int64 = 0
 	var resourceId int64 = 1
-	resource := "test-entity"
 	permissions := []string{"read"}
 
 	// Act
-	usecase.Grant(userId, resourceId, resource, permissions)
+	usecase.Grant(userId, resourceId, permissions)
 
 	// Assert
 	if !errors.As(usecase.Error(), &internal_error.InternalError{}) {
