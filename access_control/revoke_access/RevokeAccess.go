@@ -22,16 +22,16 @@ func New(revokeAccessGateway RevokeAccessGateway) RevokeAccess {
 	}
 }
 
-func (usecase *RevokeAccess) Revoke(userId int64, resourceId int64, resource string, permissions []string) {
-	usecase.setAccessControl(userId, resourceId, resource, permissions)
+func (usecase *RevokeAccess) Revoke(userId int64, resourceId int64, permissions []string) {
+	usecase.setAccessControl(userId, resourceId, permissions)
 	usecase.revokeAccessControl()
 }
 
-func (usecase *RevokeAccess) setAccessControl(userId int64, resourceId int64, resource string, permissions []string) {
+func (usecase *RevokeAccess) setAccessControl(userId int64, resourceId int64, permissions []string) {
 	if usecase.HasError() {
 		return
 	}
-	usecase.accessControl = access_control.New(userId, resourceId, resource, permissions)
+	usecase.accessControl = access_control.New(userId, resourceId, permissions)
 }
 
 func (usecase *RevokeAccess) revokeAccessControl() {

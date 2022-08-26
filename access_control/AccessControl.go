@@ -8,15 +8,13 @@ import (
 type AccessControl struct {
 	userId     id.Id
 	resourceId id.Id
-	entityType string
 	permission_list.PermissionList
 }
 
-func New(userId int64, resourceId int64, entityType string, permissions []string) AccessControl {
+func New(userId int64, resourceId int64, permissions []string) AccessControl {
 	ac := AccessControl{
 		userId:     id.New(userId),
 		resourceId: id.New(resourceId),
-		entityType: entityType,
 	}
 	ac.AddManyPermissions(permissions)
 	return ac
@@ -28,10 +26,6 @@ func (ac AccessControl) UserId() int64 {
 
 func (ac AccessControl) ResourceId() int64 {
 	return ac.resourceId.AsInteger()
-}
-
-func (ac AccessControl) EntityType() string {
-	return ac.entityType
 }
 
 func (ac AccessControl) HasError() bool {

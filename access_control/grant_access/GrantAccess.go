@@ -22,16 +22,16 @@ func New(gateway GrantAccessGateway) GrantAccess {
 	}
 }
 
-func (usecase *GrantAccess) Grant(userId int64, resourceId int64, resource string, permissions []string) {
-	usecase.setAccessControl(userId, resourceId, resource, permissions)
+func (usecase *GrantAccess) Grant(userId int64, resourceId int64, permissions []string) {
+	usecase.setAccessControl(userId, resourceId, permissions)
 	usecase.grantAccessControl()
 }
 
-func (usecase *GrantAccess) setAccessControl(userId int64, resourceId int64, resource string, permissions []string) {
+func (usecase *GrantAccess) setAccessControl(userId int64, resourceId int64, permissions []string) {
 	if usecase.HasError() {
 		return
 	}
-	usecase.accessControl = access_control.New(userId, resourceId, resource, permissions)
+	usecase.accessControl = access_control.New(userId, resourceId, permissions)
 }
 
 func (usecase *GrantAccess) grantAccessControl() {

@@ -52,12 +52,11 @@ func Test_RevokeAccess_Successfully(t *testing.T) {
 	var gateway revoke_access.RevokeAccessGateway = NewMockRevokeAccessGateway()
 	var userId int64 = 0
 	var resourceId int64 = 1
-	resource := "test-resource"
 	permissions := []string{"read"}
 
 	// Act
 	usecase := revoke_access.New(gateway)
-	usecase.Revoke(userId, resourceId, resource, permissions)
+	usecase.Revoke(userId, resourceId, permissions)
 
 	// Assert
 	if usecase.HasError() {
@@ -110,12 +109,11 @@ func Test_Returns_InternalError_With_Nil_RevokeAccessGateway_When_Revoke_Invoked
 	var gateway revoke_access.RevokeAccessGateway = nil
 	var userId int64 = 0
 	var resourceId int64 = 1
-	resource := "test-resource"
 	permissions := []string{"read"}
 
 	// Act
 	usecase := revoke_access.New(gateway)
-	usecase.Revoke(userId, resourceId, resource, permissions)
+	usecase.Revoke(userId, resourceId, permissions)
 
 	// Assert
 	if usecase.HasError() != true {
@@ -151,11 +149,10 @@ func Test_Invoke_Assign_Returns_InternalError(t *testing.T) {
 
 	var userId int64 = 0
 	var resourceId int64 = 1
-	resource := "test-entity"
 	permissions := []string{"read"}
 
 	// Act
-	usecase.Revoke(userId, resourceId, resource, permissions)
+	usecase.Revoke(userId, resourceId, permissions)
 
 	// Assert
 	if !errors.As(usecase.Error(), &internal_error.InternalError{}) {
