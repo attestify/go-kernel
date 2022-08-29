@@ -1,9 +1,9 @@
-package grant_access_test
+package modify_access_test
 
 import (
 	"errors"
 	"github.com/attestify/go-kernel/access_control"
-	"github.com/attestify/go-kernel/access_control/grant_access"
+	"github.com/attestify/go-kernel/access_control/modify_access"
 	"github.com/attestify/go-kernel/error/internal_error"
 	"testing"
 )
@@ -14,30 +14,30 @@ func setup(t *testing.T) {
 
 /** Happy Path **/
 
-// Given an instance of a GrantAccessGateway is provided
-// When the GrantAccess use case is instantiated
+// Given an instance of a ModifyAccessGateway is provided
+// When the ModifyAccess use case is instantiated
 // Then there should be no error
 func Test_Instantiate_AssignRole_Successfully(t *testing.T) {
 	setup(t)
 	assignRoleGateway := NewAssignRoleGatewayMock()
-	usecase := grant_access.New(assignRoleGateway)
+	usecase := modify_access.New(assignRoleGateway)
 	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
 }
 
-// Given a valid instance of GrantAccess exists
+// Given a valid instance of ModifyAccess exists
 //  and the user id of "0" is provided,
 //  and the entity if of "1" is provided,
 //  and the entity of "test-entity" is provided
 //  and a permission_list of "write" is provided
-// When .Grant(...) is invoked
+// When .Modify(...) is invoked
 // Then there should be no error
 func Test_Invoke_Assign_Successfully(t *testing.T) {
 	setup(t)
 	// Assemble
 	gateway := NewAssignRoleGatewayMock()
-	usecase := grant_access.New(gateway)
+	usecase := modify_access.New(gateway)
 	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
@@ -46,7 +46,7 @@ func Test_Invoke_Assign_Successfully(t *testing.T) {
 	permissions := []string{"read"}
 
 	// Act
-	usecase.Grant(userId, resourceId, permissions)
+	usecase.Modify(userId, resourceId, permissions)
 
 	// Assert
 	if usecase.HasError() {
@@ -56,16 +56,16 @@ func Test_Invoke_Assign_Successfully(t *testing.T) {
 
 /** Sad Path **/
 
-// Given an nil instance of a GrantAccessGateway is provided
-// When the GrantAccess use case is instantiated
-// Then an InternalError with the text "the provided GrantAccessGateway is nil, please provide a valid instance of an GrantAccessGateway" should be returned
+// Given an nil instance of a ModifyAccessGateway is provided
+// When the ModifyAccess use case is instantiated
+// Then an InternalError with the text "the provided ModifyAccessGateway is nil, please provide a valid instance of an ModifyAccessGateway" should be returned
 func Test_Instantiate_AssignRole_With_Nil_AssignRoleGateway(t *testing.T) {
 	setup(t)
 	// Assemble
-	var assignRoleGateway grant_access.GrantAccessGateway = nil
+	var assignRoleGateway modify_access.ModifyAccessGateway = nil
 
 	// Act
-	usecase := grant_access.New(assignRoleGateway)
+	usecase := modify_access.New(assignRoleGateway)
 
 	// Assert
 	if usecase.HasError() == false {
@@ -77,28 +77,28 @@ func Test_Instantiate_AssignRole_With_Nil_AssignRoleGateway(t *testing.T) {
 	}
 
 	actualMessage := usecase.Error().Error()
-	expectedMessage := "the provided GrantAccessGateway is nil, please provide a valid instance of an GrantAccessGateway"
+	expectedMessage := "the provided ModifyAccessGateway is nil, please provide a valid instance of an ModifyAccessGateway"
 	if expectedMessage != actualMessage {
 		t.Errorf("The returned error message was not expected: \n Expected: %s \n Actual %s", expectedMessage, actualMessage)
 	}
 }
 
-// Given an nil instance of a GrantAccessGateway is provided
-// When .Grant() is invoked
-// Then an InternalError with the text "the provided GrantAccessGateway is nil, please provide a valid instance of an GrantAccessGateway" should be returned
-func Test_Returns_InternalError_With_Nil_AssignRoleGateway_When_Grant_Invoked(t *testing.T) {
+// Given an nil instance of a ModifyAccessGateway is provided
+// When .Modify() is invoked
+// Then an InternalError with the text "the provided ModifyAccessGateway is nil, please provide a valid instance of an ModifyAccessGateway" should be returned
+func Test_Returns_InternalError_With_Nil_AssignRoleGateway_When_Modify_Invoked(t *testing.T) {
 	setup(t)
 	// Assemble
-	var assignRoleGateway grant_access.GrantAccessGateway = nil
+	var assignRoleGateway modify_access.ModifyAccessGateway = nil
 
 	// Act
-	usecase := grant_access.New(assignRoleGateway)
+	usecase := modify_access.New(assignRoleGateway)
 	var userId int64 = 0
 	var resourceId int64 = 1
 	permissions := []string{"read"}
 
 	// Act
-	usecase.Grant(userId, resourceId, permissions)
+	usecase.Modify(userId, resourceId, permissions)
 
 	// Assert
 	if usecase.HasError() == false {
@@ -110,21 +110,21 @@ func Test_Returns_InternalError_With_Nil_AssignRoleGateway_When_Grant_Invoked(t 
 	}
 
 	actualMessage := usecase.Error().Error()
-	expectedMessage := "the provided GrantAccessGateway is nil, please provide a valid instance of an GrantAccessGateway"
+	expectedMessage := "the provided ModifyAccessGateway is nil, please provide a valid instance of an ModifyAccessGateway"
 	if expectedMessage != actualMessage {
 		t.Errorf("The returned error message was not expected: \n Expected: %s \n Actual %s", expectedMessage, actualMessage)
 	}
 }
 
-// Given we expect the GrantAccessGateway to return InternalError
-// When .Grant(...) is invoked with the proper arguments
-// Then the GrantAccess use case must return an InternalError
+// Given we expect the ModifyAccessGateway to return InternalError
+// When .Modify(...) is invoked with the proper arguments
+// Then the ModifyAccess use case must return an InternalError
 func Test_Invoke_Assign_Returns_InternalError(t *testing.T) {
 	setup(t)
 	// Assemble
 	gateway := NewAssignRoleGatewayMock()
 	gateway.ReturnInternalError()
-	usecase := grant_access.New(gateway)
+	usecase := modify_access.New(gateway)
 	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
@@ -133,7 +133,7 @@ func Test_Invoke_Assign_Returns_InternalError(t *testing.T) {
 	permissions := []string{"read"}
 
 	// Act
-	usecase.Grant(userId, resourceId, permissions)
+	usecase.Modify(userId, resourceId, permissions)
 
 	// Assert
 	if !errors.As(usecase.Error(), &internal_error.InternalError{}) {
@@ -149,7 +149,7 @@ func NewAssignRoleGatewayMock() AssignRoleGatewayMock {
 	return AssignRoleGatewayMock{}
 }
 
-func (gateway AssignRoleGatewayMock) Grant(accessControl access_control.AccessControl) {}
+func (gateway AssignRoleGatewayMock) Modify(accessControl access_control.AccessControl) {}
 
 func (gateway *AssignRoleGatewayMock) ReturnInternalError() {
 	gateway.gatewayError = internal_error.New("some internal error")
