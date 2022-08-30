@@ -75,7 +75,6 @@ func Test_AccessControlOne_Equals_AccessControlTwo_Successfully(t *testing.T) {
 	acOne := access_control.New(userId, resourceId, permissions)
 	acTwo := access_control.New(userId2, resourceId2, permissions2)
 
-
 	// Assert
 	if acOne.Equals(acTwo) != true {
 		t.Errorf("Expected both AccessControls equal.\n acOne: %+v\n, acTwo: %+v\n", acOne, acTwo)
@@ -167,7 +166,7 @@ func Test_AccessControlOne_DoesNotEqual_AccessControlTwo_Different_ResourceId(t 
 
 	// Assert
 	if acOne.Equals(acTwo) {
-		t.Errorf("Expected both AccessControls to NOT equal because of different resourceIds.\n acOne: %d\n, " +
+		t.Errorf("Expected both AccessControls to NOT equal because of different resourceIds.\n acOne: %d\n, "+
 			"acTwo: %d\n",
 			acOne.ResourceId(), acTwo.ResourceId())
 	}
@@ -198,12 +197,11 @@ func Test_AccessControlOne_DoesNotEqual_AccessControlTwo_Different_Permissions(t
 
 	// Assert
 	if acOne.Equals(acTwo) {
-		t.Errorf("Expected both AccessControls to NOT equal because of different PermissonLists.\n acOne: %s\n, " +
+		t.Errorf("Expected both AccessControls to NOT equal because of different PermissonLists.\n acOne: %s\n, "+
 			"acTwo: %s\n",
 			acOne.GetAllPermissions(), acTwo.GetAllPermissions())
 	}
 }
-
 
 /** Testing Tools **/
 func stringSlicesEqual(a, b []string) bool {
