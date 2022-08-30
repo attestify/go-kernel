@@ -23,7 +23,7 @@ func Test_Instantiate_GrantOwner_Successfully(t *testing.T) {
 	gateway := NewGrantOwnerGatewayMock()
 
 	//Act
-	usecase := grant_owner.New(&gateway)
+	usecase := grant_owner.New(gateway)
 
 	//Assert
 	if usecase.HasError() {
@@ -43,7 +43,7 @@ func Test_Invoke_Grant_Successfully(t *testing.T) {
 	var resourceId int64 = 1
 
 	//Act
-	usecase := grant_owner.New(&gateway)
+	usecase := grant_owner.New(gateway)
 	usecase.Grant(userId, resourceId)
 
 	//Assert
@@ -93,7 +93,7 @@ func Test_Handle_InternalError_Invoking_GrantOwnerGateway(t *testing.T) {
 	// Assemble
 	gateway := NewGrantOwnerGatewayMock()
 	gateway.GenerateInternalError()
-	usecase := grant_owner.New(&gateway)
+	usecase := grant_owner.New(gateway)
 	if usecase.HasError() == true {
 		t.Fatalf("An error was thrown when non was expected.\n Error: %s\n", usecase.Error())
 	}
@@ -114,12 +114,35 @@ func Test_Handle_InternalError_Invoking_GrantOwnerGateway(t *testing.T) {
 
 }
 
-// todo - test gate for setAccessControl
-// todo - test gate for grantOwner
+// Given the GrantOwner usecase is instantiated with a nil GrantOwnerGateway dependency
+// When the GrantOwner.Grant(...) is invoked
+// Then there should be an error InternalError
+func Test_Returns_InternalError_With_Nil_GrantOwnerGateway_When_Grant_Invoked(t *testing.T)  {
+	setup(t)
+	// Assemble
+	var gateway grant_owner.GrantOwnerGateway = nil
+	var userId int64 = 0
+	var resourceId int64 = 1
+
+	//Act
+	usecase := grant_owner.New(gateway)
+	usecase.Grant(userId, resourceId)
+
+	//Assert
+	if usecase.HasError() == false {
+		t.Fatal("An error was expected, but no error was returned")
+	}
+
+	if !errors.As(usecase.Error(), &internal_error.InternalError{}) {
+		t.Errorf("did not get the epected error of type InternalError")
+	}
+
+}
 
 /** Testing Tools **/
 
 type GrantOwnerGatewayMock struct {
+	accessControl access_control.AccessControl
 	generateInternalError bool
 	mockError error
 }
@@ -128,7 +151,7 @@ func NewGrantOwnerGatewayMock()  GrantOwnerGatewayMock {
 	return GrantOwnerGatewayMock{}
 }
 
-func (mock *GrantOwnerGatewayMock) Grant(accessControl access_control.AccessControl)  {}
+func (mock GrantOwnerGatewayMock) Grant(accessControl access_control.AccessControl)  {}
 
 func (mock GrantOwnerGatewayMock) HasError() bool {
 	return mock.mockError != nil
@@ -140,4 +163,8 @@ func (mock GrantOwnerGatewayMock) Error() error {
 
 func (mock *GrantOwnerGatewayMock) GenerateInternalError() {
 	mock.mockError = internal_error.New("Internal error when .Grant(...) was invoked")
+}
+
+func (mock GrantOwnerGatewayMock) GetAccessControl() access_control.AccessControl {
+	return mock.accessControl
 }
