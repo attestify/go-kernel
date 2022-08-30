@@ -35,3 +35,10 @@ func (ac AccessControl) HasError() bool {
 func (ac AccessControl) Error() error {
 	return ac.PermissionList.Error()
 }
+
+func (ac AccessControl) Equals(compare AccessControl) bool {
+	sameUserId := ac.userId == compare.userId
+	sameResourceId := ac.resourceId == compare.resourceId
+	samePermissionList := ac.PermissionList.Equals(compare.PermissionList)
+	return sameUserId && sameResourceId && samePermissionList
+}

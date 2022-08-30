@@ -61,6 +61,20 @@ func (list PermissionList) HasError() bool {
 	return list.listError != nil
 }
 
+func (list PermissionList) Equals(compare PermissionList) bool {
+	thisList := list.GetAllPermissions()
+	otherList := compare.GetAllPermissions()
+	if len(thisList) != len(otherList) {
+		return false
+	}
+	for _, v := range thisList {
+		if !compare.ContainsPermission(v) {
+			return false
+		}
+	}
+	return true
+}
+
 func (list *PermissionList) cleanPermission(permission string) string {
 	permission = strings.CleanAndLower(permission)
 	permission = strings.RemoveAllNumbers(permission)
