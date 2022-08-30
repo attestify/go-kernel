@@ -179,6 +179,25 @@ func Test_Remove_All_Leading_And_Trailing_Special_Characters(t *testing.T) {
 	}
 }
 
+// Given a permission_list class contains permissions "write" and "read"
+//  and a second permission_list class contains "write" and "read"
+// When the first permission class is compared to the second permission class
+// Then they will equal each other
+func Test_Two_PermissionLists_Equal(t *testing.T) {
+	listOne := permission_list.New()
+	listOne.AddPermission("write")
+	listOne.AddPermission("read")
+
+	listTwo := permission_list.New()
+	listTwo.AddPermission("read")
+	listTwo.AddPermission("write")
+
+	if listOne.Equals(listTwo) != true {
+		t.Errorf("Expected both permissions list to equal.\n ListOne: %s\n, ListTwo: %s\n",
+			listOne.GetAllPermissions(), listTwo.GetAllPermissions())
+	}
+}
+
 /** Sad Path **/
 
 // Given a permission_list class is instantiated
@@ -323,6 +342,45 @@ func Test_Add_Many_Of_Same_Permission_Without_Duplication(t *testing.T) {
 		t.Errorf("The expectced value does match the actual value.\n Expected: %s\n Actual: %s\n", expectedValue, actualValue)
 	}
 
+}
+
+// Given a permission_list class contains permissions "write", "read", and "delete"
+//  and a second permission_list class contains "write" and "read"
+// When the first permission class is compared to the second permission class
+// Then they will not equal each other
+func Test_Two_PermissionLists_Different_Size_Do_Not_Equal(t *testing.T) {
+	listOne := permission_list.New()
+	listOne.AddPermission("write")
+	listOne.AddPermission("read")
+	listOne.AddPermission("delete")
+
+	listTwo := permission_list.New()
+	listTwo.AddPermission("write")
+	listTwo.AddPermission("read")
+
+	if listOne.Equals(listTwo) {
+		t.Errorf("Expected both permissions list to NOT equal.\n ListOne: %s\n, ListTwo: %s\n",
+			listOne.GetAllPermissions(), listTwo.GetAllPermissions())
+	}
+}
+
+// Given a permission_list class contains permissions "write" and "read"
+//  and a second permission_list class contains "read" and "delete"
+// When the first permission class is compared to the second permission class
+// Then they will not equal each other
+func Test_Two_PermissionLists_Same_Size_Do_Not_Equal(t *testing.T) {
+	listOne := permission_list.New()
+	listOne.AddPermission("write")
+	listOne.AddPermission("read")
+
+	listTwo := permission_list.New()
+	listTwo.AddPermission("read")
+	listTwo.AddPermission("delete")
+
+	if listOne.Equals(listTwo) {
+		t.Errorf("Expected both permissions list to NOT equal.\n ListOne: %s\n, ListTwo: %s\n",
+			listOne.GetAllPermissions(), listTwo.GetAllPermissions())
+	}
 }
 
 /** Testing Tools **/

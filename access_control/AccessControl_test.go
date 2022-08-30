@@ -52,6 +52,36 @@ func Test_Instantiate_AccessControl_Successfully(t *testing.T) {
 	}
 }
 
+// Given a user Id of "1541815603606036480" is provided
+//  and a resource Id of "1541815603606036481" is provided
+//  and the permission_list of "write", "read", "delete" is provided for the first AccessControl
+//  AND given a user Id of "1541815603606036480" is provided
+//  and a resource Id of "1541815603606036481" is provided
+//  and the permission_list of "delete", "write", "read" is provided for the second AccessControl
+// When both AccessControls are compared
+// Then they must equal each other
+func Test_AccessControlOne_Equals_AccessControlTwo_Successfully(t *testing.T) {
+	//Assemble
+	setup(t)
+	var userId int64 = 1541815603606036480
+	var resourceId int64 = 1541815603606036481
+	permissions := []string{"write", "read", "delete"}
+
+	var userId2 int64 = 1541815603606036480
+	var resourceId2 int64 = 1541815603606036481
+	permissions2 := []string{"delete", "write", "read"}
+
+	// Act
+	acOne := access_control.New(userId, resourceId, permissions)
+	acTwo := access_control.New(userId2, resourceId2, permissions2)
+
+
+	// Assert
+	if acOne.Equals(acTwo) != true {
+		t.Errorf("Expected both AccessControls equal.\n acOne: %+v\n, acTwo: %+v\n", acOne, acTwo)
+	}
+}
+
 /** Sad Path **/
 
 // Given a user Id of "1541815603606036480" is provided
@@ -80,6 +110,100 @@ func Test_Error_Propagation_For_PermissionList(t *testing.T) {
 		t.Errorf("Did not get the epected error of type ValidationError")
 	}
 }
+
+// Given a user Id of "1541815603606036482" is provided
+//  and a resource Id of "1541815603606036481" is provided
+//  and the permission_list of "write", "read", "delete" is provided for the first AccessControl
+//  AND given a user Id of "1541815603606036480" is provided
+//  and a resource Id of "1541815603606036481" is provided
+//  and the permission_list of "delete", "write", "read" is provided for the second AccessControl
+// When both AccessControls are compared
+// Then they must equal each other
+func Test_AccessControlOne_DoesNotEqual_AccessControlTwo_Different_UserId(t *testing.T) {
+	//Assemble
+	setup(t)
+	var userId int64 = 1541815603606036482
+	var resourceId int64 = 1541815603606036481
+	permissions := []string{"write", "read", "delete"}
+
+	var userId2 int64 = 1541815603606036480
+	var resourceId2 int64 = 1541815603606036481
+	permissions2 := []string{"write", "read", "delete"}
+
+	// Act
+	acOne := access_control.New(userId, resourceId, permissions)
+	acTwo := access_control.New(userId2, resourceId2, permissions2)
+
+	// Assert
+	if acOne.Equals(acTwo) {
+		t.Errorf("Expected both AccessControls to NOT equal because of different userIds.\n acOne: %d\n, acTwo: %d\n",
+			acOne.UserId(), acTwo.UserId())
+	}
+}
+
+// todo - updated test to reflect different resourceId
+// Given a user Id of "1541815603606036480" is provided
+//  and a resource Id of "1541815603606036481" is provided
+//  and the permission_list of "write", "read", "delete" is provided for the first AccessControl
+//  AND given a user Id of "1541815603606036480" is provided
+//  and a resource Id of "1541815603606036482" is provided
+//  and the permission_list of "delete", "write", "read" is provided for the second AccessControl
+// When both AccessControls are compared
+// Then they must equal each other
+func Test_AccessControlOne_DoesNotEqual_AccessControlTwo_Different_ResourceId(t *testing.T) {
+	//Assemble
+	setup(t)
+	var userId int64 = 1541815603606036480
+	var resourceId int64 = 1541815603606036481
+	permissions := []string{"write", "read", "delete"}
+
+	var userId2 int64 = 1541815603606036480
+	var resourceId2 int64 = 1541815603606036482
+	permissions2 := []string{"write", "read", "delete"}
+
+	// Act
+	acOne := access_control.New(userId, resourceId, permissions)
+	acTwo := access_control.New(userId2, resourceId2, permissions2)
+
+	// Assert
+	if acOne.Equals(acTwo) {
+		t.Errorf("Expected both AccessControls to NOT equal because of different resourceIds.\n acOne: %d\n, " +
+			"acTwo: %d\n",
+			acOne.ResourceId(), acTwo.ResourceId())
+	}
+}
+
+// Given a user Id of "1541815603606036480" is provided
+//  and a resource Id of "1541815603606036481" is provided
+//  and the permission_list of "write" and "read", is provided for the first AccessControl
+//  AND given a user Id of "1541815603606036480" is provided
+//  and a resource Id of "1541815603606036481" is provided
+//  and the permission_list of "delete" and "write" is provided for the second AccessControl
+// When both AccessControls are compared
+// Then they must equal each other
+func Test_AccessControlOne_DoesNotEqual_AccessControlTwo_Different_Permissions(t *testing.T) {
+	//Assemble
+	setup(t)
+	var userId int64 = 1541815603606036480
+	var resourceId int64 = 1541815603606036481
+	permissions := []string{"write", "read"}
+
+	var userId2 int64 = 1541815603606036480
+	var resourceId2 int64 = 1541815603606036481
+	permissions2 := []string{"delete", "write"}
+
+	// Act
+	acOne := access_control.New(userId, resourceId, permissions)
+	acTwo := access_control.New(userId2, resourceId2, permissions2)
+
+	// Assert
+	if acOne.Equals(acTwo) {
+		t.Errorf("Expected both AccessControls to NOT equal because of different PermissonLists.\n acOne: %s\n, " +
+			"acTwo: %s\n",
+			acOne.GetAllPermissions(), acTwo.GetAllPermissions())
+	}
+}
+
 
 /** Testing Tools **/
 func stringSlicesEqual(a, b []string) bool {
