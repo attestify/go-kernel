@@ -176,7 +176,7 @@ func NewMockGrantOwnerGateway() MockGrantOwnerGateway {
 	return MockGrantOwnerGateway{}
 }
 
-func (gateway* MockGrantOwnerGateway) Grant(accessControl access_control.AccessControl) {
+func (gateway *MockGrantOwnerGateway) Grant(accessControl access_control.AccessControl) {
 	if gateway.grantOwnerGatewayInternalError {
 		gateway.mockError =  internal_error.New("Error generated from GrantOwner.Grant() invocation.")
 	}
