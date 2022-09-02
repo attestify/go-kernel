@@ -61,6 +61,10 @@ func Test_Invoke_Modify_Successfully(t *testing.T) {
 	if usecase.HasError() {
 		t.Error("an error was returned when no error was expected")
 	}
+
+	if usecase.Error() != nil {
+		t.Errorf("An error was genrated when no eror was exptected.\n Error: %s", usecase.Error())
+	}
 }
 
 /** Sad Path **/

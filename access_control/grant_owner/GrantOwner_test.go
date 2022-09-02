@@ -55,6 +55,10 @@ func Test_Invoke_Grant_Successfully(t *testing.T) {
 		t.Errorf("An unexpected error occurred.\n Error: %s\n", usecase.Error())
 	}
 
+	if usecase.Error() != nil {
+		t.Errorf("An error was genrated when no eror was exptected.\n Error: %s", usecase.Error())
+	}
+
 }
 
 /** Sad Path **/
