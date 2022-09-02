@@ -14,10 +14,9 @@ func setup(t *testing.T) {
 
 /** Happy Path **/
 
-// Given a non-nil RevokeAccessGateway is provided
-// When a RevokeAccess use case is instantiated
-// Then no error should be returned
-//  and .HasError() should be false
+// Given there is a valid RevokeAccessGateway dependency
+// When the RevokeAccess usecase is instantiated
+// Then there should not be any errors
 func Test_Instantiate_RevokeAccess_Successfully(t *testing.T) {
 	setup(t)
 

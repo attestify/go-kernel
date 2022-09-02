@@ -31,6 +31,10 @@ func Test_Instantiate_GrantAll_Successfully(t *testing.T) {
 	if usecase.HasError() {
 		t.Errorf("Encountered an unexpected error.\n Error: %s\n", usecase.Error())
 	}
+
+	if usecase.Error() != nil {
+		t.Errorf("An error was genrated when no eror was exptected.\n Error: %s", usecase.Error())
+	}
 }
 
 // Given the GrantAll usecase is instantiated without error
