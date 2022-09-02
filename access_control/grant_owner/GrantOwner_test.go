@@ -41,13 +41,17 @@ func Test_Instantiate_GrantOwner_Successfully(t *testing.T) {
 // Then there should not be any errors
 func Test_Invoke_Grant_Successfully(t *testing.T) {
 	setup(t)
+
 	// Assemble
 	gateway := NewMockGrantOwnerGateway()
-	var userId int64 = 0
-	var resourceId int64 = 1
+	usecase := grant_owner.New(&gateway)
+	if usecase.HasError() {
+		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
+	}
 
 	//Act
-	usecase := grant_owner.New(&gateway)
+	var userId int64 = 0
+	var resourceId int64 = 1
 	usecase.Grant(userId, resourceId)
 
 	//Assert
