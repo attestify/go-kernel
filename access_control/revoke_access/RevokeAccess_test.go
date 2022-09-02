@@ -37,28 +37,31 @@ func Test_Instantiate_RevokeAccess_Successfully(t *testing.T) {
 
 }
 
-// Given a non-nil RevokeAccessGateway is provided
-//  and a user id of 0
-//  and a resourceId of 1
-//  and a resource of "test-resource"
-//  and a permission_list of "write"
-// When a RevokeAccess.Revoke(...) is invoked
-// Then there should be no error
-func Test_RevokeAccess_Successfully(t *testing.T) {
+// Given the RevokeAccess usecase is instantiated without error
+// When the .Revoke(..) is invoked with proper parameter
+// Then there should not be any errors
+func Test_Invoke_Revoke_Successfully(t *testing.T) {
 	setup(t)
 
 	// Assemble
-	var gateway revoke_access.RevokeAccessGateway = NewMockRevokeAccessGateway()
+	gateway := NewMockRevokeAccessGateway()
+	usecase := revoke_access.New(gateway)
+	if usecase.HasError() {
+		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
+	}
+
+	// Act
 	var userId int64 = 0
 	var resourceId int64 = 1
 	permissions := []string{"read"}
-
-	// Act
-	usecase := revoke_access.New(gateway)
 	usecase.Revoke(userId, resourceId, permissions)
 
 	// Assert
 	if usecase.HasError() {
+		t.Errorf("An error was genrated when no eror was exptected.\n Error: %s", usecase.Error())
+	}
+
+	if usecase.Error() != nil {
 		t.Errorf("An error was genrated when no eror was exptected.\n Error: %s", usecase.Error())
 	}
 
