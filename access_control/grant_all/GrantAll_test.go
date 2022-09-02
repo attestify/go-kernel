@@ -41,11 +41,14 @@ func Test_Invoke_Grant_Successfully(t *testing.T) {
 
 	// Assemble
 	var gateway = NewMockGrantAllGateway()
-	var resourceId int64 = 1
-	var permissions = []string{permission.Read}
+	usecase := grant_all.New(&gateway)
+	if usecase.HasError() {
+		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
+	}
 
 	// Act
-	usecase := grant_all.New(&gateway)
+	var resourceId int64 = 1
+	var permissions = []string{permission.Read}
 	usecase.Grant(resourceId, permissions)
 
 	// Assert
@@ -140,7 +143,6 @@ func Test_Handle_GrantAllGateway_Returns_InternalError_When_Grant_Invoked(t *tes
 	}
 
 	// Act
-
 	var resourceId int64 = 1
 	var permissions = []string{permission.Read}
 	usecase.Grant(resourceId, permissions)

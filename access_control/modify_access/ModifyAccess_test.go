@@ -14,38 +14,43 @@ func setup(t *testing.T) {
 
 /** Happy Path **/
 
-// Given an instance of a ModifyAccessGateway is provided
-// When the ModifyAccess use case is instantiated
-// Then there should be no error
-func Test_Instantiate_AssignRole_Successfully(t *testing.T) {
+// Given there is a valid ModifyAccessGateway dependency
+// When the ModifyAccess usecase is instantiated
+// Then there should not be any errors
+func Test_Instantiate_ModifyAccess_Successfully(t *testing.T) {
 	setup(t)
-	assignRoleGateway := NewAssignRoleGatewayMock()
-	usecase := modify_access.New(assignRoleGateway)
+
+	// Assemble
+	assignRoleGateway := NewMockModifyAccessGateway()
+
+	// Act
+	usecase := modify_access.New(&assignRoleGateway)
+
+	// Assert
 	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
 }
 
-// Given a valid instance of ModifyAccess exists
-//  and the user id of "0" is provided,
-//  and the entity if of "1" is provided,
-//  and the entity of "test-entity" is provided
-//  and a permission_list of "write" is provided
-// When .Modify(...) is invoked
+// Given the ModifyAccess usecase is instantiated without error
+// When .Modify(...) is invoked  with the user id of "0",
+//  and an entity of "1" ,
+//  and a permission_list of "read" is provided
 // Then there should be no error
-func Test_Invoke_Assign_Successfully(t *testing.T) {
+func Test_Invoke_Modify_Successfully(t *testing.T) {
 	setup(t)
 	// Assemble
-	gateway := NewAssignRoleGatewayMock()
-	usecase := modify_access.New(gateway)
+	gateway := NewMockModifyAccessGateway()
+	usecase := modify_access.New(&gateway)
 	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
+
+
+	// Act
 	var userId int64 = 0
 	var resourceId int64 = 1
 	permissions := []string{"read"}
-
-	// Act
 	usecase.Modify(userId, resourceId, permissions)
 
 	// Assert
@@ -56,11 +61,15 @@ func Test_Invoke_Assign_Successfully(t *testing.T) {
 
 /** Sad Path **/
 
-// Given an nil instance of a ModifyAccessGateway is provided
-// When the ModifyAccess use case is instantiated
-// Then an InternalError with the text "the provided ModifyAccessGateway is nil, please provide a valid instance of an ModifyAccessGateway" should be returned
-func Test_Instantiate_AssignRole_With_Nil_AssignRoleGateway(t *testing.T) {
+/** Side Effects of nil ModifyAccessGateway **/
+
+// Given there is a nil ModifyAccessGateway dependency
+// When the ModifyAccess usecase is instantiated
+// Then there should be an InternalError with the message:
+//   "the provided ModifyAccessGateway is nil, please provide a valid instance of an ModifyAccessGateway" should be returned
+func Test_Handle_InternalError_With_Nil_ModifyAccessGateway_When_Instantiated(t *testing.T) {
 	setup(t)
+
 	// Assemble
 	var assignRoleGateway modify_access.ModifyAccessGateway = nil
 
@@ -76,6 +85,7 @@ func Test_Instantiate_AssignRole_With_Nil_AssignRoleGateway(t *testing.T) {
 		t.Errorf("did not get the epected error of type InternalError")
 	}
 
+	// This assertion ensure the InternalError is generated from the nil gateway check
 	actualMessage := usecase.Error().Error()
 	expectedMessage := "the provided ModifyAccessGateway is nil, please provide a valid instance of an ModifyAccessGateway"
 	if expectedMessage != actualMessage {
@@ -83,21 +93,22 @@ func Test_Instantiate_AssignRole_With_Nil_AssignRoleGateway(t *testing.T) {
 	}
 }
 
-// Given an nil instance of a ModifyAccessGateway is provided
-// When .Modify() is invoked
-// Then an InternalError with the text "the provided ModifyAccessGateway is nil, please provide a valid instance of an ModifyAccessGateway" should be returned
-func Test_Returns_InternalError_With_Nil_AssignRoleGateway_When_Modify_Invoked(t *testing.T) {
+// NOTE - this tests that error guards function properly
+// Given the ModifyAccess usecase is instantiated with a nil ModifyAccessGateway dependency
+// When .Modify() is invoked with valid parameters
+// Then there should be an InternalError with the message:
+//  "the provided ModifyAccessGateway is nil, please provide a valid instance of an ModifyAccessGateway" should be returned
+func Test_Returns_InternalError_With_Nil_ModifyAccessGateway_When_Modify_Invoked(t *testing.T) {
 	setup(t)
+
 	// Assemble
 	var assignRoleGateway modify_access.ModifyAccessGateway = nil
-
-	// Act
-	usecase := modify_access.New(assignRoleGateway)
 	var userId int64 = 0
 	var resourceId int64 = 1
 	permissions := []string{"read"}
 
 	// Act
+	usecase := modify_access.New(assignRoleGateway)
 	usecase.Modify(userId, resourceId, permissions)
 
 	// Assert
@@ -109,6 +120,7 @@ func Test_Returns_InternalError_With_Nil_AssignRoleGateway_When_Modify_Invoked(t
 		t.Errorf("did not get the epected error of type InternalError")
 	}
 
+	// This assertion ensure the InternalError is generated from the nil gateway check
 	actualMessage := usecase.Error().Error()
 	expectedMessage := "the provided ModifyAccessGateway is nil, please provide a valid instance of an ModifyAccessGateway"
 	if expectedMessage != actualMessage {
@@ -116,49 +128,69 @@ func Test_Returns_InternalError_With_Nil_AssignRoleGateway_When_Modify_Invoked(t
 	}
 }
 
-// Given we expect the ModifyAccessGateway to return InternalError
-// When .Modify(...) is invoked with the proper arguments
-// Then the ModifyAccess use case must return an InternalError
-func Test_Invoke_Assign_Returns_InternalError(t *testing.T) {
+/** Side Effects of ModifyAccessGateway errors **/
+
+// Given the ModifyAccess usecase is instantiated without error
+// When .Modify(...) is invoked with the valid parameters
+// Then the ModifyAccessGateway returns an InternalError
+//  and the ModifyAccess usecase should reflect InternalError returned by the ModifyAccessGateway
+func Test_Handle_ModifyAccessGateway_Returns_InternalError_When_Modify_Invoked(t *testing.T) {
 	setup(t)
 	// Assemble
-	gateway := NewAssignRoleGatewayMock()
-	gateway.ReturnInternalError()
-	usecase := modify_access.New(gateway)
+	gateway := NewMockModifyAccessGateway()
+	gateway.ModifyAccessGatewayInternalError()
+	usecase := modify_access.New(&gateway)
 	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
+
+	// Act
 	var userId int64 = 0
 	var resourceId int64 = 1
 	permissions := []string{"read"}
-
-	// Act
 	usecase.Modify(userId, resourceId, permissions)
 
 	// Assert
 	if !errors.As(usecase.Error(), &internal_error.InternalError{}) {
 		t.Errorf("did not get the epected error of type InternalError")
 	}
+
+	// This assertion ensure the InternalError is generate when the ModifyAccess.Modify(...) method is invoked
+	// If the message is other than what's here, the InternalError was generated by something else than .Modify(...)
+	// By testing this, we can expect that and InternalError generated  by any other implementation of the
+	// ModifyAccessGateway will be properly handled
+	actualMessage := usecase.Error().Error()
+	expectedMessage := "Error generated from ModifyAccess.Modify() invocation."
+	if expectedMessage != actualMessage {
+		t.Errorf("The returned error message was not expected: \n Expected: %s \n Actual %s", expectedMessage, actualMessage)
+	}
 }
 
-type AssignRoleGatewayMock struct {
-	gatewayError error
+/** Testing Tools **/
+
+type MockModifyAccessGateway struct {
+	modifyAccessGatewayInternalError bool
+	mockError error
 }
 
-func NewAssignRoleGatewayMock() AssignRoleGatewayMock {
-	return AssignRoleGatewayMock{}
+func NewMockModifyAccessGateway() MockModifyAccessGateway {
+	return MockModifyAccessGateway{}
 }
 
-func (gateway AssignRoleGatewayMock) Modify(accessControl access_control.AccessControl) {}
-
-func (gateway *AssignRoleGatewayMock) ReturnInternalError() {
-	gateway.gatewayError = internal_error.New("some internal error")
+func (gateway *MockModifyAccessGateway) Modify(accessControl access_control.AccessControl) {
+	if gateway.modifyAccessGatewayInternalError {
+		gateway.mockError = internal_error.New("Error generated from ModifyAccess.Modify() invocation.")
+	}
 }
 
-func (gateway AssignRoleGatewayMock) HasError() bool {
-	return gateway.gatewayError != nil
+func (gateway *MockModifyAccessGateway) ModifyAccessGatewayInternalError () {
+	gateway.modifyAccessGatewayInternalError = true
 }
 
-func (gateway AssignRoleGatewayMock) Error() error {
-	return gateway.gatewayError
+func (gateway MockModifyAccessGateway) HasError() bool {
+	return gateway.mockError != nil
+}
+
+func (gateway MockModifyAccessGateway) Error() error {
+	return gateway.mockError
 }
