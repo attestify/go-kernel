@@ -30,6 +30,10 @@ func Test_Instantiate_ModifyAccess_Successfully(t *testing.T) {
 	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
+
+	if usecase.Error() != nil {
+		t.Errorf("An error was genrated when no eror was exptected.\n Error: %s", usecase.Error())
+	}
 }
 
 // Given the ModifyAccess usecase is instantiated without error
