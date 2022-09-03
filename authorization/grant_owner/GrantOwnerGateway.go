@@ -1,11 +1,11 @@
 package grant_owner
 
 import (
-	"github.com/attestify/go-kernel/authorization/access_control"
+	"github.com/attestify/go-kernel/authorization/owner_control"
 )
 
 type GrantOwnerGateway interface {
-	Grant(accessControl access_control.AccessControl)
+	Grant(ownerControl owner_control.OwnerControl)
 	HasError() bool
 	Error() error
 }

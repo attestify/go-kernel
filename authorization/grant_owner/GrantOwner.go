@@ -1,12 +1,12 @@
 package grant_owner
 
 import (
-	"github.com/attestify/go-kernel/authorization/access_control"
+	"github.com/attestify/go-kernel/authorization/owner_control"
 	"github.com/attestify/go-kernel/error/internal_error"
 )
 
 type GrantOwner struct {
-	accessControl     access_control.AccessControl
+	ownerControl     owner_control.OwnerControl
 	grantOwnerGateway GrantOwnerGateway
 	grantOwnerError   error
 }
@@ -23,22 +23,22 @@ func New(gateway GrantOwnerGateway) GrantOwner {
 }
 
 func (usecase *GrantOwner) Grant(userId int64, resourceId int64) {
-	usecase.setAccessControl(userId, resourceId)
+	usecase.setOwnerControl(userId, resourceId)
 	usecase.grantOwner()
 }
 
-func (usecase *GrantOwner) setAccessControl(userId int64, resourceId int64) {
+func (usecase *GrantOwner) setOwnerControl(userId int64, resourceId int64) {
 	if usecase.HasError() {
 		return
 	}
-	usecase.accessControl = access_control.New(userId, resourceId, []string{})
+	usecase.ownerControl = owner_control.MarkAsOwner(userId, resourceId)
 }
 
 func (usecase *GrantOwner) grantOwner() {
 	if usecase.HasError() {
 		return
 	}
-	usecase.grantOwnerGateway.Grant(usecase.accessControl)
+	usecase.grantOwnerGateway.Grant(usecase.ownerControl)
 	if usecase.grantOwnerGateway.HasError() {
 		usecase.grantOwnerError = usecase.grantOwnerGateway.Error()
 	}
