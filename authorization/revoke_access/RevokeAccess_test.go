@@ -2,7 +2,7 @@ package revoke_access_test
 
 import (
 	"errors"
-	"github.com/attestify/go-kernel/authorization"
+	"github.com/attestify/go-kernel/authorization/access_control"
 	"github.com/attestify/go-kernel/authorization/revoke_access"
 	"github.com/attestify/go-kernel/error/internal_error"
 	"testing"
@@ -188,7 +188,7 @@ func NewMockRevokeAccessGateway() MockRevokeAccessGateway {
 	return MockRevokeAccessGateway{}
 }
 
-func (gateway *MockRevokeAccessGateway) Revoke(accessControl authorization.AccessControl) {
+func (gateway *MockRevokeAccessGateway) Revoke(accessControl access_control.AccessControl) {
 	if gateway.revokeAccessGatewayInternalError {
 		gateway.gatewayError = internal_error.New("Error generated from RevokeAccess.Revoke() invocation.")
 	}

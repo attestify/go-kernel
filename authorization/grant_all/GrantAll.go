@@ -1,12 +1,12 @@
 package grant_all
 
 import (
-	"github.com/attestify/go-kernel/authorization"
+	"github.com/attestify/go-kernel/authorization/access_control"
 	"github.com/attestify/go-kernel/error/internal_error"
 )
 
 type GrantAll struct {
-	accessControl   authorization.AccessControl
+	accessControl   access_control.AccessControl
 	grantAllGateway GrantAllGateway
 	usecaseError    error
 }
@@ -31,7 +31,7 @@ func (uc *GrantAll) setAccessControl(resourceId int64, permissions []string) {
 	if uc.HasError() {
 		return
 	}
-	uc.accessControl = authorization.New(0, resourceId, permissions)
+	uc.accessControl = access_control.New(0, resourceId, permissions)
 }
 
 func (uc *GrantAll) grantAll() {

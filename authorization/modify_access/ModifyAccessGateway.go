@@ -1,6 +1,8 @@
 package modify_access
 
-import "github.com/attestify/go-kernel/authorization"
+import (
+	"github.com/attestify/go-kernel/authorization/access_control"
+)
 
 // ModifyAccessGateway provides the behavior for persisting a role record
 // Expected Alternative Behaviors
@@ -9,7 +11,7 @@ import "github.com/attestify/go-kernel/authorization"
 // Returns one (1) type of error:
 //  - InternalError - Returned if there is an error invoking the implementation of this interface
 type ModifyAccessGateway interface {
-	Modify(accessControl authorization.AccessControl)
+	Modify(accessControl access_control.AccessControl)
 	Error() error
 	HasError() bool
 }

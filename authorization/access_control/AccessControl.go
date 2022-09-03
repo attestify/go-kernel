@@ -1,4 +1,4 @@
-package authorization
+package access_control
 
 import (
 	"github.com/attestify/go-kernel/authorization/permission_list"

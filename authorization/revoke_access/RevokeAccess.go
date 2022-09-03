@@ -1,13 +1,13 @@
 package revoke_access
 
 import (
-	"github.com/attestify/go-kernel/authorization"
+	"github.com/attestify/go-kernel/authorization/access_control"
 	"github.com/attestify/go-kernel/error/internal_error"
 )
 
 type RevokeAccess struct {
 	gateway       RevokeAccessGateway
-	accessControl authorization.AccessControl
+	accessControl access_control.AccessControl
 	usecaseError  error
 }
 
@@ -31,7 +31,7 @@ func (usecase *RevokeAccess) setAccessControl(userId int64, resourceId int64, pe
 	if usecase.HasError() {
 		return
 	}
-	usecase.accessControl = authorization.New(userId, resourceId, permissions)
+	usecase.accessControl = access_control.New(userId, resourceId, permissions)
 }
 
 func (usecase *RevokeAccess) revokeAccessControl() {

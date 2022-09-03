@@ -1,12 +1,12 @@
 package grant_owner
 
 import (
-	"github.com/attestify/go-kernel/authorization"
+	"github.com/attestify/go-kernel/authorization/access_control"
 	"github.com/attestify/go-kernel/error/internal_error"
 )
 
 type GrantOwner struct {
-	accessControl     authorization.AccessControl
+	accessControl     access_control.AccessControl
 	grantOwnerGateway GrantOwnerGateway
 	grantOwnerError   error
 }
@@ -31,7 +31,7 @@ func (usecase *GrantOwner) setAccessControl(userId int64, resourceId int64) {
 	if usecase.HasError() {
 		return
 	}
-	usecase.accessControl = authorization.New(userId, resourceId, []string{})
+	usecase.accessControl = access_control.New(userId, resourceId, []string{})
 }
 
 func (usecase *GrantOwner) grantOwner() {

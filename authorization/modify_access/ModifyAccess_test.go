@@ -2,7 +2,7 @@ package modify_access_test
 
 import (
 	"errors"
-	"github.com/attestify/go-kernel/authorization"
+	"github.com/attestify/go-kernel/authorization/access_control"
 	"github.com/attestify/go-kernel/authorization/modify_access"
 	"github.com/attestify/go-kernel/error/internal_error"
 	"testing"
@@ -185,7 +185,7 @@ func NewMockModifyAccessGateway() MockModifyAccessGateway {
 	return MockModifyAccessGateway{}
 }
 
-func (gateway *MockModifyAccessGateway) Modify(accessControl authorization.AccessControl) {
+func (gateway *MockModifyAccessGateway) Modify(accessControl access_control.AccessControl) {
 	if gateway.modifyAccessGatewayInternalError {
 		gateway.mockError = internal_error.New("Error generated from ModifyAccess.Modify() invocation.")
 	}
