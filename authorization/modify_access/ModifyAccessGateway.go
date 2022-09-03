@@ -1,6 +1,8 @@
 package modify_access
 
-import "github.com/attestify/go-kernel/access_control"
+import (
+	"github.com/attestify/go-kernel/authorization/access_control"
+)
 
 // ModifyAccessGateway provides the behavior for persisting a role record
 // Expected Alternative Behaviors

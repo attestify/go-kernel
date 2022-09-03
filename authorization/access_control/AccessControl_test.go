@@ -2,7 +2,7 @@ package access_control_test
 
 import (
 	"errors"
-	"github.com/attestify/go-kernel/access_control"
+	"github.com/attestify/go-kernel/authorization/access_control"
 	"github.com/attestify/go-kernel/error/validation_error"
 	"testing"
 )

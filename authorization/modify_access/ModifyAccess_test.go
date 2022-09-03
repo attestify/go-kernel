@@ -2,8 +2,8 @@ package modify_access_test
 
 import (
 	"errors"
-	"github.com/attestify/go-kernel/access_control"
-	"github.com/attestify/go-kernel/access_control/modify_access"
+	"github.com/attestify/go-kernel/authorization/access_control"
+	"github.com/attestify/go-kernel/authorization/modify_access"
 	"github.com/attestify/go-kernel/error/internal_error"
 	"testing"
 )

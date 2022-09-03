@@ -2,9 +2,9 @@ package grant_all_test
 
 import (
 	"errors"
-	"github.com/attestify/go-kernel/access_control"
-	"github.com/attestify/go-kernel/access_control/grant_all"
-	"github.com/attestify/go-kernel/access_control/permission"
+	"github.com/attestify/go-kernel/authorization/access_control"
+	"github.com/attestify/go-kernel/authorization/grant_all"
+	"github.com/attestify/go-kernel/authorization/permission"
 	"github.com/attestify/go-kernel/error/internal_error"
 	"testing"
 )

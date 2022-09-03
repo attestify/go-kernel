@@ -1,7 +1,7 @@
 package revoke_access
 
 import (
-	"github.com/attestify/go-kernel/access_control"
+	"github.com/attestify/go-kernel/authorization/access_control"
 	"github.com/attestify/go-kernel/error/internal_error"
 )
 

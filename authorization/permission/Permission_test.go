@@ -1,7 +1,7 @@
 package permission_test
 
 import (
-	"github.com/attestify/go-kernel/access_control/permission"
+	"github.com/attestify/go-kernel/authorization/permission"
 	"testing"
 )
 

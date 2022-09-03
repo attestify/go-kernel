@@ -1,6 +1,8 @@
 package revoke_access
 
-import "github.com/attestify/go-kernel/access_control"
+import (
+	"github.com/attestify/go-kernel/authorization/access_control"
+)
 
 // RevokeAccessGateway provides the behavior for remove an access permission_list
 // Expected Alternative Behaviors
