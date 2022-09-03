@@ -2,8 +2,8 @@ package revoke_access_test
 
 import (
 	"errors"
+	revoke_access2 "github.com/attestify/go-kernel/authorization/access/revoke_access"
 	"github.com/attestify/go-kernel/authorization/access_control"
-	"github.com/attestify/go-kernel/authorization/revoke_access"
 	"github.com/attestify/go-kernel/error/internal_error"
 	"testing"
 )
@@ -24,7 +24,7 @@ func Test_Instantiate_RevokeAccess_Successfully(t *testing.T) {
 	gateway := NewMockRevokeAccessGateway()
 
 	// Act
-	usecase := revoke_access.New(&gateway)
+	usecase := revoke_access2.New(&gateway)
 
 	// Assert
 	if usecase.HasError() == true {
@@ -45,7 +45,7 @@ func Test_Invoke_Revoke_Successfully(t *testing.T) {
 
 	// Assemble
 	gateway := NewMockRevokeAccessGateway()
-	usecase := revoke_access.New(&gateway)
+	usecase := revoke_access2.New(&gateway)
 	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
@@ -79,10 +79,10 @@ func Test_Instantiate_RevokeAccess_With_Nil_RevokeAccessGateway(t *testing.T) {
 	setup(t)
 
 	// Assemble
-	var gateway revoke_access.RevokeAccessGateway = nil
+	var gateway revoke_access2.RevokeAccessGateway = nil
 
 	// Act
-	usecase := revoke_access.New(gateway)
+	usecase := revoke_access2.New(gateway)
 
 	// Assert
 	if usecase.HasError() != true {
@@ -111,13 +111,13 @@ func Test_Returns_InternalError_With_Nil_RevokeAccessGateway_When_Revoke_Invoked
 	setup(t)
 
 	// Assemble
-	var gateway revoke_access.RevokeAccessGateway = nil
+	var gateway revoke_access2.RevokeAccessGateway = nil
 	var userId int64 = 0
 	var resourceId int64 = 1
 	permissions := []string{"read"}
 
 	// Act
-	usecase := revoke_access.New(gateway)
+	usecase := revoke_access2.New(gateway)
 	usecase.Revoke(userId, resourceId, permissions)
 
 	// Assert
@@ -150,7 +150,7 @@ func Test_Handle_RevokeAccessGateway_Returns_InternalError_When_Revoke_Invoked(t
 	// Assemble
 	gateway := NewMockRevokeAccessGateway()
 	gateway.RevokeAccessGatewayInternalError()
-	usecase := revoke_access.New(&gateway)
+	usecase := revoke_access2.New(&gateway)
 	if usecase.HasError() {
 		t.Fatalf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}

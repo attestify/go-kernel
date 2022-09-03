@@ -2,7 +2,7 @@ package grant_owner_test
 
 import (
 	"errors"
-	"github.com/attestify/go-kernel/authorization/grant_owner"
+	grant_owner2 "github.com/attestify/go-kernel/authorization/owner/grant_owner"
 	"github.com/attestify/go-kernel/authorization/owner_control"
 	"github.com/attestify/go-kernel/error/internal_error"
 	"testing"
@@ -23,7 +23,7 @@ func Test_Instantiate_GrantOwner_Successfully(t *testing.T) {
 	gateway := NewMockGrantOwnerGateway()
 
 	//Act
-	usecase := grant_owner.New(&gateway)
+	usecase := grant_owner2.New(&gateway)
 
 	//Assert
 	if usecase.HasError() {
@@ -44,7 +44,7 @@ func Test_Invoke_Grant_Successfully(t *testing.T) {
 
 	// Assemble
 	gateway := NewMockGrantOwnerGateway()
-	usecase := grant_owner.New(&gateway)
+	usecase := grant_owner2.New(&gateway)
 	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
@@ -77,10 +77,10 @@ func Test_Handle_InternalError_With_Nil_GrantOwnerGateway_When_Instantiated(t *t
 	setup(t)
 
 	// Assemble
-	var gateway grant_owner.GrantOwnerGateway = nil
+	var gateway grant_owner2.GrantOwnerGateway = nil
 
 	//Act
-	usecase := grant_owner.New(gateway)
+	usecase := grant_owner2.New(gateway)
 
 	//Assert
 	if usecase.HasError() == false {
@@ -108,12 +108,12 @@ func Test_Handle_InternalError_With_Nil_GrantOwnerGateway_When_Instantiated(t *t
 func Test_Returns_InternalError_With_Nil_GrantOwnerGateway_When_Grant_Invoked(t *testing.T) {
 	setup(t)
 	// Assemble
-	var gateway grant_owner.GrantOwnerGateway = nil
+	var gateway grant_owner2.GrantOwnerGateway = nil
 	var userId int64 = 0
 	var resourceId int64 = 1
 
 	//Act
-	usecase := grant_owner.New(gateway)
+	usecase := grant_owner2.New(gateway)
 	usecase.Grant(userId, resourceId)
 
 	//Assert
@@ -146,7 +146,7 @@ func Test_Handle_GrantOwnerGateway_Returns_InternalError_When_Grant_Invoked(t *t
 	// Assemble
 	gateway := NewMockGrantOwnerGateway()
 	gateway.GrantOwnerGatewayInternalError()
-	usecase := grant_owner.New(&gateway)
+	usecase := grant_owner2.New(&gateway)
 	if usecase.HasError() == true {
 		t.Fatalf("An error was thrown when non was expected.\n Error: %s\n", usecase.Error())
 	}

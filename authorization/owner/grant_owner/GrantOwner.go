@@ -6,7 +6,7 @@ import (
 )
 
 type GrantOwner struct {
-	ownerControl     owner_control.OwnerControl
+	ownerControl      owner_control.OwnerControl
 	grantOwnerGateway GrantOwnerGateway
 	grantOwnerError   error
 }
