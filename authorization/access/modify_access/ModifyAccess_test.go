@@ -2,8 +2,8 @@ package modify_access_test
 
 import (
 	"errors"
+	modify_access2 "github.com/attestify/go-kernel/authorization/access/modify_access"
 	"github.com/attestify/go-kernel/authorization/access_control"
-	"github.com/attestify/go-kernel/authorization/modify_access"
 	"github.com/attestify/go-kernel/error/internal_error"
 	"testing"
 )
@@ -24,7 +24,7 @@ func Test_Instantiate_ModifyAccess_Successfully(t *testing.T) {
 	assignRoleGateway := NewMockModifyAccessGateway()
 
 	// Act
-	usecase := modify_access.New(&assignRoleGateway)
+	usecase := modify_access2.New(&assignRoleGateway)
 
 	// Assert
 	if usecase.HasError() {
@@ -45,7 +45,7 @@ func Test_Invoke_Modify_Successfully(t *testing.T) {
 	setup(t)
 	// Assemble
 	gateway := NewMockModifyAccessGateway()
-	usecase := modify_access.New(&gateway)
+	usecase := modify_access2.New(&gateway)
 	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
@@ -79,10 +79,10 @@ func Test_Handle_InternalError_With_Nil_ModifyAccessGateway_When_Instantiated(t 
 	setup(t)
 
 	// Assemble
-	var assignRoleGateway modify_access.ModifyAccessGateway = nil
+	var assignRoleGateway modify_access2.ModifyAccessGateway = nil
 
 	// Act
-	usecase := modify_access.New(assignRoleGateway)
+	usecase := modify_access2.New(assignRoleGateway)
 
 	// Assert
 	if usecase.HasError() == false {
@@ -110,13 +110,13 @@ func Test_Returns_InternalError_With_Nil_ModifyAccessGateway_When_Modify_Invoked
 	setup(t)
 
 	// Assemble
-	var assignRoleGateway modify_access.ModifyAccessGateway = nil
+	var assignRoleGateway modify_access2.ModifyAccessGateway = nil
 	var userId int64 = 0
 	var resourceId int64 = 1
 	permissions := []string{"read"}
 
 	// Act
-	usecase := modify_access.New(assignRoleGateway)
+	usecase := modify_access2.New(assignRoleGateway)
 	usecase.Modify(userId, resourceId, permissions)
 
 	// Assert
@@ -147,7 +147,7 @@ func Test_Handle_ModifyAccessGateway_Returns_InternalError_When_Modify_Invoked(t
 	// Assemble
 	gateway := NewMockModifyAccessGateway()
 	gateway.ModifyAccessGatewayInternalError()
-	usecase := modify_access.New(&gateway)
+	usecase := modify_access2.New(&gateway)
 	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
