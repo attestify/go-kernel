@@ -1,7 +1,7 @@
-package access_control
+package authorization
 
 import (
-	"github.com/attestify/go-kernel/access_control/permission_list"
+	"github.com/attestify/go-kernel/authorization/permission_list"
 	"github.com/attestify/go-kernel/identity/id"
 )
 

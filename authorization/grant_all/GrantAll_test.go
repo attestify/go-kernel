@@ -2,9 +2,9 @@ package grant_all_test
 
 import (
 	"errors"
-	"github.com/attestify/go-kernel/access_control"
-	"github.com/attestify/go-kernel/access_control/grant_all"
-	"github.com/attestify/go-kernel/access_control/permission"
+	"github.com/attestify/go-kernel/authorization"
+	"github.com/attestify/go-kernel/authorization/grant_all"
+	"github.com/attestify/go-kernel/authorization/permission"
 	"github.com/attestify/go-kernel/error/internal_error"
 	"testing"
 )
@@ -187,7 +187,7 @@ func NewMockGrantAllGateway() MockGrantAllGateway {
 	return MockGrantAllGateway{}
 }
 
-func (gateway *MockGrantAllGateway) Grant(control access_control.AccessControl) {
+func (gateway *MockGrantAllGateway) Grant(control authorization.AccessControl) {
 	if gateway.grantAllGatewayInternalError {
 		gateway.mockError = internal_error.New("Error generated from GrantAll.Grant() invocation.")
 	}

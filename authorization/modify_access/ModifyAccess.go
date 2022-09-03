@@ -1,13 +1,13 @@
 package modify_access
 
 import (
-	"github.com/attestify/go-kernel/access_control"
+	"github.com/attestify/go-kernel/authorization"
 	"github.com/attestify/go-kernel/error/internal_error"
 )
 
 type ModifyAccess struct {
 	gateway       ModifyAccessGateway
-	accessControl access_control.AccessControl
+	accessControl authorization.AccessControl
 	usecaseError  error
 }
 
@@ -31,7 +31,7 @@ func (usecase *ModifyAccess) setAccessControl(userId int64, resourceId int64, pe
 	if usecase.HasError() {
 		return
 	}
-	usecase.accessControl = access_control.New(userId, resourceId, permissions)
+	usecase.accessControl = authorization.New(userId, resourceId, permissions)
 }
 
 func (usecase *ModifyAccess) modifyAccessControl() {

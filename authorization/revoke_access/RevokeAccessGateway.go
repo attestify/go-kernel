@@ -1,6 +1,6 @@
 package revoke_access
 
-import "github.com/attestify/go-kernel/access_control"
+import "github.com/attestify/go-kernel/authorization"
 
 // RevokeAccessGateway provides the behavior for remove an access permission_list
 // Expected Alternative Behaviors
@@ -9,7 +9,7 @@ import "github.com/attestify/go-kernel/access_control"
 // Returns one (1) type of error:
 //   - InternalError - Returned if there is an error invoking the implementation of this interface
 type RevokeAccessGateway interface {
-	Revoke(accessControl access_control.AccessControl)
+	Revoke(accessControl authorization.AccessControl)
 	Error() error
 	HasError() bool
 }

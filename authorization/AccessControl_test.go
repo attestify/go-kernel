@@ -1,8 +1,8 @@
-package access_control_test
+package authorization_test
 
 import (
 	"errors"
-	"github.com/attestify/go-kernel/access_control"
+	"github.com/attestify/go-kernel/authorization"
 	"github.com/attestify/go-kernel/error/validation_error"
 	"testing"
 )
@@ -29,7 +29,7 @@ func Test_Instantiate_AccessControl_Successfully(t *testing.T) {
 	var resourceId int64 = 1541815603606036481
 	permissions := []string{"write"}
 	// Act
-	ac := access_control.New(userId, resourceId, permissions)
+	ac := authorization.New(userId, resourceId, permissions)
 
 	// Assert
 	var actual int64 = ac.UserId()
@@ -72,8 +72,8 @@ func Test_AccessControlOne_Equals_AccessControlTwo_Successfully(t *testing.T) {
 	permissions2 := []string{"delete", "write", "read"}
 
 	// Act
-	acOne := access_control.New(userId, resourceId, permissions)
-	acTwo := access_control.New(userId2, resourceId2, permissions2)
+	acOne := authorization.New(userId, resourceId, permissions)
+	acTwo := authorization.New(userId2, resourceId2, permissions2)
 
 	// Assert
 	if acOne.Equals(acTwo) != true {
@@ -98,7 +98,7 @@ func Test_Error_Propagation_For_PermissionList(t *testing.T) {
 	permissions := []string{""}
 
 	// Act
-	ac := access_control.New(userId, resourceId, permissions)
+	ac := authorization.New(userId, resourceId, permissions)
 
 	// Assert
 	if ac.HasError() != true {
@@ -130,8 +130,8 @@ func Test_AccessControlOne_DoesNotEqual_AccessControlTwo_Different_UserId(t *tes
 	permissions2 := []string{"write", "read", "delete"}
 
 	// Act
-	acOne := access_control.New(userId, resourceId, permissions)
-	acTwo := access_control.New(userId2, resourceId2, permissions2)
+	acOne := authorization.New(userId, resourceId, permissions)
+	acTwo := authorization.New(userId2, resourceId2, permissions2)
 
 	// Assert
 	if acOne.Equals(acTwo) {
@@ -161,8 +161,8 @@ func Test_AccessControlOne_DoesNotEqual_AccessControlTwo_Different_ResourceId(t 
 	permissions2 := []string{"write", "read", "delete"}
 
 	// Act
-	acOne := access_control.New(userId, resourceId, permissions)
-	acTwo := access_control.New(userId2, resourceId2, permissions2)
+	acOne := authorization.New(userId, resourceId, permissions)
+	acTwo := authorization.New(userId2, resourceId2, permissions2)
 
 	// Assert
 	if acOne.Equals(acTwo) {
@@ -192,8 +192,8 @@ func Test_AccessControlOne_DoesNotEqual_AccessControlTwo_Different_Permissions(t
 	permissions2 := []string{"delete", "write"}
 
 	// Act
-	acOne := access_control.New(userId, resourceId, permissions)
-	acTwo := access_control.New(userId2, resourceId2, permissions2)
+	acOne := authorization.New(userId, resourceId, permissions)
+	acTwo := authorization.New(userId2, resourceId2, permissions2)
 
 	// Assert
 	if acOne.Equals(acTwo) {

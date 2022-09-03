@@ -2,7 +2,7 @@ package permission_list_test
 
 import (
 	"errors"
-	"github.com/attestify/go-kernel/access_control/permission_list"
+	"github.com/attestify/go-kernel/authorization/permission_list"
 	"github.com/attestify/go-kernel/error/validation_error"
 	"testing"
 )
