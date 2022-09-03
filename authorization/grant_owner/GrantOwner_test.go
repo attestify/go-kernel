@@ -2,8 +2,8 @@ package grant_owner_test
 
 import (
 	"errors"
-	"github.com/attestify/go-kernel/authorization/access_control"
 	"github.com/attestify/go-kernel/authorization/grant_owner"
+	"github.com/attestify/go-kernel/authorization/owner_control"
 	"github.com/attestify/go-kernel/error/internal_error"
 	"testing"
 )
@@ -188,7 +188,7 @@ func NewMockGrantOwnerGateway() MockGrantOwnerGateway {
 	return MockGrantOwnerGateway{}
 }
 
-func (gateway *MockGrantOwnerGateway) Grant(accessControl access_control.AccessControl) {
+func (gateway *MockGrantOwnerGateway) Grant(ownerControl owner_control.OwnerControl) {
 	if gateway.grantOwnerGatewayInternalError {
 		gateway.mockError =  internal_error.New("Error generated from GrantOwner.Grant() invocation.")
 	}
