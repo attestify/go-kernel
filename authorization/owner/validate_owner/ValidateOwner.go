@@ -22,8 +22,15 @@ func New(gateway ValidateOwnerGateway) ValidateOwner {
 	}
 }
 
-func (usecase ValidateOwner) Validate(userId int64, resourceId int64) owner_control.OwnerControl {
-	return usecase.gateway.Validate(id.New(userId), id.New(resourceId))
+func (usecase *ValidateOwner) Validate(userId int64, resourceId int64) owner_control.OwnerControl {
+	if usecase.HasError() {
+		return owner_control.MarkAsNotOwner(userId, resourceId)
+	}
+	ownerControl := usecase.gateway.Validate(id.New(userId), id.New(resourceId))
+	if usecase.gateway.HasError() {
+		usecase.usecaseError = usecase.gateway.Error()
+	}
+	return ownerControl
 }
 
 func (usecase ValidateOwner) HasError() bool {
