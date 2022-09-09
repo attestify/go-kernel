@@ -2,8 +2,8 @@ package validate_owner_test
 
 import (
 	"errors"
-	"github.com/attestify/go-kernel/authorization/owner/validate_owner"
 	"github.com/attestify/go-kernel/authorization/owner_control"
+	validate_owner2 "github.com/attestify/go-kernel/authorization/usecase/validate_owner"
 	"github.com/attestify/go-kernel/error/internal_error"
 	"github.com/attestify/go-kernel/identity/id"
 	"testing"
@@ -25,7 +25,7 @@ func Test_Instantiate_ValidateOwner_Successfully(t *testing.T) {
 	gateway := NewMockValidateOwnerGateway()
 
 	// Act
-	usecase := validate_owner.New(&gateway)
+	usecase := validate_owner2.New(&gateway)
 
 	// Assert
 	if usecase.HasError() != false {
@@ -43,7 +43,7 @@ func Test_Instantiate_Invoke_Validate_Successfully_With_True_OwnerControl(t *tes
 	// Assemble
 	gateway := NewMockValidateOwnerGateway()
 	gateway.ReturnTrueOwnerControl()
-	usecase := validate_owner.New(&gateway)
+	usecase := validate_owner2.New(&gateway)
 	if usecase.HasError() != false {
 		t.Fatalf("Encountered an unexpected error.\n Error: %s\n", usecase.Error())
 	}
@@ -70,7 +70,7 @@ func Test_Instantiate_Invoke_Validate_Successfully_With_False_OwnerControl(t *te
 	// Assemble
 	gateway := NewMockValidateOwnerGateway()
 	gateway.ReturnFalseOwnerControl()
-	usecase := validate_owner.New(&gateway)
+	usecase := validate_owner2.New(&gateway)
 	if usecase.HasError() != false {
 		t.Fatalf("Encountered an unexpected error.\n Error: %s\n", usecase.Error())
 	}
@@ -99,10 +99,10 @@ func Test_Handle_InternalError_With_Nil_ValidateOwnerGateway_When_Instantiated(t
 	setup(t)
 
 	// Assemble
-	var gateway validate_owner.ValidateOwnerGateway = nil
+	var gateway validate_owner2.ValidateOwnerGateway = nil
 
 	// Act
-	usecase := validate_owner.New(gateway)
+	usecase := validate_owner2.New(gateway)
 
 	// Assert
 	if usecase.HasError() != true {
@@ -125,8 +125,8 @@ func Test_Returns_InternalError_With_Nil_ValidateOwnerGateway_When_Validate_Invo
 	setup(t)
 
 	// Assemble
-	var gateway validate_owner.ValidateOwnerGateway = nil
-	usecase := validate_owner.New(gateway)
+	var gateway validate_owner2.ValidateOwnerGateway = nil
+	usecase := validate_owner2.New(gateway)
 
 	// Act
 	var userId int64 = 0
@@ -164,7 +164,7 @@ func Test_Handle_ValidateOwnerGateway_Returns_InternalError_When_Validate_Invoke
 	// Assemble
 	gateway := NewMockValidateOwnerGateway()
 	gateway.ValidateOwnerGatewayInternalError()
-	usecase := validate_owner.New(&gateway)
+	usecase := validate_owner2.New(&gateway)
 	if usecase.HasError() == true {
 		t.Fatalf("An error was thrown when non was expected.\n Error: %s\n", usecase.Error())
 	}
@@ -202,7 +202,7 @@ type MockValidateOwnerGateway struct {
 	mockError                      error
 }
 
-func NewMockValidateOwnerGateway() MockValidateOwnerGateway{
+func NewMockValidateOwnerGateway() MockValidateOwnerGateway {
 	return MockValidateOwnerGateway{}
 }
 
