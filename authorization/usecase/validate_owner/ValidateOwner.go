@@ -7,7 +7,7 @@ import (
 )
 
 type ValidateOwner struct {
-	gateway ValidateOwnerGateway
+	gateway      ValidateOwnerGateway
 	usecaseError error
 }
 

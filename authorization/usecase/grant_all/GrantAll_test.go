@@ -2,9 +2,9 @@ package grant_all_test
 
 import (
 	"errors"
-	grant_all2 "github.com/attestify/go-kernel/authorization/access/grant_all"
 	"github.com/attestify/go-kernel/authorization/access_control"
 	"github.com/attestify/go-kernel/authorization/permission"
+	"github.com/attestify/go-kernel/authorization/usecase/grant_all"
 	"github.com/attestify/go-kernel/error/internal_error"
 	"testing"
 )
@@ -25,7 +25,7 @@ func Test_Instantiate_GrantAll_Successfully(t *testing.T) {
 	var gateway = NewMockGrantAllGateway()
 
 	// Act
-	usecase := grant_all2.New(&gateway)
+	usecase := grant_all.New(&gateway)
 
 	// Assert
 	if usecase.HasError() {
@@ -45,7 +45,7 @@ func Test_Invoke_Grant_Successfully(t *testing.T) {
 
 	// Assemble
 	var gateway = NewMockGrantAllGateway()
-	usecase := grant_all2.New(&gateway)
+	usecase := grant_all.New(&gateway)
 	if usecase.HasError() {
 		t.Errorf("An error was returned when no error was expected: \n %s", usecase.Error())
 	}
@@ -77,10 +77,10 @@ func Test_Handle_InternalError_With_Nil_GrantAllGateway_When_Instantiated(t *tes
 	setup(t)
 
 	// Assemble
-	var gateway grant_all2.GrantAllGateway = nil
+	var gateway grant_all.GrantAllGateway = nil
 
 	// Act
-	usecase := grant_all2.New(gateway)
+	usecase := grant_all.New(gateway)
 
 	// Assert
 	if usecase.HasError() != true {
@@ -108,12 +108,12 @@ func Test_Returns_InternalError_With_Nil_GrantAllGateway_When_Grant_Invoked(t *t
 	setup(t)
 
 	// Assemble
-	var gateway grant_all2.GrantAllGateway = nil
+	var gateway grant_all.GrantAllGateway = nil
 	var resourceId int64 = 1
 	var permissions = []string{permission.Read}
 
 	// Act
-	usecase := grant_all2.New(gateway)
+	usecase := grant_all.New(gateway)
 	usecase.Grant(resourceId, permissions)
 
 	// Assert
@@ -145,7 +145,7 @@ func Test_Handle_GrantAllGateway_Returns_InternalError_When_Grant_Invoked(t *tes
 	// Assemble
 	gateway := NewMockGrantAllGateway()
 	gateway.GrantAllGatewayInternalError()
-	usecase := grant_all2.New(&gateway)
+	usecase := grant_all.New(&gateway)
 	if usecase.HasError() == true {
 		t.Fatalf("An error was thrown when non was expected.\n Error: %s\n", usecase.Error())
 	}
